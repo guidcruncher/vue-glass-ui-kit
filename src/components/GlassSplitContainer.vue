@@ -84,5 +84,5 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/GlassSplitContainer" as *;
+@use '@/styles/components/GlassSplitContainer' as *;
 </style>

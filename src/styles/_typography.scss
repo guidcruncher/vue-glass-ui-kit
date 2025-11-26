@@ -2,7 +2,14 @@
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css';
 
 :root {
-  font-family: Inter, sans-serif;
+  --font-family-base: 'Inter', sans-serif;
+  --font-size-base: 16px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  font-family: var(--font-family-base);
   font-feature-settings:
     'liga' 1,
     'calt' 1;
@@ -13,4 +20,26 @@
   :root {
     font-family: InterVariable, sans-serif;
   }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition: var(--theming-transition);
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-label-primary);
+  background-color: var(--color-system-background);
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  cursor: pointer;
 }

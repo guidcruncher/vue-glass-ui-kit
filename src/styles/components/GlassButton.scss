@@ -2,24 +2,25 @@
 @use '../mixins/glass' as *;
 
 .glass-button {
+  --button-glass-opacity: 0.3;
+
   @include apply-liquid-glass($material-opacity: 0.3);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  color: var(--color-text-primary);
-  background: transparent;
-  min-height: 44px;
-  min-width: 44px;
-  font-size: 1rem;
+  background-color: rgba(var(--color-glass-rgb), var(--button-glass-opacity));
+  color: var(--color-label-primary);
+  border: 1px solid rgba(var(--color-glass-rgb), 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  padding: var(--spacing-xs) var(--spacing-l);
+  border-radius: 20px;
 
   &:hover:not(:disabled) {
-    --color-glass-bg-opacity: 0.45;
-    box-shadow: 0 6px 10px var(--shadow-color);
+    --button-glass-opacity: 0.45;
+    border-color: rgba(var(--color-glass-rgb), 0.6);
   }
 
   &:active:not(:disabled) {
-    --color-glass-bg-opacity: 0.6;
+    --button-glass-opacity: 0.6;
     transform: scale(0.98);
   }
 

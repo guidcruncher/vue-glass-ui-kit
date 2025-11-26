@@ -9,5 +9,5 @@ const props = defineProps({})
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/GlassTableContainer" as *;
+@use '@/styles/components/GlassTableContainer' as *;
 </style>

@@ -55,5 +55,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/GlassScrollContainer" as *;
+@use '@/styles/components/GlassScrollContainer' as *;
 </style>

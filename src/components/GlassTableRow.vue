@@ -18,5 +18,5 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/GlassTableRow" as *;
+@use '@/styles/components/GlassTableRow' as *;
 </style>

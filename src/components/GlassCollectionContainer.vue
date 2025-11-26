@@ -43,5 +43,5 @@ const selectItem = (item, index) => {
 </template>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/GlassCollectionContainer" as *;
+@use '@/styles/components/GlassCollectionContainer' as *;
 </style>
