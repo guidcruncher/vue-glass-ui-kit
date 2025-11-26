@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@/styles/mixins/glass' as *;
+@use '../mixins/glass' as *;
 
 $size: 20px;
 $transition-speed: 0.2s ease;

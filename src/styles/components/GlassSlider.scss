@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@/styles/mixins/glass' as *;
+@use '../mixins/glass' as *;
 
 $track-color: rgba(var(--color-glass-rgb), 0.3);
 $active-color: var(--color-accent);

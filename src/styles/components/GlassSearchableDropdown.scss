@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@/styles/mixins/glass' as *;
+@use '../mixins/glass' as *;
 
 .glass-searchable-dropdown {
   position: relative;

@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@/styles/mixins/glass' as *;
+@use '../mixins/glass' as *;
 
 $icon-size: 60px;
 $button-padding: 8px;

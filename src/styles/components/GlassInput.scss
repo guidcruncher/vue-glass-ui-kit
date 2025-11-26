@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use '@/styles/mixins/glass' as *;
+@use '../mixins/glass' as *;
 
 .glass-input {
   @include apply-liquid-glass($material-opacity: 0.05);
