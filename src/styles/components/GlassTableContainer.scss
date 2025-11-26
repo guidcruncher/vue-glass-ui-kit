@@ -1,0 +1,13 @@
+/*
+  Styles to mimic a grouped/inset UITableView appearance.
+  The container itself provides general background color and spacing.
+*/
+.ui-table-container {
+  /* Margin around the entire table block */
+  margin: 16px;
+  /* The background for the 'grouped' table appearance */
+  color: var(--color-text-primary);
+  /* Remove list-like styling if used in a list context */
+  list-style: none;
+  padding: 0;
+}

@@ -1,0 +1,37 @@
+@use 'sass:math';
+
+.glass-toast {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 25px;
+  pointer-events: none;
+
+  .toast-icon {
+    font-size: 1.2em;
+    margin-right: 8px;
+  }
+
+  .toast-message {
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+}
+
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.toast-fade-enter-from,
+.toast-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 10px);
+}

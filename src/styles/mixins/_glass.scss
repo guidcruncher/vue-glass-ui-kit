@@ -1,0 +1,28 @@
+@function get-vw($target) {
+  $vw-context: (1000 * 0.01) * 1px;
+  @return ($target/$vw-context) * 1vw;
+}
+
+@mixin apply-liquid-glass($material-opacity: var(--color-glass-bg-opacity)) {
+  background-color: rgba(var(--color-glass-rgb), $material-opacity);
+
+  backdrop-filter: blur(var(--blur-radius-base));
+
+  border: 1px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
+
+  box-shadow: 0 4px 6px var(--shadow-color);
+
+  transition: var(--theming-transition);
+}
+
+@mixin apply-liquid-glass-dropdown($material-opacity: var(--color-glass-bg-opacity)) {
+  background-color: rgba(var(--color-glass-rgb), 1);
+
+  backdrop-filter: blur(var(--blur-radius-base));
+
+  border: 1px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
+
+  box-shadow: 0 4px 6px var(--shadow-color);
+
+  transition: var(--theming-transition);
+}

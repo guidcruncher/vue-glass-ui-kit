@@ -1,0 +1,397 @@
+<template>
+  <Container v-background-image="'/465552.webp'">
+    <template #header>
+      <GlassNavBar title="Glass UI Component Showcase">
+        <template #right-action>
+          <GlassThemeChooser mode="compact" />
+        </template>
+      </GlassNavBar>
+    </template>
+    <template #menubar>
+      <MenuBar :menus="appMenus" @menu-action="handleMenuAction" />
+    </template>
+    <template #body>
+      <GlassVStack :spacing="30" alignment="left" class="showcase-content">
+        <GlassCard class="group-card">
+          <template #header><h3>Inputs & Forms</h3></template>
+          <GlassVStack :spacing="20" alignment="start">
+            <GlassInput v-model="inputValue" placeholder="Standard Text Input" />
+
+            <GlassValidatedInput
+              v-model="validatedInput"
+              placeholder="Validated Input"
+              :errorMessage="validatedInput.length < 5 ? 'Minimum 5 characters required' : ''"
+            />
+
+            <PasswordInput
+              v-model="confirmPassword"
+              label="Confirm Password"
+              placeholder="Repeat your password"
+              :show-toggle="true"
+              :complexity-rules="customRules"
+            />
+
+            <GlassTextarea v-model="textareaValue" placeholder="Multiline Textarea" :rows="3" />
+
+            <GlassCheckbox v-model="isChecked">I agree to the Glass Terms</GlassCheckbox>
+
+            <div class="control-row">
+              <GlassToggle v-model="isToggled" />
+              <span>{{ isToggled ? 'ON' : 'OFF' }}</span>
+            </div>
+
+            <GlassDropdown
+              v-model="dropdownValue"
+              :options="dropdownOptions"
+              placeholder="Select an Option"
+            />
+
+            <GlassSearchableDropdown
+              v-model="searchableDropdownValue"
+              :options="dropdownOptions"
+              placeholder="Search or Select"
+            />
+
+            <GlassDatePicker v-model="datePickerValue" />
+          </GlassVStack>
+        </GlassCard>
+
+        <GlassCard class="group-card">
+          <template #header><h3>Controls & Selection</h3></template>
+          <GlassVStack :spacing="20" alignment="start">
+            <GlassHStack :spacing="16" alignment="center">
+              <ImageButton
+                size="64"
+                imageurl="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/apple-retro.svg"
+              />
+            </GlassHStack>
+            <GlassHStack :spacing="16" alignment="center">
+              <GlassButton @click="showToast('Default button clicked!')"
+                >Default Button</GlassButton
+              >
+              <GlassButton variant="accent" @click="modalOpen = true">Show Dialog</GlassButton>
+              <GlassButton variant="accent" @click="alertVisible = true">Accent Button</GlassButton>
+            </GlassHStack>
+            <GlassHStack :spacing="30" alignment="center">
+              <GlassButton variant="selected" @click="alertVisible = true"
+                >Selected Button</GlassButton
+              >
+              <GlassButton variant="destructive" @click="alertVisible = true"
+                >Destructive Button</GlassButton
+              >
+
+              <GlassButton disabled>Disabled</GlassButton>
+            </GlassHStack>
+
+            <GlassHStack :spacing="16" alignment="center">
+              <GlassIconButton label="Settings" @click="showToast('Settings clicked!')">
+                <template #icon>⚙️</template>
+              </GlassIconButton>
+              <GlassIconButton label="Profile" @click="showToast('Profile clicked!')">
+                <template #icon>👤</template>
+              </GlassIconButton>
+            </GlassHStack>
+
+            <GlassHStack :spacing="16" alignment="center">
+              <label>Quantity:</label>
+              <GlassStepper v-model="stepperValue" :min="0" :max="10" />
+              <GlassBadge variant="success">{{ stepperValue }}</GlassBadge>
+            </GlassHStack>
+
+            <GlassSegmentedControl v-model="segmentedControlValue" :options="segmentedOptions" />
+
+            <GlassSliderWithLabels v-model="sliderValue" :min="0" :max="100" :step="5">
+              <template #label>Volume Level</template>
+            </GlassSliderWithLabels>
+
+            <GlassSlider v-model="simpleSliderValue" :min="0" :max="500" :step="10" />
+          </GlassVStack>
+        </GlassCard>
+
+        <GlassCard class="group-card">
+          <template #header><h3>Data & Indicators</h3></template>
+          <GlassVStack :spacing="20" alignment="start">
+            <div class="indicator-row">
+              <h4>Progress Bar ({{ progressValue }}%)</h4>
+              <GlassProgressBar :progress="progressValue" />
+            </div>
+
+            <GlassHStack :spacing="30" alignment="center">
+              <GlassProgressRing :progress="progressValue" :size="70" :stroke-width="6">
+                <span class="ring-text">{{ progressValue }}%</span>
+              </GlassProgressRing>
+
+              <GlassActivityIndicator :size="40" />
+
+              <GlassBadge variant="danger">New (10)</GlassBadge>
+              <GlassBadge variant="standard">Draft</GlassBadge>
+            </GlassHStack>
+
+            <GlassHStack :spacing="30" alignment="start">
+              <GlassDigitalClock
+                timezone="Europe/London"
+                :format12-hour="false"
+                :show-timezone="false"
+              />
+            </GlassHStack>
+            <GlassHStack :spacing="30" alignment="start">
+              <GlassAnalogClock size="100" timezone="America/Los_Angeles" />
+              <GlassAnalogClock size="200" timezone="Europe/London" />
+            </GlassHStack>
+            <GlassHStack :spacing="30" alignment="start">
+              <FlipClock />
+            </GlassHStack>
+          </GlassVStack>
+        </GlassCard>
+
+        <GlassCard class="group-card">
+          <template #header><h3>Layout, Navigation & Utility</h3></template>
+          <GlassVStack :spacing="10" alignment="start">
+            <GlassCalendar v-model="calendarDate" />
+
+            <GlassThemeChooser />
+
+            <GlassTabBar v-model="tabBarValue" :items="tabBarItems" />
+
+            <GlassPanel class="list-panel">
+              <GlassListItem
+                title="User Profile"
+                subtitle="Edit your personal details"
+                @click="showToast('List item clicked!')"
+              >
+                <template #leading>👤</template>
+              </GlassListItem>
+              <GlassListItem title="Privacy Settings" interactive>
+                <template #leading>🔒</template>
+              </GlassListItem>
+            </GlassPanel>
+
+            <GlassScrollContainer height="100px">
+              <p v-for="i in 10" :key="i">Scrollable content line #{{ i }} inside GlassPanel.</p>
+            </GlassScrollContainer>
+          </GlassVStack>
+        </GlassCard>
+
+        <GlassCard class="group-card">
+          <GlassVStack :spacing="10" alignment="start">
+            <ContentPanel
+              background="linear-gradient(135deg, #6e8efb, #a777e3)"
+              :border-radius="15"
+            >
+              <template #header> Panel Header (Gradient) </template>
+
+              <p>
+                This is the main body content. The overall panel has a purple-to-blue gradient
+                background, and a border radius of 15px.
+              </p>
+              <p>
+                The **footer** below has a beautiful glassmorphic effect applied to it, blurring the
+                background beneath it.
+              </p>
+
+              <template #footer>
+                <button class="footer-button">Action</button>
+              </template>
+            </ContentPanel>
+
+            <h2>Image Background Example</h2>
+            <ContentPanel
+              background="url(https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg)"
+              :border-radius="5"
+            >
+              <template #header>Panel Header (Image)</template>
+
+              <p>
+                This panel uses an image URL for its background. The image is automatically sized to
+                cover the panel.
+              </p>
+              <p>
+                The glassmorphic effect in the footer is even more noticeable with an image
+                background!
+              </p>
+
+              <template #footer>
+                <small>Powered by Vue 3</small>
+              </template>
+            </ContentPanel>
+          </GlassVStack>
+        </GlassCard>
+      </GlassVStack>
+
+      <GlassToast ref="toastRef" />
+      <GlassAlert
+        :visible="alertVisible"
+        title="Action Required"
+        message="This modal is triggered by the Accent Button."
+        buttonText="Close"
+        @close="alertVisible = false"
+      />
+
+      <GlassModal v-model:isVisible="modalOpen" width="700px" height="300px">
+        <template #header>
+          <span class="modal-title">System Preferences</span>
+        </template>
+        <template #body>
+          <p>
+            This is the main content area. You can put forms, data tables, or long-form text here.
+            The body area is automatically scrollable.
+          </p>
+
+          <label for="theme-select">Select Theme:</label>
+          <select id="theme-select">
+            <option value="light">Light Mode</option>
+            <option value="dark">Dark Mode</option>
+          </select>
+
+          <p>
+            Note: Clicking the red, yellow, or green buttons will close the modal by updating the
+            `v-model:isVisible` prop.
+          </p>
+        </template>
+        <template #footer>
+          <GlassButton @click="saveSettings" variant="accent">Apply Changes</GlassButton>
+          &nbsp;
+          <GlassButton @click="modalOpen = false" variant="accent">Close</GlassButton>
+        </template>
+      </GlassModal>
+
+      <GlassTableContainer>
+        <GlassTableRow
+          v-for="(setting, index) in settingsList"
+          :key="setting.id"
+          :is-last="index === settingsList.length - 1"
+        >
+          <div class="row-content-layout">
+            <span>{{ setting.label }}</span>
+            <span v-if="setting.value" class="setting-value">{{ setting.value }}</span>
+          </div>
+        </GlassTableRow>
+      </GlassTableContainer>
+
+      <GlassTableContainer>
+        <GlassTableRow :is-last="true">
+          <div class="row-content-layout">
+            <input type="checkbox" id="darkMode" />
+            <label for="darkMode">Dark Mode</label>
+          </div>
+        </GlassTableRow>
+      </GlassTableContainer>
+
+      <GlassSplitContainer>
+        <template #primary>
+          <h3>Primary Panel (Menu)</h3>
+          <ul>
+            <li v-for="i in 10" :key="i">Menu Item {{ i }}</li>
+          </ul>
+        </template>
+
+        <template #secondary>
+          <h1>Secondary Panel (Detail View)</h1>
+          <p>This is the main content area.</p>
+          <p>On **Desktop** (width > 768px), both columns are visible side-by-side.</p>
+          <p>On **Mobile** (width < 768px), the Primary Panel slides over this Secondary Panel.</p>
+        </template>
+      </GlassSplitContainer>
+    </template>
+  </Container>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+
+const appMenus = [
+  { id: 'finder', label: 'Finder', items: ['About Finder', 'Preferences', 'Empty Trash'] },
+  {
+    id: 'file',
+    label: 'File',
+    items: ['New Finder Window', 'New Folder', 'Get Info', 'Move to Trash'],
+  },
+  { id: 'view', label: 'View', items: ['as Icons', 'as List', 'as Gallery', 'Show Sidebar'] },
+  { id: 'help', label: 'Help', items: ['Finder Help', 'Search'] },
+]
+
+const handleMenuAction = (payload) => {
+  console.log(`[App.vue] Executing action for: ${payload.menuLabel} -> ${payload.itemText}`)
+  lastAction.value = payload
+
+  if (payload.itemText === 'Empty Trash') {
+    alert('Trash is now empty.')
+  }
+}
+
+const settingsList = ref([
+  { id: 1, label: 'Account', value: 'example@email.com' },
+  { id: 2, label: 'Notifications', value: 'On' },
+  { id: 3, label: 'Privacy & Security', value: '' },
+])
+
+const inputValue = ref('Initial Text')
+const confirmPassword = ref('')
+const validatedInput = ref('Valid')
+const textareaValue = ref('This is multiline text')
+const isChecked = ref(true)
+const isToggled = ref(false)
+const dropdownValue = ref('opt2')
+const searchableDropdownValue = ref(null)
+const datePickerValue = ref(new Date())
+
+const dropdownOptions = [
+  { label: 'Option One', value: 'opt1' },
+  { label: 'Option Two', value: 'opt2' },
+  { label: 'Option Three', value: 'opt3' },
+]
+
+const stepperValue = ref(5)
+const segmentedControlValue = ref('seg1')
+const sliderValue = ref(75)
+const simpleSliderValue = ref(250)
+
+const segmentedOptions = [
+  { label: 'Seg 1', value: 'seg1' },
+  { label: 'Seg 2', value: 'seg2' },
+  { label: 'Seg 3', value: 'seg3' },
+]
+
+const progressValue = ref(65)
+let progressInterval: number
+
+onMounted(() => {
+  progressInterval = window.setInterval(() => {
+    progressValue.value = (progressValue.value + 1) % 101
+    if (progressValue.value === 0) progressValue.value = 1
+  }, 100)
+})
+
+onUnmounted(() => {
+  clearInterval(progressInterval)
+})
+
+const tabBarValue = ref('home')
+const calendarDate = ref(new Date())
+
+const tabBarItems = [
+  { label: 'Home', value: 'home' },
+  { label: 'Data', value: 'data' },
+  { label: 'Map', value: 'map' },
+]
+
+const alertVisible = ref(false)
+const modalOpen = ref(false)
+const toastRef = ref<InstanceType<typeof GlassToast> | null>(null)
+const contextMenuRef = ref<InstanceType<typeof GlassContextMenu> | null>(null)
+
+const showToast = (message: string) => {
+  toastRef.value?.show(message)
+}
+
+const handleContextMenu = (event: MouseEvent) => {
+  event.preventDefault()
+  contextMenuRef.value?.show(event)
+}
+</script>
+
+<style scoped>
+.showcase-content {
+  padding: 16px;
+}
+</style>

@@ -1,0 +1,125 @@
+@use '@/styles/mixins/glass' as *;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-box {
+  @include apply-liquid-glass();
+
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9em;
+  overflow: hidden;
+  font-size: 1rem;
+  &.dark {
+    background-color: #000000 !important;
+  }
+}
+
+.modal-header {
+  height: 30px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  user-select: none;
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.control-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  transition: transform 0.1s;
+}
+
+.close {
+  background-color: #ff5f56;
+}
+.minimize {
+  background-color: #ffbd2e;
+}
+.maximize {
+  background-color: #27c93f;
+}
+
+.modal-header:hover .control-btn:active {
+  transform: scale(0.9);
+}
+
+.header-slot {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  left: -13px;
+}
+
+.modal-body {
+  padding: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+  font-size: 0.9em;
+}
+
+.modal-footer {
+  padding: 10px 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  min-height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+
+.modal-fade-enter-active .modal-box,
+.modal-fade-leave-active .modal-box {
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.modal-fade-enter-from .modal-box {
+  transform: scale(0.9);
+}
+
+.modal-fade-leave-to .modal-box {
+  transform: scale(0.9);
+}

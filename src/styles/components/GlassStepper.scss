@@ -1,0 +1,27 @@
+@use 'sass:math';
+@use '@/styles/mixins/glass' as *;
+
+.glass-stepper {
+  display: inline-flex;
+  align-items: center;
+
+  @include apply-liquid-glass($material-opacity: 0.1);
+  border-radius: 8px;
+  padding: 4px;
+
+  .glass-button {
+    padding: 4px 8px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .stepper-value {
+    padding: 0 8px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--color-text-primary);
+
+    background: transparent;
+  }
+}

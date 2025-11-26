@@ -1,0 +1,68 @@
+@use 'sass:math';
+@use '@/styles/mixins/glass' as *;
+
+.glass-theme-chooser {
+  width: 250px;
+  padding: var(--spacing-m);
+  border-radius: 12px;
+
+  .chooser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-m);
+
+    .chooser-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--color-label-primary);
+    }
+  }
+
+  .theme-options {
+    display: flex;
+    gap: var(--spacing-s);
+
+    .theme-option-item {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--spacing-s);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      background-color: rgba(var(--color-glass-rgb), 0.05);
+      border: 1px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(var(--color-glass-rgb), 0.15);
+      }
+
+      &.is-active {
+        background-color: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+        box-shadow: 0 4px 6px rgba(var(--color-accent), 0.3);
+
+        .theme-label {
+          color: white;
+        }
+      }
+
+      .theme-icon {
+        font-size: 1.5em;
+        margin-bottom: var(--spacing-xxs);
+      }
+
+      .theme-label {
+        font-size: 0.9em;
+        font-weight: 500;
+        color: var(--color-label-primary);
+        transition: color 0.2s ease;
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+@use 'sass:math';
+@use '@/styles/mixins/glass' as *;
+
+.glass-button {
+  @include apply-liquid-glass($material-opacity: 0.3);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  background: transparent;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 1rem;
+
+  &:hover:not(:disabled) {
+    --color-glass-bg-opacity: 0.45;
+    box-shadow: 0 6px 10px var(--shadow-color);
+  }
+
+  &:active:not(:disabled) {
+    --color-glass-bg-opacity: 0.6;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.variant-accent {
+    background-color: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+  }
+
+  &.variant-default {
+    background-color: var(--color-default);
+    color: white;
+    border-color: var(--color-default);
+  }
+
+  &.variant-destructive {
+    background-color: var(--color-destructive);
+    color: white;
+    border-color: var(--color-destructive);
+  }
+
+  &.variant-selected {
+    background-color: var(--color-selected);
+    color: white;
+    border-color: var(--color-selected);
+  }
+}

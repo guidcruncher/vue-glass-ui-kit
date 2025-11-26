@@ -1,0 +1,22 @@
+@use 'sass:math';
+@use '@/styles/mixins/glass' as *;
+
+.glass-panel {
+  @include apply-liquid-glass();
+  padding: 16px;
+  border-radius: var(--borderRadius);
+  color: var(--color-text-primary);
+  width: auto;
+
+  &.material-ultraThin {
+    --blur-radius-base: 10px;
+    --color-glass-bg-opacity: 0.05;
+    --color-glass-border-opacity: 0.15;
+  }
+
+  &.material-thick {
+    --blur-radius-base: 30px;
+    --color-glass-bg-opacity: 0.3;
+    --color-glass-border-opacity: 0.45;
+  }
+}

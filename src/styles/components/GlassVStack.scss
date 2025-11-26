@@ -1,0 +1,7 @@
+@use 'sass:math';
+
+.glass-v-stack {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

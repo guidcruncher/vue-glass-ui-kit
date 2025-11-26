@@ -1,0 +1,6 @@
+{
+    "sourceDir": "../src/components",
+    "outputDir": "../src/styles/components",
+    "styleAliasRoot": "@/styles/components",
+    "excludeFiles": [ "GlassPanel.vue", "GlassAnalogClock.vue" ]
+}

@@ -1,0 +1,22 @@
+@use 'sass:math';
+@use '@/styles/mixins/glass' as *;
+
+.glass-textarea {
+  @include apply-liquid-glass($material-opacity: 0.05);
+
+  padding: 10px 12px;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: var(--color-text-primary);
+  background-color: rgba(var(--color-glass-rgb), 0.08);
+  resize: vertical;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent);
+  }
+}

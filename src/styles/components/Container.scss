@@ -1,0 +1,31 @@
+.full-page-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-header {
+  height: 54px;
+  min-height: 54px;
+  max-height: 54px;
+  width: 100%;
+
+  z-index: 10;
+
+  overflow: hidden;
+}
+
+.scrollable-content {
+  flex-grow: 0;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: block;
+}
