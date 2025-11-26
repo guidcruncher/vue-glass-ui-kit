@@ -11,6 +11,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite pr  eview",
     "build-only": "vite build",
+    "sass": "sass ./src/styles/combined.txt --embed-source-map",
     "mig-styles": "node ./scripts/styleExtractor.js",
     "autorefactor": "node ./scripts/autoRefactor.ts",
     "type-check": "vue-tsc --build",
