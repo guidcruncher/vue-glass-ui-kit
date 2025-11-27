@@ -27,11 +27,11 @@ export function GlassUiRegistry(options = {}) {
   const generateStaticSpa = () => {
     const stylesDirectory = 'src/styles/components'
     const files = fs.readdirSync(stylesDirectory)
-    const scssFiles = files.filter((f) => f.endsWith('.wscss'))
+    const scssFiles = files.filter((f) => f.endsWith('.scss'))
 
     const getFile = (file) => {
       const data = fs.readFileSync('./src/styles/' + file, 'utf-8')
-      return `/* Fle: ${file} */\n${data}p`
+      return `/* File: ${file} */\n${data}`
     }
     const scssImports = scssFiles.map((file) => {
       return getFile('./components/' + file)
