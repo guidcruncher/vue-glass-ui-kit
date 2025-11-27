@@ -30,7 +30,6 @@ import GlassScrollContainer from './GlassScrollContainer.vue'
 import GlassSearchableDropdown from './GlassSearchableDropdown.vue'
 import GlassSegmentedControl from './GlassSegmentedControl.vue'
 import GlassSlider from './GlassSlider.vue'
-import GlassSliderWithLabels from './GlassSliderWithLabels.vue'
 import GlassSplitContainer from './GlassSplitContainer.vue'
 import GlassStepper from './GlassStepper.vue'
 import GlassTabBar from './GlassTabBar.vue'
@@ -85,7 +84,6 @@ export const GlassComponents = {
   GlassSearchableDropdown,
   GlassSegmentedControl,
   GlassSlider,
-  GlassSliderWithLabels,
   GlassSplitContainer,
   GlassStepper,
   GlassTabBar,
@@ -100,18 +98,17 @@ export const GlassComponents = {
   ImageButton,
   MenuBar,
   PasswordInput,
-};
+}
 
-
-export function  UseGlassUi(app) {
-    const pinia = createPinia()
-    app.directive('click-outside', ClickOutside);
-    app.directive('background-image', BackgroundImage);
-    app.directive('background-mesh', BackgroundMesh);
-    app.use(pinia);
-    Object.keys(GlassComponents).forEach((name) => {
-      app.component(name, GlassComponents[name]);
-    });
-    const themeStore = useThemeStore()
-    themeStore.restoreTheme()
-};
+export function UseGlassUi(app) {
+  const pinia = createPinia()
+  app.directive('click-outside', ClickOutside)
+  app.directive('background-image', BackgroundImage)
+  app.directive('background-mesh', BackgroundMesh)
+  app.use(pinia)
+  Object.keys(GlassComponents).forEach((name) => {
+    app.component(name, GlassComponents[name])
+  })
+  const themeStore = useThemeStore()
+  themeStore.restoreTheme()
+}

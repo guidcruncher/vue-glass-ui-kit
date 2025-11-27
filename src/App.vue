@@ -192,7 +192,8 @@
 
             <ContentPanel
               background="url(https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg)"
-              :border-radius="5" color="#ffffff"
+              :border-radius="5"
+              color="#ffffff"
             >
               <template #header>Panel Header (Image)</template>
 
