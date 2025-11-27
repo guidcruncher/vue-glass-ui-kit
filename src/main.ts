@@ -4,7 +4,6 @@ import App from './App.vue'
 import router from './router'
 
 import { UseGlassUi } from './components/'
-import './styles/styles.scss'
 
 const app = createApp(App)
 UseGlassUi(app)

@@ -100,10 +100,6 @@
 
             <GlassSegmentedControl v-model="segmentedControlValue" :options="segmentedOptions" />
 
-            <GlassSliderWithLabels v-model="sliderValue" :min="0" :max="100" :step="5">
-              <template #label>Volume Level</template>
-            </GlassSliderWithLabels>
-
             <GlassSlider v-model="simpleSliderValue" :min="0" :max="500" :step="10" />
           </GlassVStack>
         </GlassCard>
@@ -173,7 +169,7 @@
         </GlassCard>
 
         <GlassCard class="group-card">
-          <GlassVStack :spacing="10" alignment="start">
+          <GlassHStack :spacing="10" alignment="start">
             <ContentPanel
               background="linear-gradient(135deg, #6e8efb, #a777e3)"
               :border-radius="15"
@@ -194,10 +190,9 @@
               </template>
             </ContentPanel>
 
-            <h2>Image Background Example</h2>
             <ContentPanel
               background="url(https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg)"
-              :border-radius="5"
+              :border-radius="5" color="#ffffff"
             >
               <template #header>Panel Header (Image)</template>
 
@@ -214,7 +209,7 @@
                 <small>Powered by Vue 3</small>
               </template>
             </ContentPanel>
-          </GlassVStack>
+          </GlassHStack>
         </GlassCard>
       </GlassVStack>
 
