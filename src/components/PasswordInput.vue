@@ -1,30 +1,28 @@
 <template>
   <div class="glass-password-input-container">
-    <input
-      v-if="!isVisible"
-      :value="modelValue"
-      @input="handleInput"
-      :placeholder="placeholder"
-      type="password"
-      class="glass-input"
-    />
-    <input
-      v-else
-      :value="modelValue"
-      @input="handleInput"
-      :placeholder="placeholder"
-      type="text"
-      class="glass-input"
-    />
-
-    <div
-      v-if="toggleEnabled"
-      class="toggle-visibility"
-      :class="{ toggled: isVisible }"
-      @click="toggleVisibility"
-    >
-      <span v-if="isVisible" title="Hide Password">🙈</span>
-      <span v-else title="Show Password">👁️</span>
+    <div>
+      <input
+        v-if="!isVisible"
+        :value="modelValue"
+        @input="handleInput"
+        :placeholder="placeholder"
+        type="password"
+        class="glass-input"
+      />
+      <input
+        v-else
+        :value="modelValue"
+        @input="handleInput"
+        :placeholder="placeholder"
+        type="text"
+        class="glass-input"
+      />
+    </div>
+    <div v-if="toggleEnabled" :class="{ toggled: isVisible }" @click="toggleVisibility">
+      <small>
+        <span v-if="isVisible" title="Hide Password">Hide Password</span>
+        <span v-else title="Show Password">Show Password</span>
+      </small>
     </div>
   </div>
 </template>

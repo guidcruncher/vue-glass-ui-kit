@@ -51,8 +51,6 @@ $uikit-pink-dark: #ff375f;
   --color-glass-border-opacity: 0.25;
   --blur-radius-base: 20px;
   --shadow-color: rgba(0, 0, 0, 0.1);
-  --theming-transition:
-    background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 
   --color-system-red: #{$uikit-red-light};
   --color-system-orange: #{$uikit-orange-light};
@@ -118,7 +116,7 @@ $uikit-pink-dark: #ff375f;
   --color-system-background-secondary: #1c1c1e;
   --color-system-background-tertiary: #2c2c2e;
   --color-system-grouped-background: #1c1c1e;
-  --color-system-background-trans: rgba(0, 0, 0, 0.7);
+  --color-system-background-trans: rgba(0, 0, 0, 0.8);
 
   --color-separator: #54545899;
   --color-system-separator-opaque: #38383a;
