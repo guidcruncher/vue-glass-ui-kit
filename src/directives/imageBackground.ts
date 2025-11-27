@@ -10,6 +10,7 @@ export const BackgroundImage = {
 
     el.style.backgroundImage = backgroundUrl
     el.style.backgroundSize = 'cover'
+    el.style.backgroundRepeat = 'no-repeat'
     el.style.backgroundAttachment = 'fixed'
   },
   unmounted(el) {},

@@ -21,7 +21,26 @@ export function GlassUiRegistry(options = {}) {
   // Absolute paths for file system operations
   const absoluteOutputDir = path.resolve(process.cwd(), path.dirname(outputFile))
   const absoluteOutputPath = path.resolve(process.cwd(), outputFile)
-  const absoluteOutputScss = path.resolve(process.cwd(), "src/styles/combined.txt")
+  const absoluteOutputScss = path.resolve(process.cwd(), 'src/styles/combined.txt')
+  const absoluteOutputSpa = path.resolve(process.cwd(), 'src/styles/combined-spa.txt')
+
+  const generateStaticSpa = () => {
+    const stylesDirectory = 'src/styles/components'
+    const files = fs.readdirSync(stylesDirectory)
+    const scssFiles = files.filter((f) => f.endsWith('.wscss'))
+
+    const getFile = (file) => {
+      const data = fs.readFleSync('./src/styles/' + file, 'utf-8')
+      return `/* Fle: ${file} */\n${data}p`
+    }
+    const scssImports = scssFiles.map((file) => {
+      return getFile('./components/' + file)
+    })
+
+    return `${getFile('./_variables.scss')}
+${getFile('./_typography.scss')}
+${scssImports.join('\n')}`
+  }
 
   const generateStaticScss = () => {
     const stylesDirectory = 'src/styles/components'
@@ -29,8 +48,8 @@ export function GlassUiRegistry(options = {}) {
     const scssFiles = files.filter((f) => f.endsWith('.scss'))
 
     const scssImports = scssFiles.map((file) => {
-       const name = file.replace(".scss", "")
-       return `@use './components/${name}' as *;`
+      const name = file.replace('.scss', '')
+      return `@use './components/${name}' as *;`
     })
 
     return `@use './_variables' as *;
@@ -152,12 +171,14 @@ export function  UseGlassUi(app) {
         fs.mkdirSync(absoluteOutputDir, { recursive: true })
       }
 
+      const spa = generateStaticSpa()
       const scss = generateStaticScss()
       const codeStatic = generateStaticCode()
       const code = generatePluginCode()
 
       // Write the generated code to the specified file path
       try {
+        fs.writeFileSync(absoluteOutputSpa, spa, 'utf-8')
         fs.writeFileSync(absoluteOutputScss, scss, 'utf-8')
         fs.writeFileSync(absoluteOutputPath, codeStatic, 'utf-8')
         console.log(`[Vite Plugin] Wrote static registry file to: ${outputFile}`)
