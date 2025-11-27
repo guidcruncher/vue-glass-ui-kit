@@ -1,5 +1,7 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-searchable-dropdown {
   position: relative;
@@ -7,13 +9,17 @@
   max-width: 300px;
 
   .dropdown-trigger-input {
+    // Re-using styles from GlassInput for the base
   }
 
   .dropdown-menu {
-    @include apply-liquid-glass($material-opacity: 0.8);
+    @include apply-liquid-glass($material-opacity: 0.8); // Used mixin to define glass style
     position: absolute;
+    top: 100%;
     left: 0;
-    z-index: 50;
+    z-index: 8000;
+    width: 100%;
+    margin-top: 5px;
     max-height: 200px;
     overflow-y: auto;
     padding: 8px 0;
@@ -27,14 +33,7 @@
       color: var(--color-text-primary);
       transition: background-color 0.1s ease;
 
-      &.no-results {
-        color: var(--color-text-secondary);
-        cursor: default;
-        font-style: italic;
-      }
-
-      &:not(.no-results):hover,
-      &.is-highlighted {
+      &:hover {
         background-color: rgba(var(--color-glass-rgb), 0.2);
       }
 
@@ -45,3 +44,4 @@
     }
   }
 }
+

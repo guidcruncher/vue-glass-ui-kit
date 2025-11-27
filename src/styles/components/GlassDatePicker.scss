@@ -1,5 +1,7 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-datepicker {
   position: relative;
@@ -7,7 +9,7 @@
 }
 
 .date-picker-dropdown {
-  @include apply-liquid-glass($material-opacity: 0.8);
+  @include apply-liquid-glass($material-opacity: 0.8); // Used mixin to define glass style
   /* --- REMOVED POSITIONING PROPERTIES FOR TELEPORT ---
      position: absolute;
      top: 100%;
@@ -52,9 +54,7 @@
     border-radius: 50%;
     transition: background-color 0.1s;
     aspect-ratio: 1 / 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center; // Refactored using utility mixin
 
     &:hover {
       background-color: rgba(var(--color-glass-rgb), 0.2);
@@ -70,3 +70,4 @@
     }
   }
 }
+

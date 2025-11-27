@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
 
@@ -18,7 +19,7 @@ $transition-speed: 0.25s ease-in-out;
     border-radius: math.div($toggle-height, 2);
     transition: all $transition-speed;
 
-    @include apply-liquid-glass($material-opacity: 0.4);
+    @include apply-liquid-glass($material-opacity: 0.4, $blur: 8px, $border-opacity: 0.1); // Used mixin to define glass style
 
     border: 1px solid transparent;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
@@ -42,9 +43,11 @@ $transition-speed: 0.25s ease-in-out;
       border-color: var(--color-selected);
       box-shadow: 0 0 0 1px var(--color-selected);
     }
+
     .glass-toggle-thumb {
       transform: translateX($toggle-width - $thumb-size - 4px);
       background-color: white;
     }
   }
 }
+

@@ -1,8 +1,10 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-input {
-  @include apply-liquid-glass($material-opacity: 0.05);
+  @include apply-liquid-glass($material-opacity: 0.05, $blur: 8px); // Used mixin to define glass style
 
   padding: 10px 12px;
   border-radius: 8px;
@@ -12,9 +14,9 @@
   background-color: rgba(var(--color-glass-rgb), 0.08);
   font-size: 1rem;
 
+  // Refactored focus style - Removed duplicated rules
   &:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 1px var(--color-accent);
+    @include apply-input-focus-style;
   }
 }
+

@@ -11,14 +11,16 @@ $glass-color-dark: 0, 0, 0;
   --spacing-xxl: 32px;
 }
 
+// **Enhanced Glassmorphism Variables for iPadOS 26 Style**
 :root {
   --color-glass-rgb: 255, 255, 255;
-  --color-glass-bg-opacity: 0.15;
-  --color-glass-border-opacity: 0.25;
-  --blur-radius-base: 20px;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --color-glass-bg-opacity: 0.2;         // Increased default opacity
+  --color-glass-border-opacity: 0.3;     // Slightly stronger border highlight
+  --blur-radius-base: 24px;              // Increased blur for a strong glass effect
+  --shadow-color: rgba(0, 0, 0, 0.15);   // Slightly stronger light-mode shadow
   --theming-transition:
     background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+
   --ui-text-color: #000000;
   --color-label-primary: #000000;
   --color-label-secondary: #3c3c4399;
@@ -27,6 +29,7 @@ $glass-color-dark: 0, 0, 0;
   --color-system-background-trans: rgba(255, 255, 255, 0.8);
   --color-system-grouped-background: #f2f2f7;
   --color-separator: #3c3c434a;
+
   --color-accent: #007aff;
   --color-error: #ff3b30;
   --color-default: #007aff;
@@ -39,9 +42,10 @@ $glass-color-dark: 0, 0, 0;
 
 :root[data-theme='dark'] {
   --color-glass-rgb: 0, 0, 0;
-  --color-glass-bg-opacity: 0.2;
-  --color-glass-border-opacity: 0.35;
-  --shadow-color: rgba(255, 255, 255, 0.05);
+  --color-glass-bg-opacity: 0.25;      // Increased dark mode background opacity
+  --color-glass-border-opacity: 0.4;   // Slightly stronger dark mode border
+  --shadow-color: rgba(255, 255, 255, 0.08); // Slightly stronger dark-mode shadow
+
   --ui-text-color: #ffffff;
   --color-label-primary: #ffffff;
   --color-label-secondary: #ebebf599;
@@ -59,3 +63,4 @@ $glass-color-dark: 0, 0, 0;
   --color-highlighted-text: #ffffff;
   --color-selected: #34c759;
 }
+

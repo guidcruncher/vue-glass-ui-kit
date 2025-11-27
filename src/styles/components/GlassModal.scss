@@ -1,48 +1,36 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
-.modal-backdrop {
+.glass-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  @include flex-center; // Refactored using utility mixin
   z-index: 1000;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-box {
-  @include apply-liquid-glass();
-
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+.glass-modal-box {
+  @include apply-liquid-glass($material-opacity: 0.8, $blur: 30px, $border-opacity: 0.3); // Used mixin to define glass style
+  width: 90%;
+  max-width: var(--max-width, 600px);
+  max-height: 90vh;
+  border-radius: var(--border-radius, 14px);
   display: flex;
   flex-direction: column;
-  font-size: 0.9em;
   overflow: hidden;
-  font-size: 1rem;
-  &.dark {
-    background-color: #000000 !important;
-  }
 }
 
 .modal-header {
-  height: 30px;
-  min-height: 30px;
-  padding: 0 10px;
+  padding: 10px 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
   user-select: none;
 }
 
@@ -66,9 +54,11 @@
 .close {
   background-color: #ff5f56;
 }
+
 .minimize {
   background-color: #ffbd2e;
 }
+
 .maximize {
   background-color: #27c93f;
 }
@@ -123,3 +113,4 @@
 .modal-fade-leave-to .modal-box {
   transform: scale(0.9);
 }
+

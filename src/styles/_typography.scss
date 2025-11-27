@@ -1,3 +1,5 @@
+@use './mixins/_utilities.scss' as *; // Import new utilities
+
 @import 'https://rsms.me/inter/inter.css';
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css';
 
@@ -26,7 +28,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  transition: var(--theming-transition);
 }
 
 body {
@@ -43,3 +44,4 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+

@@ -1,6 +1,5 @@
-/*
-  Styles for an individual UITableViewCell
-*/
+@use '../mixins/_utilities' as *;
+/* Styles for an individual UITableViewCell */
 .ui-table-row {
   position: relative;
   background-color: var(--color-system-background);
@@ -10,21 +9,19 @@
   box-sizing: border-box;
 }
 
-/* Mimics the iOS separator line that starts slightly indented.
-*/
+/* Mimics the iOS separator line that starts slightly indented. */
 .separator-line {
   position: absolute;
   bottom: 0;
   left: 16px; /* Indent the line from the left edge (matches content padding) */
   right: 0;
-  height: 0.5px; /* Very thin line */
+  height: 0.5px;
+  /* Very thin line */
   background-color: var(--color-system-grouped-background); /* iOS-style separator color */
 }
 
-/*
-  Add rounded corners to the first and last rows to mimic the grouped table look.
-  These selectors require the rows to be direct children of a container.
-*/
+/* Add rounded corners to the first and last rows to mimic the grouped table look.
+These selectors require the rows to be direct children of a container. */
 .ui-table-row:first-child {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -40,3 +37,4 @@
   background-color: var(--color-system-grouped-background);
   cursor: pointer;
 }
+

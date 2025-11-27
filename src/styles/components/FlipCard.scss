@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 @keyframes flipTop {
   from {
     transform: rotateX(0deg);
@@ -70,3 +71,4 @@
   transform: rotateX(90deg);
   animation: flipBottom 0.3s 0.3s ease-out forwards;
 }
+

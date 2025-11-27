@@ -21,7 +21,7 @@ export function GlassUiRegistry(options = {}) {
   // Absolute paths for file system operations
   const absoluteOutputDir = path.resolve(process.cwd(), path.dirname(outputFile))
   const absoluteOutputPath = path.resolve(process.cwd(), outputFile)
-  const absoluteOutputScss = path.resolve(process.cwd(), 'src/styles/combined.txt')
+  const absoluteOutputScss = path.resolve(process.cwd(), 'src/styles/styles-full.scss')
   const absoluteOutputSpa = path.resolve(process.cwd(), 'src/styles/combined-spa.txt')
 
   const generateStaticSpa = () => {
@@ -178,7 +178,7 @@ export function  UseGlassUi(app) {
 
       // Write the generated code to the specified file path
       try {
-        fs.writeFileSync(absoluteOutputSpa, spa, 'utf-8')
+        // fs.writeFileSync(absoluteOutputSpa, spa, 'utf-8')
         fs.writeFileSync(absoluteOutputScss, scss, 'utf-8')
         fs.writeFileSync(absoluteOutputPath, codeStatic, 'utf-8')
         console.log(`[Vite Plugin] Wrote static registry file to: ${outputFile}`)

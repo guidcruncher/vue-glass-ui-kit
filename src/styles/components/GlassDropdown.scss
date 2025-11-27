@@ -1,5 +1,7 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-dropdown {
   position: relative;
@@ -16,7 +18,7 @@
   }
 
   .dropdown-menu {
-    @include apply-liquid-glass($material-opacity: 0.8);
+    @include apply-liquid-glass($material-opacity: 0.8); // Used mixin to define glass style
     position: absolute;
     left: 0;
     z-index: 8000;
@@ -45,3 +47,4 @@
     }
   }
 }
+

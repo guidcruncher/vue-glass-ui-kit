@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 .apple-app-icon-button:hover:not(.disabled),
 .apple-app-icon-button:focus-visible:not(.disabled) {
   transform: translateY(-2px) scale(1.03);

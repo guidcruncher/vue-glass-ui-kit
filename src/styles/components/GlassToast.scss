@@ -1,11 +1,21 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
+@use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
-.glass-toast {
+.glass-toast-container {
   position: fixed;
-  bottom: 50px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 500;
+  z-index: 9000;
+  pointer-events: none;
+}
+
+.glass-toast {
+  @include apply-liquid-glass($material-opacity: 0.9, $blur: 10px, $border-opacity: 0.3); // Used mixin to define glass style
+  box-shadow: 0 10px 40px var(--shadow-color);
+  
   display: flex;
   align-items: center;
   padding: 12px 20px;
@@ -25,9 +35,7 @@
 
 .toast-fade-enter-active,
 .toast-fade-leave-active {
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .toast-fade-enter-from,
@@ -35,3 +43,4 @@
   opacity: 0;
   transform: translate(-50%, 10px);
 }
+

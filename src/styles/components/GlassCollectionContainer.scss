@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 .collection-view {
   /* This container handles the layout using the computed gridStyle */
   width: 100%;
@@ -17,3 +18,4 @@
 .collection-view-cell:hover {
   background-color: #f0f0f0;
 }
+

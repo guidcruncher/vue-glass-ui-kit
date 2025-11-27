@@ -1,28 +1,18 @@
-@function get-vw($target) {
-  $vw-context: (1000 * 0.01) * 1px;
-  @return ($target/$vw-context) * 1vw;
-}
+@use 'sass:math';
 
-@mixin apply-liquid-glass($material-opacity: var(--color-glass-bg-opacity)) {
+@mixin apply-liquid-glass(
+  $material-opacity: var(--color-glass-bg-opacity),
+  $border-opacity: var(--color-glass-border-opacity),
+  $blur: var(--blur-radius-base)
+) {
+  // Use a calc to ensure the variable is treated as a CSS custom property
+  $dynamic-blur: var(--blur, $blur);
+
   background-color: rgba(var(--color-glass-rgb), $material-opacity);
-
-  backdrop-filter: blur(var(--blur-radius-base));
-
-  border: 1px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
-
-  box-shadow: 0 4px 6px var(--shadow-color);
-
+  backdrop-filter: blur($dynamic-blur) saturate(180%);
+  -webkit-backdrop-filter: blur($dynamic-blur) saturate(180%);
+  border: 1px solid rgba(var(--color-glass-rgb), $border-opacity);
+  box-shadow: 0 4px 15px var(--shadow-color);
   transition: var(--theming-transition);
 }
 
-@mixin apply-liquid-glass-dropdown($material-opacity: var(--color-glass-bg-opacity)) {
-  background-color: rgba(var(--color-glass-rgb), 1);
-
-  backdrop-filter: blur(var(--blur-radius-base));
-
-  border: 1px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
-
-  box-shadow: 0 4px 6px var(--shadow-color);
-
-  transition: var(--theming-transition);
-}

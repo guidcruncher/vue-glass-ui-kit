@@ -1,15 +1,18 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-button {
   --button-glass-opacity: 0.3;
 
-  @include apply-liquid-glass($material-opacity: 0.3);
+  // Uses the enhanced mixin
+  @include apply-liquid-glass($material-opacity: var(--button-glass-opacity), $border-opacity: 0.45);
   background-color: rgba(var(--color-glass-rgb), var(--button-glass-opacity));
   color: var(--color-label-primary);
-  border: 1px solid rgba(var(--color-glass-rgb), 0.45);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  
   box-shadow: 0 2px 4px var(--shadow-color);
   padding: var(--spacing-xs) var(--spacing-l);
   border-radius: 20px;
@@ -29,27 +32,21 @@
     cursor: not-allowed;
   }
 
+  // Refactored variants - Removed duplicated color/border rules
   &.variant-accent {
-    background-color: var(--color-accent);
-    color: white;
-    border-color: var(--color-accent);
+    @include apply-variant-styles(--color-accent);
   }
 
   &.variant-default {
-    background-color: var(--color-default);
-    color: white;
-    border-color: var(--color-default);
+    @include apply-variant-styles(--color-default);
   }
 
   &.variant-destructive {
-    background-color: var(--color-destructive);
-    color: white;
-    border-color: var(--color-destructive);
+    @include apply-variant-styles(--color-destructive);
   }
 
   &.variant-selected {
-    background-color: var(--color-selected);
-    color: white;
-    border-color: var(--color-selected);
+    @include apply-variant-styles(--color-selected);
   }
 }
+

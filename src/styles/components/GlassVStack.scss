@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 
 .glass-v-stack {
@@ -5,3 +6,4 @@
   flex-direction: column;
   width: 100%;
 }
+

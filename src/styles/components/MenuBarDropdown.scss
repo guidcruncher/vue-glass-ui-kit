@@ -1,0 +1,65 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-bar-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  padding-top: 5px;
+  list-style: none;
+  margin: 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .dropdown-content {
+    @include apply-liquid-glass($material-opacity: 0.95, $blur: 20px, $border-opacity: 0.35); // Used mixin to define glass style
+    border-radius: 12px;
+    padding: 8px 0;
+    box-shadow: 0 10px 40px var(--shadow-color);
+    overflow: hidden;
+    transform: translateY(-8px);
+    animation: slideIn 0.2s forwards;
+    transition: var(--theming-transition);
+  }
+
+  .dropdown-item {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: var(--spacing-xs) var(--spacing-m);
+    font-size: 14px;
+    // Uses the primary label color variable (now reliably white in dark mode)
+    color: var(--color-label-primary);
+    cursor: pointer;
+    transition: var(--theming-transition);
+
+    &:hover {
+      background: var(--color-accent);
+      color: var(--color-highlighted-text);
+    }
+  }
+}
+

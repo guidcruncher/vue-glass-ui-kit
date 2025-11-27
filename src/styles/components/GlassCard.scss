@@ -1,6 +1,11 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
+@use '../mixins/glass' as *; // Used mixin to define glass style
 
 .glass-card {
+  @include apply-liquid-glass($material-opacity: 0.15, $blur: 10px); // Used mixin to define glass style
+  border-radius: 14px; // Added a standard radius
+  
   display: flex;
   flex-direction: column;
   max-width: 96%;
@@ -22,3 +27,4 @@
     color: var(--color-text-secondary);
   }
 }
+

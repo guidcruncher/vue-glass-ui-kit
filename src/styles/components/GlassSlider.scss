@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
 
@@ -27,7 +28,6 @@ $track-height: 4px;
       $active-color var(--slider-progress),
       $track-color var(--slider-progress)
     );
-
     border: 1px solid rgba(var(--color-glass-rgb), 0.3);
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
   }
@@ -52,13 +52,13 @@ $track-height: 4px;
     width: 100%;
     height: $track-height;
     border-radius: math.div($track-height, 2);
-    background: $track-color;
-  }
-
-  &::-moz-range-progress {
-    height: $track-height;
-    background: $active-color;
-    border-radius: math.div($track-height, 2);
+    background: linear-gradient(
+      to right,
+      $active-color var(--slider-progress),
+      $track-color var(--slider-progress)
+    );
+    border: 1px solid rgba(var(--color-glass-rgb), 0.3);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
   }
 
   &::-moz-range-thumb {
@@ -68,5 +68,12 @@ $track-height: 4px;
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+    transition: transform 0.1s;
+
+    &:active {
+      transform: scale(1.1);
+    }
   }
 }
+

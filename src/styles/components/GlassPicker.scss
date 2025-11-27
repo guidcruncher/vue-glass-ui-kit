@@ -1,16 +1,14 @@
 @use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
-.glass-segmented-control {
+.glass-picker {
   display: inline-flex;
+  border-radius: 12px;
+  overflow: hidden;
 
-  @include apply-liquid-glass($material-opacity: 0.1);
-  padding: 4px;
-  border-radius: 10px;
-  gap: 4px;
-
-  .segment-button {
+  .picker-segment-button {
     flex-grow: 1;
     min-width: 80px;
     padding: 6px 12px;
@@ -22,7 +20,6 @@
     background: transparent;
     border: none;
     color: var(--color-text-primary);
-
     border: 1px solid transparent;
 
     &:hover:not(.is-active) {
@@ -30,9 +27,10 @@
     }
 
     &.is-active {
-      @include apply-liquid-glass($material-opacity: 1);
+      @include apply-liquid-glass($material-opacity: 1); // Used mixin to define glass style
       color: var(--color-text-primary);
       box-shadow: 0 2px 4px var(--shadow-color);
     }
   }
 }
+

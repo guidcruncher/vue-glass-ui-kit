@@ -1,5 +1,7 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 $icon-size: 60px;
 $button-padding: 8px;
@@ -15,7 +17,6 @@ $border-radius-icon: 22%;
   background: transparent;
   border: none;
   padding: 0;
-
   width: ($icon-size + $button-padding * 2);
   margin: 5px;
 
@@ -29,11 +30,9 @@ $border-radius-icon: 22%;
     border-radius: $border-radius-icon;
     overflow: hidden;
 
-    @include apply-liquid-glass($material-opacity: 0.2);
+    @include apply-liquid-glass($material-opacity: 0.2, $blur: 12px); // Used mixin to define glass style
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center; // Refactored using utility mixin
 
     box-shadow:
       0 4px 8px rgba(0, 0, 0, 0.2),
@@ -66,6 +65,7 @@ $border-radius-icon: 22%;
 
   &:not(.is-disabled):active {
     transform: scale(0.95);
+
     .icon-wrapper {
       box-shadow:
         0 2px 4px rgba(0, 0, 0, 0.1),
@@ -78,3 +78,4 @@ $border-radius-icon: 22%;
     cursor: not-allowed;
   }
 }
+

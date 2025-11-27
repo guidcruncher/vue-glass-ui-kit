@@ -1,5 +1,7 @@
+@use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-list-item {
   display: flex;
@@ -30,20 +32,22 @@
 
   .list-item-content {
     flex-grow: 1;
+
     .list-item-title {
       font-size: 16px;
       font-weight: 500;
-
       color: var(--color-label-primary);
     }
+
     .list-item-subtitle {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--color-label-secondary);
     }
   }
 
   .list-item-trailing {
     margin-left: var(--spacing-s);
-    color: var(--color-label-tertiary);
+    color: var(--color-label-secondary);
   }
 }
+

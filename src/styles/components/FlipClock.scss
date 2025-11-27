@@ -1,3 +1,4 @@
+@use '../mixins/_utilities' as *;
 .clock-container {
   display: flex;
   flex-direction: column;
@@ -42,3 +43,4 @@
     letter-spacing: 1px;
   }
 }
+
