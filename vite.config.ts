@@ -14,7 +14,8 @@ export default defineConfig({
     GlassUiRegistry({
       directory: './src/components', 
       outputFile: './src/components/index.ts',
-      virtualModuleId: 'virtual:glassui-registry'
+      virtualModuleId: 'virtual:glassui-registry',
+      scssSpa: true
     }),
   ],
   server: {

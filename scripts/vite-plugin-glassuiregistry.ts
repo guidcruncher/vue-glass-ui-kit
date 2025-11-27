@@ -17,6 +17,7 @@ export function GlassUiRegistry(options = {}) {
   const outputFile = options.outputFile || 'src/plugins/componentRegistry.js'
   const virtualModuleId = options.virtualModuleId || 'virtual:dynamic-registry'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
+  const renderScssSpa = options.scssSpa ? true : false
 
   // Absolute paths for file system operations
   const absoluteOutputDir = path.resolve(process.cwd(), path.dirname(outputFile))
@@ -178,7 +179,7 @@ export function  UseGlassUi(app) {
 
       // Write the generated code to the specified file path
       try {
-        // fs.writeFileSync(absoluteOutputSpa, spa, 'utf-8')
+        if (renderScssSpa) {fs.writeFileSync(absoluteOutputSpa, spa, 'utf-8')}
         fs.writeFileSync(absoluteOutputScss, scss, 'utf-8')
         fs.writeFileSync(absoluteOutputPath, codeStatic, 'utf-8')
         console.log(`[Vite Plugin] Wrote static registry file to: ${outputFile}`)

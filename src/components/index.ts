@@ -98,17 +98,18 @@ export const GlassComponents = {
   ImageButton,
   MenuBar,
   PasswordInput,
-}
+};
 
-export function UseGlassUi(app) {
-  const pinia = createPinia()
-  app.directive('click-outside', ClickOutside)
-  app.directive('background-image', BackgroundImage)
-  app.directive('background-mesh', BackgroundMesh)
-  app.use(pinia)
-  Object.keys(GlassComponents).forEach((name) => {
-    app.component(name, GlassComponents[name])
-  })
-  const themeStore = useThemeStore()
-  themeStore.restoreTheme()
-}
+
+export function  UseGlassUi(app) {
+    const pinia = createPinia()
+    app.directive('click-outside', ClickOutside);
+    app.directive('background-image', BackgroundImage);
+    app.directive('background-mesh', BackgroundMesh);
+    app.use(pinia);
+    Object.keys(GlassComponents).forEach((name) => {
+      app.component(name, GlassComponents[name]);
+    });
+    const themeStore = useThemeStore()
+    themeStore.restoreTheme()
+};
