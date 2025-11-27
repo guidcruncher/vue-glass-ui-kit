@@ -25,39 +25,39 @@
       </g>
 
       <line
-        class="hour-hand"
-        x1="50"
-        y1="50"
-        x2="50"
-        y2="28"
-        stroke="var(--color-label-primary)"
-        stroke-width="3"
-        stroke-linecap="round"
-        :transform="`rotate(${hourAngle} 50 50)`"
-      />
-
-      <line
-        class="minute-hand"
-        x1="50"
-        y1="50"
-        x2="50"
-        y2="15"
-        stroke="var(--color-label-primary)"
-        stroke-width="2"
-        stroke-linecap="round"
-        :transform="`rotate(${minuteAngle} 50 50)`"
-      />
-
-      <line
         class="second-hand"
         x1="50"
-        y1="50"
+        y1="55"
         x2="50"
         y2="10"
         stroke="var(--color-error)"
         stroke-width="1"
         stroke-linecap="round"
         :transform="`rotate(${secondAngle} 50 50)`"
+      />
+
+      <line
+        class="minute-hand"
+        x1="50"
+        y1="55"
+        x2="50"
+        y2="15"
+        stroke="var(--color-label-tertiary)"
+        stroke-width="2"
+        stroke-linecap="round"
+        :transform="`rotate(${minuteAngle} 50 50)`"
+      />
+
+      <line
+        class="hour-hand"
+        x1="50"
+        y1="55"
+        x2="50"
+        y2="28"
+        stroke="var(--color-label-tertiary)"
+        stroke-width="3"
+        stroke-linecap="round"
+        :transform="`rotate(${hourAngle} 50 50)`"
       />
 
       <circle cx="50" cy="50" r="3" fill="var(--color-accent)" />
@@ -87,30 +87,27 @@ const prevTime = ref(new Date())
 const currentTime = ref(new Date())
 let interval: number
 
-const hour = computed(() => {
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    hourCycle: 'h23',
-    timeZone: props.timezone,
-  })
-  return parseInt(formatter.format(currentTime.value))
-})
+type TimeUnit = 'hour' | 'minute' | 'second'
 
-const minute = computed(() => {
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    minute: 'numeric',
-    timeZone: props.timezone,
-  })
-  return parseInt(formatter.format(currentTime.value))
-})
+function parseTimeComponent(date: Date, timezone: string, type: TimeUnit): number {
+  const options: Intl.DateTimeFormatOptions = { timeZone: timezone, [type]: '2-digit' }
 
-const second = computed(() => {
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    second: 'numeric',
-    timeZone: props.timezone,
-  })
-  return parseInt(formatter.format(currentTime.value))
-})
+  if (type === 'hour') {
+    options.hourCycle = 'h23'
+  }
+
+  const formatter = new Intl.DateTimeFormat('en-US', options)
+  const formattedTime = formatter.format(date)
+
+  // Aggressively clean the string to ensure only Latin digits (0-9) remain.
+  const numericalString = formattedTime.replace(/[^0-9]/g, '')
+
+  return parseInt(numericalString, 10) || 0
+}
+
+const hour = computed(() => parseTimeComponent(currentTime.value, props.timezone, 'hour'))
+const minute = computed(() => parseTimeComponent(currentTime.value, props.timezone, 'minute'))
+const second = computed(() => parseTimeComponent(currentTime.value, props.timezone, 'second'))
 
 const secondAngle = computed(() => second.value * 6)
 const minuteAngle = computed(() => minute.value * 6 + second.value * 0.1)
