@@ -7,12 +7,15 @@
   --button-glass-opacity: 0.3;
 
   // Uses the enhanced mixin
-  @include apply-liquid-glass($material-opacity: var(--button-glass-opacity), $border-opacity: 0.45);
+  @include apply-liquid-glass(
+    $material-opacity: var(--button-glass-opacity),
+    $border-opacity: 0.45
+  );
   background-color: rgba(var(--color-glass-rgb), var(--button-glass-opacity));
   color: var(--color-label-primary);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  
+
   box-shadow: 0 2px 4px var(--shadow-color);
   padding: var(--spacing-xs) var(--spacing-l);
   border-radius: 20px;
@@ -49,4 +52,3 @@
     @include apply-variant-styles(--color-selected);
   }
 }
-

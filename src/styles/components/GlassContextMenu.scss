@@ -12,7 +12,10 @@
 }
 
 .glass-context-menu {
-  @include apply-liquid-glass($material-opacity: 0.9, $blur: 15px); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.9,
+    $blur: 15px
+  ); // Used mixin to define glass style
   position: absolute;
   padding: 8px 0;
   min-width: 150px;
@@ -31,4 +34,3 @@
     }
   }
 }
-

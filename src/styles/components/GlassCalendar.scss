@@ -4,7 +4,10 @@
 @use '../mixins/utilities' as *; // Import new utilities
 
 .glass-calendar {
-  @include apply-liquid-glass($material-opacity: 0.8, $blur: 15px); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.8,
+    $blur: 15px
+  ); // Used mixin to define glass style
   width: 300px;
   max-width: 100%;
   padding: var(--spacing-m);
@@ -79,4 +82,3 @@
     }
   }
 }
-

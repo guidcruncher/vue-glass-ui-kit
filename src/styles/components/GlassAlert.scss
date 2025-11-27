@@ -20,11 +20,11 @@
   max-width: 300px;
   padding: 20px 20px 15px;
   text-align: center;
-  
+
   // Refactored to use the core glass mixin for consistency
   @include apply-liquid-glass($material-opacity: 0.9, $blur: 15px);
   border-radius: 14px;
-  
+
   .alert-header h3 {
     margin: 0 0 5px 0;
     font-size: 1.1em;
@@ -43,4 +43,3 @@
     }
   }
 }
-

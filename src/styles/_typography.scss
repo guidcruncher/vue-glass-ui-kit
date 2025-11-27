@@ -4,6 +4,14 @@
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css';
 
 :root {
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 20px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+
   --font-family-base: 'Inter', sans-serif;
   --font-size-base: 16px;
   --font-weight-regular: 400;
@@ -44,4 +52,3 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
-

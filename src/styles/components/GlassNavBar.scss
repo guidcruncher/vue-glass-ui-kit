@@ -4,7 +4,10 @@
 @use '../mixins/utilities' as *; // Import new utilities
 
 .glass-navbar {
-  @include apply-liquid-glass($material-opacity: 0.3, $blur: 15px); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.3,
+    $blur: 15px
+  ); // Used mixin to define glass style
   display: flex;
   align-items: center;
   width: 100%;

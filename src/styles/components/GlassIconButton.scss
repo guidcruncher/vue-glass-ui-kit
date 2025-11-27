@@ -30,7 +30,10 @@ $border-radius-icon: 22%;
     border-radius: $border-radius-icon;
     overflow: hidden;
 
-    @include apply-liquid-glass($material-opacity: 0.2, $blur: 12px); // Used mixin to define glass style
+    @include apply-liquid-glass(
+      $material-opacity: 0.2,
+      $blur: 12px
+    ); // Used mixin to define glass style
 
     @include flex-center; // Refactored using utility mixin
 
@@ -78,4 +81,3 @@ $border-radius-icon: 22%;
     cursor: not-allowed;
   }
 }
-

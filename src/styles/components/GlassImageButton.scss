@@ -4,7 +4,10 @@
 @use '../mixins/utilities' as *; // Import new utilities
 
 .glass-image-button {
-  @include apply-liquid-glass($material-opacity: 0.3, $border-opacity: 0.15); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.3,
+    $border-opacity: 0.15
+  ); // Used mixin to define glass style
 
   height: var(--button-size, 44px);
   width: var(--button-size, 44px);
@@ -60,4 +63,3 @@
     object-fit: contain;
   }
 }
-

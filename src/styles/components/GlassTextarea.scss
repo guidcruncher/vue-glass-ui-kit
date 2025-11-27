@@ -4,7 +4,10 @@
 @use '../mixins/utilities' as *; // Import new utilities
 
 .glass-textarea {
-  @include apply-liquid-glass($material-opacity: 0.05, $blur: 8px); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.05,
+    $blur: 8px
+  ); // Used mixin to define glass style
 
   padding: 10px 12px;
   border-radius: 8px;
@@ -21,4 +24,3 @@
     @include apply-input-focus-style;
   }
 }
-

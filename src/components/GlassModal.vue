@@ -1,8 +1,8 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" class="modal-backdrop">
-        <div :class="modalClass" :style="modalStyle">
+      <div v-if="isVisible" class="glass-modal-overlay">
+        <div class="glass-modal-box" :style="modalStyle">
           <header class="modal-header">
             <div class="window-controls">
               <button class="control-btn close" @click="handleClose"></button>

@@ -7,7 +7,10 @@
   display: inline-flex;
   align-items: center;
 
-  @include apply-liquid-glass($material-opacity: 0.1, $blur: 8px); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.1,
+    $blur: 8px
+  ); // Used mixin to define glass style
 
   border-radius: 8px;
   padding: 4px;
@@ -32,4 +35,3 @@
     color: var(--color-label-primary);
   }
 }
-

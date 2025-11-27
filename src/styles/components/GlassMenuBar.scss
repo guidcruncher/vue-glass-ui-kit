@@ -15,8 +15,14 @@ $z-menubar: 9999;
 }
 
 .glass-menu-bar {
-  @include apply-liquid-glass($material-opacity: 0.15, $blur: 20px, $border-opacity: 0.3); // Used mixin to define glass style
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1), 0 0 1px rgba(255, 255, 255, 0.5) inset; // Overridden shadow for better floating feel
+  @include apply-liquid-glass(
+    $material-opacity: 0.15,
+    $blur: 20px,
+    $border-opacity: 0.3
+  ); // Used mixin to define glass style
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.1),
+    0 0 1px rgba(255, 255, 255, 0.5) inset; // Overridden shadow for better floating feel
 
   display: flex;
   height: 44px;
@@ -46,7 +52,9 @@ $z-menubar: 9999;
         color: inherit;
         cursor: pointer;
         border-radius: 6px;
-        transition: background-color 0.2s, color 0.2s;
+        transition:
+          background-color 0.2s,
+          color 0.2s;
       }
 
       & > *:hover,
@@ -56,7 +64,11 @@ $z-menubar: 9999;
       }
 
       ul {
-        @include apply-liquid-glass($material-opacity: 0.85, $blur: 15px, $border-opacity: 0.35); // Used mixin to define glass style
+        @include apply-liquid-glass(
+          $material-opacity: 0.85,
+          $blur: 15px,
+          $border-opacity: 0.35
+        ); // Used mixin to define glass style
         position: absolute;
         top: 100%;
         left: 0;
@@ -68,7 +80,10 @@ $z-menubar: 9999;
         visibility: hidden;
         pointer-events: none;
         transform: translateY(10px);
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease,
+          visibility 0.2s;
         border-radius: 8px;
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 
@@ -95,4 +110,3 @@ $z-menubar: 9999;
     }
   }
 }
-

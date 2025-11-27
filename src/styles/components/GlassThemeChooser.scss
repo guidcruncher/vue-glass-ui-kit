@@ -4,7 +4,10 @@
 @use '../mixins/utilities' as *; // Import new utilities
 
 .glass-theme-chooser {
-  @include apply-liquid-glass($material-opacity: 0.8, $blur: 15px); // Used mixin to define glass style
+  @include apply-liquid-glass(
+    $material-opacity: 0.8,
+    $blur: 15px
+  ); // Used mixin to define glass style
 
   width: 250px;
   padding: var(--spacing-m);
@@ -41,4 +44,3 @@
     }
   }
 }
-

@@ -25,7 +25,9 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 
   &.is-open {
     opacity: 1;
@@ -34,7 +36,11 @@
   }
 
   .dropdown-content {
-    @include apply-liquid-glass($material-opacity: 0.95, $blur: 20px, $border-opacity: 0.35); // Used mixin to define glass style
+    @include apply-liquid-glass(
+      $material-opacity: 0.95,
+      $blur: 20px,
+      $border-opacity: 0.35
+    ); // Used mixin to define glass style
     border-radius: 12px;
     padding: 8px 0;
     box-shadow: 0 10px 40px var(--shadow-color);
@@ -62,4 +68,3 @@
     }
   }
 }
-

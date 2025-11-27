@@ -28,7 +28,10 @@ $transition-speed: 0.2s ease;
     transition: all $transition-speed;
     margin-right: 8px;
 
-    @include apply-liquid-glass($material-opacity: 0.1, $blur: 4px); // Used mixin to define glass style
+    @include apply-liquid-glass(
+      $material-opacity: 0.1,
+      $blur: 4px
+    ); // Used mixin to define glass style
     background-color: transparent;
     box-shadow: none;
     border: 2px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
@@ -56,4 +59,3 @@ $transition-speed: 0.2s ease;
     color: var(--color-text-primary);
   }
 }
-
