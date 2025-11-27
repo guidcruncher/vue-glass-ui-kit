@@ -30,7 +30,7 @@ export function GlassUiRegistry(options = {}) {
     const scssFiles = files.filter((f) => f.endsWith('.wscss'))
 
     const getFile = (file) => {
-      const data = fs.readFleSync('./src/styles/' + file, 'utf-8')
+      const data = fs.readFileSync('./src/styles/' + file, 'utf-8')
       return `/* Fle: ${file} */\n${data}p`
     }
     const scssImports = scssFiles.map((file) => {
