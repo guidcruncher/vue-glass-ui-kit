@@ -85,7 +85,7 @@ onMounted(() => {
   timer = setInterval(() => {
     prevTime.value = time.value
     time.value = tzDate()
-    if (time.value.getMinutes() != prevTime.value.geMinutes()) {
+    if (time.value.getMinutes() != prevTime.value.getMinutes()) {
       emit('tick')
     }
   }, 1000)

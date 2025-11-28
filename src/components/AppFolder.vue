@@ -9,7 +9,7 @@ interface App {
   color: string
 }
 
-const props = witthDefaults(
+const props = withDefaults(
   defineProps<{
     modelValue: App[]
     columns?: string
