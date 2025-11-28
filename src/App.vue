@@ -62,7 +62,7 @@
             <GlassHStack :spacing="16" alignment="center">
               <ImageButton
                 size="64"
-                imageurl="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/apple-retro.svg"
+                imageurl="https://cdn.jsdelivr.net/gh/selfhst/icons/sapple-retro.svg"
               />
             </GlassHStack>
             <GlassHStack :spacing="16" alignment="center">
@@ -214,6 +214,10 @@
         </GlassCard>
       </GlassVStack>
 
+      <GlassCard class="group-card">
+        <AppFolder v-model="appleApps" />
+      </GlassCard>
+
       <GlassToast ref="toastRef" />
       <GlassAlert
         :visible="alertVisible"
@@ -250,50 +254,41 @@
           <GlassButton @click="modalOpen = false" variant="accent">Close</GlassButton>
         </template>
       </GlassModal>
-
-      <GlassTableContainer>
-        <GlassTableRow
-          v-for="(setting, index) in settingsList"
-          :key="setting.id"
-          :is-last="index === settingsList.length - 1"
-        >
-          <div class="row-content-layout">
-            <span>{{ setting.label }}</span>
-            <span v-if="setting.value" class="setting-value">{{ setting.value }}</span>
-          </div>
-        </GlassTableRow>
-      </GlassTableContainer>
-
-      <GlassTableContainer>
-        <GlassTableRow :is-last="true">
-          <div class="row-content-layout">
-            <input type="checkbox" id="darkMode" />
-            <label for="darkMode">Dark Mode</label>
-          </div>
-        </GlassTableRow>
-      </GlassTableContainer>
-
-      <GlassSplitContainer>
-        <template #primary>
-          <h3>Primary Panel (Menu)</h3>
-          <ul>
-            <li v-for="i in 10" :key="i">Menu Item {{ i }}</li>
-          </ul>
-        </template>
-
-        <template #secondary>
-          <h1>Secondary Panel (Detail View)</h1>
-          <p>This is the main content area.</p>
-          <p>On **Desktop** (width > 768px), both columns are visible side-by-side.</p>
-          <p>On **Mobile** (width < 768px), the Primary Panel slides over this Secondary Panel.</p>
-        </template>
-      </GlassSplitContainer>
     </template>
   </Container>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+
+const appleApps = ref([
+  {
+    name: 'App Store',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/app-store.svg',
+    color: '#EF4444',
+  },
+  { name: 'Cloud', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/icloud.svg' }, // Blue
+  { name: 'Apple', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-retro.svg' }, // Sky Blue
+  {
+    name: 'Apple Containers',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/png/apple-containers.png',
+  }, // Yellow
+  {
+    name: 'Apple HomeKit',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-homekit.svg',
+  }, // Pink
+  {
+    name: 'Apple Kusic',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-music.svg',
+  }, // Green
+  { name: 'Apple TV', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-tv.svg' }, // Purple
+  { name: 'Safari', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/safari.svg' }, // Indigo
+  {
+    name: 'Apple PodCasts',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-podcasts.svg',
+    color: '#F59E0B',
+  }, // Emoji/Text Icon (Fallback exampl e)
+])
 
 const appMenus = [
   { id: 'finder', label: 'Finder', items: ['About Finder', 'Preferences', 'Empty Trash'] },
