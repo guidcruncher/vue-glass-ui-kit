@@ -1,6 +1,7 @@
 @use './thenes.apple.scss' as *;
 @use './_typography' as *;
 
+@use './components/AppFolder' as *;
 @use './components/Container' as *;
 @use './components/ContentPanel' as *;
 @use './components/FlipCard' as *;
@@ -50,3 +51,4 @@
 @use './components/ImageButton' as *;
 @use './components/MenuBar' as *;
 @use './components/PasswordInput' as *;
+@use './components/WidgetPanel' as *;
