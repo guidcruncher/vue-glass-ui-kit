@@ -28,5 +28,5 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/WidgetPanel" as *;
+@use '@/styles/components/WidgetPanel' as *;
 </style>

@@ -220,6 +220,15 @@
         <GlassCard class="group-card">
           <AppFolder v-model="appleApps" />
         </GlassCard>
+
+        <GlassCard class="group-card">
+          <GlassImage
+            src="https://images.squarespace-cdn.com/content/v1/6494678b67b42e6fd1a6de8b/1688568948629-ZCWIHO2GYSVDRJW2DVWD/UK23-480+Strawberry+Moon%2C+Durdle+Door%2C+Dorset.jpg"
+            width="400px"
+            height="250px"
+            alt="Mountain landscape behind frosted glass"
+          />
+        </GlassCard>
       </GlassVStack>
 
       <GlassToast ref="toastRef" />

@@ -19,6 +19,7 @@ import GlassDigitalClock from './GlassDigitalClock.vue'
 import GlassDropdown from './GlassDropdown.vue'
 import GlassHStack from './GlassHStack.vue'
 import GlassIconButton from './GlassIconButton.vue'
+import GlassImage from './GlassImage.vue'
 import GlassImageButton from './GlassImageButton.vue'
 import GlassInput from './GlassInput.vue'
 import GlassListItem from './GlassListItem.vue'
@@ -75,6 +76,7 @@ export const GlassComponents = {
   GlassDropdown,
   GlassHStack,
   GlassIconButton,
+  GlassImage,
   GlassImageButton,
   GlassInput,
   GlassListItem,
@@ -102,18 +104,17 @@ export const GlassComponents = {
   MenuBar,
   PasswordInput,
   WidgetPanel,
-};
+}
 
-
-export function  UseGlassUi(app) {
-    const pinia = createPinia()
-    app.directive('click-outside', ClickOutside);
-    app.directive('background-image', BackgroundImage);
-    app.directive('background-mesh', BackgroundMesh);
-    app.use(pinia);
-    Object.keys(GlassComponents).forEach((name) => {
-      app.component(name, GlassComponents[name]);
-    });
-    const themeStore = useThemeStore()
-    themeStore.restoreTheme()
-};
+export function UseGlassUi(app) {
+  const pinia = createPinia()
+  app.directive('click-outside', ClickOutside)
+  app.directive('background-image', BackgroundImage)
+  app.directive('background-mesh', BackgroundMesh)
+  app.use(pinia)
+  Object.keys(GlassComponents).forEach((name) => {
+    app.component(name, GlassComponents[name])
+  })
+  const themeStore = useThemeStore()
+  themeStore.restoreTheme()
+}

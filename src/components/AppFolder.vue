@@ -59,5 +59,5 @@ const handleClick = (app) => {
 </template>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/AppFolder" as *;
+@use '@/styles/components/AppFolder' as *;
 </style>
