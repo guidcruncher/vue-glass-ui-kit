@@ -21,7 +21,7 @@
   padding: 30px;
 
   /* Container Constraints */
-  max-width: 1200px;
+  max-width: 100vw;
   margin: 0 auto;
 }
 </style>
