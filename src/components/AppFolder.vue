@@ -27,6 +27,8 @@ const emit = defineEmits<{
 
 const appsList = computed(() => props.modelValue)
 
+const inlineStyles = computed(() => [{ '--appfolder-columns': props.columns }])
+
 // Function to check if the icon string is a URL
 const isImageUrl = (icon: string): boolean => {
   return icon.startsWith('http')
@@ -39,7 +41,7 @@ const handleClick = (app) => {
 </script>
 
 <template>
-  <div class="folder-container">
+  <div class="folder-container" :style="inlineStyles">
     <h1 class="folder-title">Lifestyle</h1>
 
     <div class="folder-panel">

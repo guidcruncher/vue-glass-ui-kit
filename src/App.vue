@@ -212,11 +212,15 @@
             </ContentPanel>
           </GlassHStack>
         </GlassCard>
-      </GlassVStack>
 
-      <GlassCard class="group-card">
-        <AppFolder v-model="appleApps" />
-      </GlassCard>
+        <GlassCard class="group-card">
+          <WidgetPanel></WidgetPanel>
+        </GlassCard>
+
+        <GlassCard class="group-card">
+          <AppFolder v-model="appleApps" />
+        </GlassCard>
+      </GlassVStack>
 
       <GlassToast ref="toastRef" />
       <GlassAlert
