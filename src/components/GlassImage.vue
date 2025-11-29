@@ -28,5 +28,5 @@ const containerStyles = computed(() => ({
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/GlassImage" as *;
+@use '@/styles/components/GlassImage' as *;
 </style>

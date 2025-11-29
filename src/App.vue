@@ -229,6 +229,35 @@
             alt="Mountain landscape behind frosted glass"
           />
         </GlassCard>
+
+        <GlassCard class="group-card">
+          <ResponsiveGrid>
+            <GridItem>
+              <h3>Item 1: Simple Content</h3>
+              <p>This content is written directly inside the GridItem tag.</p>
+            </GridItem>
+
+            <GridItem>
+              <h3>Item 2: Custom Layout</h3>
+              <p>You can put any HTML or Vue component inside this slot.</p>
+            </GridItem>
+
+            <GridItem>
+              <h3>Item 3: Fully Manual</h3>
+              <p>The grid container handles the wrapping automatically.</p>
+            </GridItem>
+
+            <GridItem>
+              <h3>Item 4: Flexibility</h3>
+              <p>This approach provides maximum control to the user of the component.</p>
+            </GridItem>
+
+            <GridItem>
+              <h3>Item 5: Last Item</h3>
+              <p>It will wrap to the next line when the screen is too narrow.</p>
+            </GridItem>
+          </ResponsiveGrid>
+        </GlassCard>
       </GlassVStack>
 
       <GlassToast ref="toastRef" />
