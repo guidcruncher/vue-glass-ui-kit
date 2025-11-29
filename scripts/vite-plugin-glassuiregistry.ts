@@ -40,6 +40,7 @@ export function GlassUiRegistry(options = {}) {
 
     return `${getFile('./themes/apple.scss')}
 ${getFile('./_typography.scss')}
+${getFile('./_gridsystem.scss')}
 ${scssImports.join('\n')}`
   }
 
@@ -53,9 +54,9 @@ ${scssImports.join('\n')}`
       return `@use './components/${name}' as *;`
     })
 
-    return `@use './thenes.apple.scss' as *;
+    return `@use './themes/apple.scss' as *;
 @use './_typography' as *;
-
+@use './_gridsystem' as *;
 ${scssImports.join('\n')}`
   }
 

@@ -1,6 +1,6 @@
-@use './thenes.apple.scss' as *;
+@use './themes/apple.scss' as *;
 @use './_typography' as *;
-
+@use './_gridsystem' as *;
 @use './components/AppFolder' as *;
 @use './components/Container' as *;
 @use './components/ContentPanel' as *;
