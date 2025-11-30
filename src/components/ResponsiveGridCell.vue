@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-item">
+  <div class="reaponsive-grid-cell">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,7 @@
 </script>
 
 <style scoped>
-.grid-item {
+.reaponsive-grid-cell {
   /* Layout and Spacing */
   border: 1px solid #ccc; /* Simple border for visibility */
   border-radius: 8px;

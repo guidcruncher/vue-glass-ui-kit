@@ -43,11 +43,14 @@ import GlassToast from './GlassToast.vue'
 import GlassToggle from './GlassToggle.vue'
 import GlassVStack from './GlassVStack.vue'
 import GlassValidatedInput from './GlassValidatedInput.vue'
-import GridItem from './GridItem.vue'
+import GridCol from './GridCol.vue'
+import GridContainer from './GridContainer.vue'
+import GridRow from './GridRow.vue'
 import ImageButton from './ImageButton.vue'
 import MenuBar from './MenuBar.vue'
 import PasswordInput from './PasswordInput.vue'
 import ResponsiveGrid from './ResponsiveGrid.vue'
+import ResponsiveGridCell from './ResponsiveGridCell.vue'
 import WidgetPanel from './WidgetPanel.vue'
 import '../styles/styles.scss'
 import { createPinia } from 'pinia'
@@ -102,11 +105,14 @@ export const GlassComponents = {
   GlassToggle,
   GlassVStack,
   GlassValidatedInput,
-  GridItem,
+  GridCol,
+  GridContainer,
+  GridRow,
   ImageButton,
   MenuBar,
   PasswordInput,
   ResponsiveGrid,
+  ResponsiveGridCell,
   WidgetPanel,
 };
 

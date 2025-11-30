@@ -232,31 +232,60 @@
 
         <GlassCard class="group-card">
           <ResponsiveGrid>
-            <GridItem>
+            <ResponsiveGridCell>
               <h3>Item 1: Simple Content</h3>
-              <p>This content is written directly inside the GridItem tag.</p>
-            </GridItem>
+              <p>This content is written directly inside the ResponsiveGridCell tag.</p>
+            </ResponsiveGridCell>
 
-            <GridItem>
+            <ResponsiveGridCell>
               <h3>Item 2: Custom Layout</h3>
               <p>You can put any HTML or Vue component inside this slot.</p>
-            </GridItem>
+            </ResponsiveGridCell>
 
-            <GridItem>
+            <ResponsiveGridCell>
               <h3>Item 3: Fully Manual</h3>
               <p>The grid container handles the wrapping automatically.</p>
-            </GridItem>
+            </ResponsiveGridCell>
 
-            <GridItem>
+            <ResponsiveGridCell>
               <h3>Item 4: Flexibility</h3>
               <p>This approach provides maximum control to the user of the component.</p>
-            </GridItem>
+            </ResponsiveGridCell>
 
-            <GridItem>
+            <ResponsiveGridCell>
               <h3>Item 5: Last Item</h3>
               <p>It will wrap to the next line when the screen is too narrow.</p>
-            </GridItem>
+            </ResponsiveGridCell>
           </ResponsiveGrid>
+        </GlassCard>
+
+        <GlassCard class="group-card">
+          <GridContainer>
+            <h1>Responsive Grid Example</h1>
+
+            <GridRow>
+              <GridCol :col="12" :col-md="6" :col-lg="4">
+                <div class="box">Item 1 (4/12 Large)</div>
+              </GridCol>
+
+              <GridCol :col="12" :col-md="6" :col-lg="4">
+                <div class="box">Item 2 (4/12 Large)</div>
+              </GridCol>
+
+              <GridCol :col="12" :col-md="12" :col-lg="4">
+                <div class="box">Item 3 (4/12 Large)</div>
+              </GridCol>
+            </GridRow>
+
+            <GridRow>
+              <GridCol :col="12" :col-md="8">
+                <div class="box spacing-lg">8/12 Content Area</div>
+              </GridCol>
+              <GridCol :col="12" :col-md="4">
+                <div class="box spacing-lg">4/12 Sidebar</div>
+              </GridCol>
+            </GridRow>
+          </GridContainer>
         </GlassCard>
       </GlassVStack>
 
