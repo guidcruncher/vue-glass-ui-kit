@@ -326,5 +326,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/LinearPicker" as *;
+@use '@/styles/components/LinearPicker' as *;
 </style>

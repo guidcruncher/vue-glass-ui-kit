@@ -37,5 +37,5 @@ const primaryWidth = ref(props.initialWidth)
 </script>
 
 <style lang="scss">
-  @use "@/styles/components/SplitViewContainer" as *;
+@use '@/styles/components/SplitViewContainer' as *;
 </style>

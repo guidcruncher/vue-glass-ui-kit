@@ -175,5 +175,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/MenuBar" as *;
+@use '@/styles/components/MenuBar' as *;
 </style>

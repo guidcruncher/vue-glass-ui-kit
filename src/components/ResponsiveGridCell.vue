@@ -9,5 +9,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/ResponsiveGridCell" as *;
+@use '@/styles/components/ResponsiveGridCell' as *;
 </style>
