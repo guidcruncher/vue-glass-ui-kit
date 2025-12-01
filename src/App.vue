@@ -220,12 +220,21 @@
               <template #header><h3>Folders & Media</h3></template>
               <AppFolder v-model="appleApps" />
               <GlassImage
-                src="https://images.squarespace-cdn.com/content/v1/6494678b67b42e6fd1a6de8b/1688568948629-ZCWIHO2GYSVDRJW2DVWD/UK23-480+Strawberry+Moon%2C+Durdle+Door%2C+Dorset.jpg"
+                :src="imageSource"
                 width="400px"
                 height="250px"
                 alt="Mountain landscape behind frosted glass"
+                @click="imageSourceView = true"
               />
             </GlassCard>
+
+            <ImageViewer
+              v-model:visible="imageSourceView"
+              :url="imageSource"
+              title="Durdle Door, Dorset"
+              info="High-resolution vertical landscape photo."
+              :initial-fit-mode="true"
+            />
 
             <GlassCard class="group-card" v-show="selectedGroup === 'grids'">
               <template #header><h3>Grids & Layouts</h3></template>
@@ -321,6 +330,9 @@ const componentGroups = [
 const selectedGroup = ref('inputs') // Start on the first group
 // ------------------------------------------
 const collapsed = ref(false)
+const imageSourceView = ref(false)
+const imageSource =
+  'https://images.squarespace-cdn.com/content/v1/6494678b67b42e6fd1a6de8b/1688568948629-ZCWIHO2GYSVDRJW2DVWD/UK23-480+Strawberry+Moon%2C+Durdle+Door%2C+Dorset.jpg'
 
 const appleApps = ref([
   {

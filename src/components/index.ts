@@ -48,6 +48,7 @@ import GridCol from './GridCol.vue'
 import GridContainer from './GridContainer.vue'
 import GridRow from './GridRow.vue'
 import ImageButton from './ImageButton.vue'
+import ImageViewer from './ImageViewer.vue'
 import LinearPicker from './LinearPicker.vue'
 import MenuBar from './MenuBar.vue'
 import PasswordInput from './PasswordInput.vue'
@@ -113,6 +114,7 @@ export const GlassComponents = {
   GridContainer,
   GridRow,
   ImageButton,
+  ImageViewer,
   LinearPicker,
   MenuBar,
   PasswordInput,
@@ -120,20 +122,19 @@ export const GlassComponents = {
   ResponsiveGridCell,
   SplitViewContainer,
   WidgetPanel,
-};
+}
 
+export function UseGlassUi(app) {
+  const pinia = createPinia()
+  app.directive('click-outside', ClickOutside)
+  app.directive('background-image', BackgroundImage)
+  app.directive('background-mesh', BackgroundMesh)
+  app.directive('background-color', BackgroundColor)
 
-export function  UseGlassUi(app) {
-    const pinia = createPinia()
-    app.directive('click-outside', ClickOutside);
-    app.directive('background-image', BackgroundImage);
-    app.directive('background-mesh', BackgroundMesh);
-    app.directive('background-color', BackgroundColor);
-
-    app.use(pinia);
-    Object.keys(GlassComponents).forEach((name) => {
-      app.component(name, GlassComponents[name]);
-    });
-    const themeStore = useThemeStore()
-    themeStore.restoreTheme()
-};
+  app.use(pinia)
+  Object.keys(GlassComponents).forEach((name) => {
+    app.component(name, GlassComponents[name])
+  })
+  const themeStore = useThemeStore()
+  themeStore.restoreTheme()
+}
