@@ -1,0 +1,63 @@
+@use '../mixins/_utilities' as *;
+/* --- Base Scroll Container Styles (from previous response) --- */
+.apple-scroll-view-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: var(--color-system-background);
+  height: 300px; /* Example fixed height */
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  /* **CRUCIAL**: Establishes a stacking context for absolutely positioned shadows */
+  position: relative;
+}
+
+.apple-scroll-view-content {
+  padding: 15px;
+}
+
+/* Scrollbar styles (omitted here for brevity, but include them from the previous answer) */
+
+/* --- Scroll Shadow Styles --- */
+.scroll-shadow {
+  /* Common positioning and size for the shadow elements */
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 15px; /* Height of the shadow fade */
+  z-index: 10;
+  /* Ensure it stays on top of the content */
+  pointer-events: none;
+  /* Allows clicks to pass through to the content */
+  /* Initial state: Hidden */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.scroll-shadow.visible {
+  opacity: 1;
+}
+
+/* Top Shadow */
+.scroll-shadow.top {
+  top: 0;
+  /* Fades from a solid color (transparent white) to transparent */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1),
+    /* Slightly dark on the very edge */ rgba(255, 255, 255, 0)
+  );
+  /* Fades to transparent */
+}
+
+/* Bottom Shadow */
+.scroll-shadow.bottom {
+  bottom: 0;
+  /* Fades from a solid color (transparent white) to transparent, inverted */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.1),
+    /* Slightly dark on the very edge */ rgba(255, 255, 255, 0)
+  );
+  /* Fades to transparent */
+}

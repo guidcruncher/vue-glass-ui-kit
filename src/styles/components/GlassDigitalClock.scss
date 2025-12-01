@@ -1,0 +1,47 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+
+.glass-digital-clock {
+  width: 400px;
+  height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  padding: var(--spacing-l) var(--spacing-xl);
+  border-radius: 12px;
+
+  .time-display {
+    font-size: 8.5em;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+
+    color: rgba(255, 255, 255, 0.05);
+
+    filter: url(#inner-blur);
+    text-shadow:
+      -1px -1px 0 rgba(255, 255, 255, 0.7),
+      2px 2px 5px rgba(0, 0, 0, 0.9),
+      0 0 10px rgba(255, 255, 255, 0.1);
+
+    margin-bottom: 0;
+  }
+
+  .date-display {
+    margin-top: var(--spacing-xxs);
+    font-size: 1.4em;
+    font-weight: 200;
+    color: var(--color-text-primary);
+  }
+
+  .timezone-label {
+    margin-top: var(--spacing-s);
+    font-size: 0.9em;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}

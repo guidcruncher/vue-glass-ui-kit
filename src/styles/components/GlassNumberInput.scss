@@ -1,0 +1,24 @@
+@use '../mixins/_utilities' as *;
+@use '../components/GlassInput' as *;
+
+.glass-number-input-container {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+
+  .glass-input {
+    text-align: center;
+    -moz-appearance: textfield; // Hide stepper buttons in Firefox
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none; // Hide stepper buttons in Webkit
+      margin: 0;
+    }
+  }
+
+  .stepper-button {
+    // Buttons are part of GlassStepper, but if standalone, they should have glass style.
+    // For now, they rely on external GlassStepper component logic.
+  }
+}

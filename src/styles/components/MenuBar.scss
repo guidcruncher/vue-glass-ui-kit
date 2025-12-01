@@ -1,0 +1,121 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+
+// ==========================================================
+// 🎨 SCSS & CSS VARIABLE DEFINITIONS (Scoped within .menu-container)
+// ==========================================================
+.menu-container {
+  // --- SCSS Constants ---
+  $z-menubar: 1000;
+  $transition-duration: 0.3s;
+  $transition-timing: ease-in-out;
+
+  --blur-radius-base: 20px;
+  --theming-transition:
+    background-color #{$transition-duration} #{$transition-timing},
+    border-color #{$transition-duration} #{$transition-timing},
+    box-shadow #{$transition-duration} #{$transition-timing},
+    color #{$transition-duration} #{$transition-timing};
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .menubar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    color: var(--color-text-primary);
+    @include apply-liquid-glass();
+    z-index: $z-menubar;
+    transition: var(--theming-transition);
+  }
+
+  .menubar-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 0 var(--spacing-m);
+  }
+
+  .menubar-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+  }
+
+  .menu-button {
+    background: none;
+    border: none;
+    // Uses the primary label color variable (now reliably white in dark mode)
+    color: var(--color-label-primary);
+    font-size: 14px;
+    padding: var(--spacing-xxs) var(--spacing-xs);
+    border-radius: var(--spacing-xs);
+    cursor: pointer;
+    transition: var(--theming-transition);
+    font-weight: 500;
+    text-align: left;
+
+    &.active {
+      background: var(--color-accent);
+      color: var(--color-highlighted-text);
+      box-shadow: 0 2px 4px var(--shadow-color);
+    }
+  }
+
+  .menu-item-wrapper {
+    position: relative;
+  }
+
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + var(--spacing-xxs));
+    left: 0;
+    min-width: 192px;
+
+    // Glass Effect
+    @include apply-liquid-glass();
+    background: var(--color-system-background-trans);
+    color: var(--color-text-primary);
+    border-radius: var(--spacing-s);
+    box-shadow: 0 10px 40px var(--shadow-color);
+    overflow: hidden;
+    transform: translateY(-8px);
+    animation: slideIn 0.2s forwards;
+    transition: var(--theming-transition);
+    z-index: 2000;
+  }
+
+  .dropdown-item {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: var(--spacing-xs) var(--spacing-m);
+    font-size: 14px;
+    // Uses the primary label color variable (now reliably white in dark mode)
+    color: var(--color-label-primary);
+    cursor: pointer;
+    transition: var(--theming-transition);
+    z-index: 2000;
+
+    &:hover {
+      background: var(--color-accent);
+      color: var(--color-highlighted-text);
+    }
+  }
+}

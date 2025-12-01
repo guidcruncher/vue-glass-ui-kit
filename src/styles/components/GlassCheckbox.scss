@@ -1,0 +1,61 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+
+$size: 20px;
+$transition-speed: 0.2s ease;
+
+.glass-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  .hidden-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .custom-checkbox {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: $size;
+    height: $size;
+    border-radius: 6px;
+    transition: all $transition-speed;
+    margin-right: 8px;
+
+    @include apply-liquid-glass(
+      $material-opacity: 0.1,
+      $blur: 4px
+    ); // Used mixin to define glass style
+    background-color: transparent;
+    box-shadow: none;
+    border: 2px solid rgba(var(--color-glass-rgb), var(--color-glass-border-opacity));
+
+    .check-icon {
+      width: 80%;
+      height: 80%;
+      fill: none;
+      stroke: white;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &.is-checked {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+
+      backdrop-filter: none;
+      box-shadow: 0 1px 3px rgba(var(--color-accent), 0.5);
+    }
+  }
+
+  .checkbox-text {
+    color: var(--color-text-primary);
+  }
+}

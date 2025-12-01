@@ -1,0 +1,55 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
+
+.glass-button {
+  --button-glass-opacity: 0.3;
+
+  // Uses the enhanced mixin
+  @include apply-liquid-glass(
+    $material-opacity: var(--button-glass-opacity),
+    $border-opacity: 0.45
+  );
+  background-color: rgba(var(--color-glass-rgb), var(--button-glass-opacity));
+  color: var(--color-label-primary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  height: 44px;
+  font-size: 16px !important;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  padding: var(--spacing-xs) var(--spacing-l);
+  border-radius: 20px;
+
+  &:hover:not(:disabled) {
+    --button-glass-opacity: 0.45;
+    border-color: rgba(var(--color-glass-rgb), 0.6);
+  }
+
+  &:active:not(:disabled) {
+    --button-glass-opacity: 0.6;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Refactored variants - Removed duplicated color/border rules
+  &.variant-accent {
+    @include apply-variant-styles(--color-accent);
+  }
+
+  &.variant-default {
+    @include apply-variant-styles(--color-default);
+  }
+
+  &.variant-destructive {
+    @include apply-variant-styles(--color-destructive);
+  }
+
+  &.variant-selected {
+    @include apply-variant-styles(--color-selected);
+  }
+}

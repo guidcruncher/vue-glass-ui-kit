@@ -1,0 +1,128 @@
+#scriptSetup {
+  --appfolder-columns: v-bind('columns');
+}
+
+:root {
+  --bg-gradient-start: #1e3a5f;
+  --bg-gradient-end: #67b4d9;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --icon-bg: #1f2937;
+  --icon-radius: 22%;
+  --folder-radius: 42px;
+  --app-gap: 24px;
+}
+
+.folder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+folder-title {
+  font-size: 24px;
+  font-weight: u700;
+  color: var(--color-label);
+  margin-bottom: 32px;
+  letter-spacing: -0.5px;
+}
+
+.folder-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid var(--glass-border);
+  border-radius: 42px;
+  padding: 28px 20px;
+  box-shadow: 0 8px 32px var(--shadow-color);
+  max-width: 680px;
+  width: 100%;
+}
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--appfolder-columns), 1fr);
+  gap: var(--app-gap);
+  row-gap: 32px;
+}
+
+.app-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.app-item:hover {
+  transform: scale(1.05);
+}
+
+.app-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--icon-bg);
+  border-radius: var(--icon-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.icon-text {
+  position: relative;
+  z-index: 1;
+}
+
+.app-name {
+  font-size: 13px;
+  color: var(--color-label-secondary);
+  text-align: center;
+  font-weight: 400;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon-image {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+}
+
+@media (max-width: 768px) {
+  .folder-panel {
+    padding: 32px 24px;
+  }
+
+  .apps-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .app-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 26px;
+  }
+
+  .app-name {
+    font-size: 12px;
+  }
+}

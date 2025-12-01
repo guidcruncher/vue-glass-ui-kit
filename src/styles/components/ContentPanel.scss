@@ -1,0 +1,48 @@
+@use '../mixins/_utilities' as *;
+/*
+  CSS Custom Properties are used here for easy style overriding
+  --panel-bg: the background (gradient or image)
+  --panel-radius: the main border radius
+*/
+
+.custom-panel {
+  background: var(--panel-bg);
+  border-radius: var(--panel-radius);
+
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  padding: 16px;
+
+  border-top-left-radius: var(--panel-radius);
+  border-top-right-radius: var(--panel-radius);
+  color: var(--panel-color);
+  font-weight: bold;
+}
+
+.panel-body {
+  padding: 16px;
+  flex-grow: 1;
+  color: var(--panel-color);
+}
+
+.panel-footer {
+  padding: 16px;
+
+  border-bottom-left-radius: var(--panel-radius);
+  border-bottom-right-radius: var(--panel-radius);
+
+  // Still uses a raw glass definition as the color is absolute white, not themed.
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--panel-color);
+  text-align: right;
+}

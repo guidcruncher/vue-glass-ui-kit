@@ -1,0 +1,38 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
+
+.glass-navbar {
+  @include apply-liquid-glass(
+    $material-opacity: 0.3,
+    $blur: 15px
+  ); // Used mixin to define glass style
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 54px;
+  top: 0px;
+  left: 0px;
+  box-sizing: border-box;
+
+  position: sticky;
+  z-index: 9990;
+
+  .navbar-left,
+  .navbar-right {
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

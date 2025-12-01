@@ -1,0 +1,23 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+
+.glass-activity-indicator {
+  display: inline-block;
+  animation: rotate 1.4s linear infinite;
+
+  .indicator-ring {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-linecap: round;
+
+    stroke-dasharray: 280;
+    stroke-dashoffset: 150;
+    transform-origin: 50% 50%;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

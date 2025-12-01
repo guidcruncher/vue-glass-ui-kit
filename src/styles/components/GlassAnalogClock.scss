@@ -1,0 +1,31 @@
+@use '../mixins/_utilities' as *;
+@use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
+
+.glass-analog-clock {
+  @include flex-center; // Refactored using utility mixin
+  flex-direction: column;
+  border-radius: 50%;
+  padding: 0;
+
+  width: var(--size);
+  height: var(--size);
+
+  svg {
+    .hour-hand,
+    .minute-hand,
+    .second-hand {
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+  }
+
+  .hour-hand {
+    fill: var(--color-label-primary);
+  }
+  .minute-hand {
+    fill: var(--color-label-primary);
+  }
+  .second-hand {
+    stroke: var(--color-error);
+  }
+}

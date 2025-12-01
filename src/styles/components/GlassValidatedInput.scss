@@ -1,0 +1,27 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+
+.glass-validated-input {
+  width: 100%;
+
+  .input-field {
+    transition: border-color 0.3s ease;
+  }
+
+  &.has-error {
+    .input-field {
+      border-color: var(--color-error);
+      box-shadow: 0 0 0 1px var(--color-error);
+    }
+
+    .error-message {
+      color: var(--color-error);
+    }
+  }
+
+  .error-message {
+    margin-top: 4px;
+    font-size: 12px;
+    padding-left: 5px;
+  }
+}

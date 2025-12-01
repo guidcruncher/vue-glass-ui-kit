@@ -1,0 +1,55 @@
+@use '../mixins/_utilities' as *;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  display: flex;
+  align-items: stretch;
+}
+
+.full-page-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  min-wirth: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-header {
+  height: 54px;
+  min-height: 54px;
+  max-height: 54px;
+  width: 100%;
+  z-index: 200;
+
+  overflow: hidden;
+}
+
+.sticky-header-menu {
+  height: 114px;
+  min-height: 54px;
+  width: 100%;
+  z-index: 200;
+  overflow: hidden;
+}
+
+.scrollable-content {
+  flex-grow: 0;
+  width: 100%;
+  top: --height-offset;
+  max-height: calc(100% - (--height-offset));
+  overflow-y: hidden;
+  overflow-x: hidden;
+  display: block;
+}

@@ -1,0 +1,20 @@
+@use '../mixins/_utilities' as *;
+.collection-view {
+  /* This container handles the layout using the computed gridStyle */
+  width: 100%;
+  overflow-y: auto; /* Enables scrolling, similar to UICollectionView */
+  padding: 16px;
+}
+
+.collection-view-cell {
+  /* Basic styling for the individual item container */
+  cursor: pointer;
+  border: 1px solid #eee;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.collection-view-cell:hover {
+  background-color: #f0f0f0;
+}

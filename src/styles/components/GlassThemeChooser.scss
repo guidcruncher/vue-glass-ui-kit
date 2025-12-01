@@ -1,0 +1,46 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+@use '../mixins/utilities' as *; // Import new utilities
+
+.glass-theme-chooser {
+  @include apply-liquid-glass(
+    $material-opacity: 0.8,
+    $blur: 15px
+  ); // Used mixin to define glass style
+
+  width: 250px;
+  padding: var(--spacing-m);
+  border-radius: 12px;
+
+  .chooser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-m);
+
+    .chooser-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--color-label-primary);
+    }
+  }
+
+  .theme-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    border-radius: var(--spacing-xs);
+
+    &:hover {
+      background-color: rgba(var(--color-glass-rgb), 0.1);
+    }
+
+    .theme-name {
+      color: var(--color-label-primary);
+    }
+  }
+}

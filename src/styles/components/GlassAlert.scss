@@ -1,0 +1,36 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/glass' as *;
+
+.glass-alert-overlay {
+  @include overlay;
+}
+
+.glass-alert-content {
+  width: 90%;
+  max-width: 300px;
+  padding: 20px 20px 15px;
+  text-align: center;
+
+  // Refactored to use the core glass mixin for consistency
+  @include apply-liquid-glass($material-opacity: 0.9, $blur: 15px);
+  border-radius: 14px;
+
+  .alert-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  .alert-body {
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+  }
+
+  .alert-footer {
+    .glass-button {
+      width: 100%;
+    }
+  }
+}

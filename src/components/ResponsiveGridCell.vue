@@ -1,0 +1,19 @@
+<template>
+  <div class="reaponsive-grid-cell">
+    <slot></slot>
+  </div>
+</template>
+
+<script setup>
+// No script changes needed
+</script>
+
+<style scoped>
+.reaponsive-grid-cell {
+  /* Layout and Spacing */
+  border: 1px solid #ccc; /* Simple border for visibility */
+  border-radius: 8px;
+  padding: 20px;
+  height: 100%; /* Critical for consistent row height in the grid */
+}
+</style>

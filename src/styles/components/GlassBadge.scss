@@ -1,0 +1,26 @@
+@use '../mixins/_utilities' as *;
+@use 'sass:math';
+@use '../mixins/utilities' as *; // Import new utilities
+
+.glass-badge {
+  @include flex-center; // Refactored using utility mixin
+  display: inline-flex; // Keep inline-flex for sizing
+  padding: 2px 8px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  background-color: var(--color-accent);
+
+  &.variant-danger {
+    background-color: var(--color-error);
+  }
+  &.variant-success {
+    background-color: #34c759;
+  }
+}
