@@ -1,7 +1,6 @@
 @use '../mixins/_utilities' as *;
 @use 'sass:math';
 @use '../mixins/glass' as *;
-@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-button {
   --button-glass-opacity: 0.3;

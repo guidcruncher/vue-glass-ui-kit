@@ -1,13 +1,14 @@
 <template>
-  <div class="full-page-container" :style="getStyles">
+  <div class="full-page-container">
     <header v-if="slots.header || slots.menubar" :class="getClass">
       <slot name="header"></slot>
       <slot name="menubar"></slot>
     </header>
-
-    <main class="scrollable-content">
-      <slot name="body"></slot>
-    </main>
+    <div :class="getWrapperClass">
+      <main class="scrollable-content">
+        <slot name="body"></slot>
+      </main>
+    </div>
   </div>
 </template>
 
@@ -15,15 +16,12 @@
 import { useSlots, computed } from 'vue'
 const slots = useSlots()
 
-const getStyles = computed(() => {
+const getWrapperClass = computed(() => {
   let size = 0
   if (slots.header && slots.menubar) {
-    size = 124
+    return ['content-wrapper', 'menu']
   }
-  if (slots.header || slots.menubar) {
-    size = 54
-  }
-  return { 'var(--height-offset)': `${size}px` }
+  return ['content-wrapper']
 })
 
 const getClass = computed(() => {

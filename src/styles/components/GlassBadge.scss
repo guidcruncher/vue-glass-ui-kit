@@ -1,6 +1,5 @@
 @use '../mixins/_utilities' as *;
 @use 'sass:math';
-@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-badge {
   @include flex-center; // Refactored using utility mixin

@@ -5,8 +5,6 @@
 :root {
   --bg-gradient-start: #1e3a5f;
   --bg-gradient-end: #67b4d9;
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
   --icon-bg: #1f2937;
   --icon-radius: 22%;
   --folder-radius: 42px;
@@ -22,14 +20,14 @@
 
 folder-title {
   font-size: 24px;
-  font-weight: u700;
+  font-weight: 700;
   color: var(--color-label);
   margin-bottom: 32px;
   letter-spacing: -0.5px;
 }
 
 .folder-panel {
-  background: var(--glass-bg);
+  background: rgba(var(--color-glass-rgb), var(--color-glass-bg-opacity));
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid var(--glass-border);

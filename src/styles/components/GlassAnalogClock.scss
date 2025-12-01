@@ -1,6 +1,5 @@
 @use '../mixins/_utilities' as *;
 @use '../mixins/glass' as *;
-@use '../mixins/utilities' as *; // Import new utilities
 
 .glass-analog-clock {
   @include flex-center; // Refactored using utility mixin

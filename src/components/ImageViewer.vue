@@ -153,5 +153,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-  @use "@/styles/components/ImageViewer" as *;
+@use '@/styles/components/ImageViewer' as *;
 </style>
