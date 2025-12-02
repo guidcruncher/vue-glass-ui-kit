@@ -50,20 +50,19 @@ export const GlassComponents = {
   UITextView,
   UIToolbar,
   UIVisualEffectView,
-};
+}
 
+export function UseGlassUi(app) {
+  const pinia = createPinia()
+  app.directive('click-outside', ClickOutside)
+  app.directive('background-image', BackgroundImage)
+  app.directive('background-mesh', BackgroundMesh)
+  app.directive('background-color', BackgroundColor)
 
-export function  UseGlassUi(app) {
-    const pinia = createPinia()
-    app.directive('click-outside', ClickOutside);
-    app.directive('background-image', BackgroundImage);
-    app.directive('background-mesh', BackgroundMesh);
-    app.directive('background-color', BackgroundColor);
-
-    app.use(pinia);
-    Object.keys(GlassComponents).forEach((name) => {
-      app.component(name, GlassComponents[name]);
-    });
-    const themeStore = useThemeStore()
-    themeStore.restoreTheme()
-};
+  app.use(pinia)
+  Object.keys(GlassComponents).forEach((name) => {
+    app.component(name, GlassComponents[name])
+  })
+  const themeStore = useThemeStore()
+  themeStore.restoreTheme()
+}
