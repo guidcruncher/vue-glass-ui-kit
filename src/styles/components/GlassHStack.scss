@@ -1,8 +1,0 @@
-@use '../mixins/_utilities' as *;
-@use 'sass:math';
-
-.glass-h-stack {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
