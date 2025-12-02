@@ -38,7 +38,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables'; // Assuming you have a file with CSS variables imported
+@use '@/styles/_variables' as *;
 
 .navigation-bar {
   position: sticky;
