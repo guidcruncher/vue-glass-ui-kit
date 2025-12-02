@@ -1,0 +1,64 @@
+// --- 1. Typography ---
+$font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+// --- 2. Design Tokens (Light Mode Default) ---
+:root {
+  /* Typography */
+  --font-family: #{$font-family};
+
+  /* Light Mode Tokens */
+  --ios-background: #F2F2F7;
+  --ios-card-bg: #FFFFFF;
+  --ios-text-primary: #000000;
+  --ios-text-secondary: #8E8E93;
+  --ios-text-tertiary: #C7C7CC;
+  --ios-separator: #C6C6C8;
+  --ios-field-bg: #E3E3E8;
+
+  /* Liquid Glass Tokens (Light) */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-highlight: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+  /* System Colors */
+  --system-blue: #007AFF;
+  --system-green: #34C759;
+  --system-red: #FF3B30;
+  --system-orange: #FF9500;
+  --system-gray: #8E8E93;
+  --system-gray2: #AEAEB2;
+  --system-gray3: #C7C7CC;
+  --system-gray4: #D1D1D6;
+  --system-gray5: #E5E5EA;
+  --system-gray6: #F2F2F7;
+}
+
+// --- 3. Dark Mode Overrides ---
+.dark-mode {
+  --ios-background: #000000;
+  --ios-card-bg: #1C1C1E;
+  --ios-text-primary: #FFFFFF;
+  --ios-text-secondary: #98989D;
+  --ios-text-tertiary: #5A5A5F;
+  --ios-separator: #38383A;
+  --ios-field-bg: #2C2C2E;
+
+  /* Liquid Glass Tokens (Dark) */
+  --glass-bg: rgba(30, 30, 30, 0.60);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  /* System Colors Dark Variants */
+  --system-blue: #0A84FF;
+  --system-green: #30D158;
+  --system-red: #FF453A;
+  --system-orange: #FF9F0A;
+  --system-gray: #8E8E93;
+  --system-gray2: #636366;
+  --system-gray3: #48484A;
+  --system-gray4: #3A3A3C;
+  --system-gray5: #2C2C2E;
+  --system-gray6: #1C1C1E;
+}
