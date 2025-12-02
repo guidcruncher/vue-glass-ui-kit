@@ -8,6 +8,7 @@ import UIDatePicker from './UIDatePicker.vue'
 import UIImageView from './UIImageView.vue'
 import UINavigationBar from './UINavigationBar.vue'
 import UIPageControl from './UIPageControl.vue'
+import UIProgressView from './UIProgressView.vue'
 import UISearchBar from './UISearchBar.vue'
 import UISlider from './UISlider.vue'
 import UISplitView from './UISplitView.vue'
@@ -38,6 +39,7 @@ export const GlassComponents = {
   UIImageView,
   UINavigationBar,
   UIPageControl,
+  UIProgressView,
   UISearchBar,
   UISlider,
   UISplitView,
@@ -50,19 +52,20 @@ export const GlassComponents = {
   UITextView,
   UIToolbar,
   UIVisualEffectView,
-}
+};
 
-export function UseGlassUi(app) {
-  const pinia = createPinia()
-  app.directive('click-outside', ClickOutside)
-  app.directive('background-image', BackgroundImage)
-  app.directive('background-mesh', BackgroundMesh)
-  app.directive('background-color', BackgroundColor)
 
-  app.use(pinia)
-  Object.keys(GlassComponents).forEach((name) => {
-    app.component(name, GlassComponents[name])
-  })
-  const themeStore = useThemeStore()
-  themeStore.restoreTheme()
-}
+export function  UseGlassUi(app) {
+    const pinia = createPinia()
+    app.directive('click-outside', ClickOutside);
+    app.directive('background-image', BackgroundImage);
+    app.directive('background-mesh', BackgroundMesh);
+    app.directive('background-color', BackgroundColor);
+
+    app.use(pinia);
+    Object.keys(GlassComponents).forEach((name) => {
+      app.component(name, GlassComponents[name]);
+    });
+    const themeStore = useThemeStore()
+    themeStore.restoreTheme()
+};
