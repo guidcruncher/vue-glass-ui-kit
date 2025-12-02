@@ -17,46 +17,10 @@ export function GlassUiRegistry(options = {}) {
   const outputFile = options.outputFile || 'src/plugins/componentRegistry.js'
   const virtualModuleId = options.virtualModuleId || 'virtual:dynamic-registry'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
-  const renderScssSpa = options.scssSpa ? true : false
 
   // Absolute paths for file system operations
   const absoluteOutputDir = path.resolve(process.cwd(), path.dirname(outputFile))
   const absoluteOutputPath = path.resolve(process.cwd(), outputFile)
-  const absoluteOutputScss = path.resolve(process.cwd(), 'src/styles/styles-full.scss')
-  const absoluteOutputSpa = path.resolve(process.cwd(), 'src/styles/combined-spa.txt')
-
-  const generateStaticSpa = () => {
-    const stylesDirectory = 'src/styles/components'
-    const files = fs.readdirSync(stylesDirectory)
-    const scssFiles = files.filter((f) => f.endsWith('.scss'))
-
-    const getFile = (file) => {
-      const data = fs.readFileSync('./src/styles/' + file, 'utf-8')
-      return `/* File: ${file} */\n${data}`
-    }
-    const scssImports = scssFiles.map((file) => {
-      return getFile('./components/' + file)
-    })
-
-    return `${getFile('./themes/apple.scss')}
-${getFile('./_typography.scss')}
-${scssImports.join('\n')}`
-  }
-
-  const generateStaticScss = () => {
-    const stylesDirectory = 'src/styles/components'
-    const files = fs.readdirSync(stylesDirectory)
-    const scssFiles = files.filter((f) => f.endsWith('.scss'))
-
-    const scssImports = scssFiles.map((file) => {
-      const name = file.replace('.scss', '')
-      return `@use './components/${name}' as *;`
-    })
-
-    return `@use './themes/apple.scss' as *;
-@use './_typography' as *;
-${scssImports.join('\n')}`
-  }
 
   const generateStaticCode = () => {
     const files = fs.readdirSync(sourceDirectory)
@@ -173,15 +137,11 @@ export function  UseGlassUi(app) {
         fs.mkdirSync(absoluteOutputDir, { recursive: true })
       }
 
-      const spa = generateStaticSpa()
-      const scss = generateStaticScss()
       const codeStatic = generateStaticCode()
       const code = generatePluginCode()
 
       // Write the generated code to the specified file path
       try {
-        if (renderScssSpa) {fs.writeFileSync(absoluteOutputSpa, spa, 'utf-8')}
-        fs.writeFileSync(absoluteOutputScss, scss, 'utf-8')
         fs.writeFileSync(absoluteOutputPath, codeStatic, 'utf-8')
         console.log(`[Vite Plugin] Wrote static registry file to: ${outputFile}`)
       } catch (error) {
