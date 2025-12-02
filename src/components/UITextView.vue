@@ -11,22 +11,22 @@
 
 <script lang="ts" setup>
 interface Props {
-  placeholder?: string;
-  rows?: number | string;
-  modelValue: string;
+  placeholder?: string
+  rows?: number | string
+  modelValue: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Enter text here...',
   rows: 3,
-});
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
 const handleInput = (event: Event) => {
-  const target = event.target as HTMLTextAreaElement;
-  emit('update:modelValue', target.value);
-};
+  const target = event.target as HTMLTextAreaElement
+  emit('update:modelValue', target.value)
+}
 </script>
 
 <style lang="scss" scoped>

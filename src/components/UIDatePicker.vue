@@ -2,45 +2,54 @@
   <div class="ui-date-picker">
     <div class="picker-container">
       <div class="highlight"></div>
-      
+
       <div class="wheel" ref="monthWheel">
         <div class="padding"></div>
         <div v-for="month in months" :key="month" class="item">{{ month }}</div>
         <div class="padding"></div>
       </div>
-      
+
       <div class="wheel" ref="dayWheel">
         <div class="padding"></div>
         <div v-for="day in days" :key="day" class="item">{{ day }}</div>
         <div class="padding"></div>
       </div>
-      
+
       <div class="wheel" ref="yearWheel">
         <div class="padding"></div>
         <div v-for="year in years" :key="year" class="item">{{ year }}</div>
         <div class="padding"></div>
       </div>
-      
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const months = [
-  'January', 'February', 'March', 'April', 'May', 'June', 'July',
-  'August', 'September', 'October', 'November', 'December',
-];
-const days = Array.from({ length: 31 }, (_, i) => i + 1);
-const years = Array.from({ length: 10 }, (_, i) => 2025 + i);
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+const days = Array.from({ length: 31 }, (_, i) => i + 1)
+const years = Array.from({ length: 10 }, (_, i) => 2025 + i)
 
-// Actual snapping and selection logic (omitted for complexity) would involve 
+// Actual snapping and selection logic (omitted for complexity) would involve
 // 'scroll' event listeners, debounce, and using Element.scrollTop to center an item.
 
-const monthWheel = ref<HTMLElement | null>(null);
-const dayWheel = ref<HTMLElement | null>(null);
-const yearWheel = ref<HTMLElement | null>(null);
+const monthWheel = ref<HTMLElement | null>(null)
+const dayWheel = ref<HTMLElement | null>(null)
+const yearWheel = ref<HTMLElement | null>(null)
 </script>
 
 <style lang="scss" scoped>
@@ -79,7 +88,7 @@ const yearWheel = ref<HTMLElement | null>(null);
     scroll-snap-type: y mandatory; // Enables native scroll snapping
     height: 100%;
     scrollbar-width: none; /* Firefox */
-    
+
     &::-webkit-scrollbar {
       display: none; // Chrome, Safari, Opera
     }

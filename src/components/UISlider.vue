@@ -13,64 +13,64 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue'
 
 interface Props {
-  modelValue?: number | string; // 0 to 100
+  modelValue?: number | string // 0 to 100
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: 50,
-});
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
-const trackRef = ref<HTMLElement | null>(null);
-const currentValue = ref(parseFloat(props.modelValue.toString()));
+const trackRef = ref<HTMLElement | null>(null)
+const currentValue = ref(parseFloat(props.modelValue.toString()))
 
 const getPercentage = (clientX: number, track: HTMLElement): number => {
-  const rect = track.getBoundingClientRect();
-  const rawPct = (clientX - rect.left) / rect.width;
-  return Math.max(0, Math.min(100, rawPct * 100));
-};
+  const rect = track.getBoundingClientRect()
+  const rawPct = (clientX - rect.left) / rect.width
+  return Math.max(0, Math.min(100, rawPct * 100))
+}
 
 const updateValue = (clientX: number) => {
   if (trackRef.value) {
-    const newPct = getPercentage(clientX, trackRef.value);
-    currentValue.value = Math.round(newPct);
-    emit('update:modelValue', currentValue.value);
+    const newPct = getPercentage(clientX, trackRef.value)
+    currentValue.value = Math.round(newPct)
+    emit('update:modelValue', currentValue.value)
   }
-};
+}
 
 const onDrag = (e: MouseEvent | TouchEvent) => {
-  e.preventDefault();
-  const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-  updateValue(clientX);
-};
+  e.preventDefault()
+  const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+  updateValue(clientX)
+}
 
 const endDrag = () => {
-  document.removeEventListener('mousemove', onDrag);
-  document.removeEventListener('mouseup', endDrag);
-  document.removeEventListener('touchmove', onDrag);
-  document.removeEventListener('touchend', endDrag);
-};
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', endDrag)
+  document.removeEventListener('touchmove', onDrag)
+  document.removeEventListener('touchend', endDrag)
+}
 
 const startDrag = (e: MouseEvent | TouchEvent) => {
-  const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-  updateValue(clientX);
+  const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+  updateValue(clientX)
 
-  document.addEventListener('mousemove', onDrag);
-  document.addEventListener('mouseup', endDrag, { once: true });
-  document.addEventListener('touchmove', onDrag, { passive: false });
-  document.addEventListener('touchend', endDrag, { once: true });
-};
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', endDrag, { once: true })
+  document.addEventListener('touchmove', onDrag, { passive: false })
+  document.addEventListener('touchend', endDrag, { once: true })
+}
 
 onMounted(() => {
   // Initialize value from prop
-  currentValue.value = parseFloat(props.modelValue.toString());
-});
+  currentValue.value = parseFloat(props.modelValue.toString())
+})
 
-onUnmounted(endDrag); // Cleanup in case the component is destroyed during a drag
+onUnmounted(endDrag) // Cleanup in case the component is destroyed during a drag
 </script>
 
 <style lang="scss" scoped>

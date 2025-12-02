@@ -22,48 +22,48 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 
 interface Action {
-  text: string;
-  style: 'default' | 'cancel' | 'destructive';
+  text: string
+  style: 'default' | 'cancel' | 'destructive'
 }
 
 interface Props {
-  title: string;
-  message: string;
-  actions: string; // JSON string from the original HTML
+  title: string
+  message: string
+  actions: string // JSON string from the original HTML
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(['action', 'close']);
+const props = defineProps<Props>()
+const emit = defineEmits(['action', 'close'])
 
-const isVisible = ref(false);
+const isVisible = ref(false)
 
 const parsedActions = computed<Action[]>(() => {
   try {
-    return JSON.parse(props.actions) as Action[];
+    return JSON.parse(props.actions) as Action[]
   } catch {
-    return [];
+    return []
   }
-});
+})
 
 const close = () => {
-  isVisible.value = false;
-  emit('close');
-};
+  isVisible.value = false
+  emit('close')
+}
 
 const show = () => {
-  isVisible.value = true;
-};
+  isVisible.value = true
+}
 
 const handleAction = (action: Action) => {
-  emit('action', action);
-  close();
-};
+  emit('action', action)
+  close()
+}
 
 // Expose show/close methods to the template ref usage
-defineExpose({ show, close });
+defineExpose({ show, close })
 </script>
 
 <style lang="scss" scoped>

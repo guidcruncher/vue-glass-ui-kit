@@ -6,22 +6,22 @@
 </template>
 
 <script lang="ts" setup>
-import IconView from './IconView.vue'; // Assuming IconView is available
-import { ref, computed } from 'vue';
+import IconView from './IconView.vue' // Assuming IconView is available
+import { ref, computed } from 'vue'
 
 interface Props {
-  icon: string;
-  label: string;
-  index: number;
-  isActive: boolean; // Managed by the parent UITabBar
+  icon: string
+  label: string
+  index: number
+  isActive: boolean // Managed by the parent UITabBar
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(['select']);
+const props = defineProps<Props>()
+const emit = defineEmits(['select'])
 
 const handleClick = () => {
-  emit('select', props.index);
-};
+  emit('select', props.index)
+}
 </script>
 
 <style lang="scss" scoped>

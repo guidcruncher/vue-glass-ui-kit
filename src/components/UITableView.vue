@@ -14,13 +14,13 @@
 .ui-table-view {
   display: block;
   margin-bottom: 24px;
-  
+
   .table-group {
     background: var(--ios-card-bg);
     border-radius: 12px;
     overflow: hidden;
     margin: 0 16px; // Apply margin for grouped style look
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05); // Subtle shadow for card look
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); // Subtle shadow for card look
   }
 }
 </style>

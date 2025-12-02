@@ -20,20 +20,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import IconView from '@/components/IconView.vue';
-import UISwitch from '@/components/UISwitch.vue'; // Need to define this one too
+import { ref } from 'vue'
+import IconView from '@/components/IconView.vue'
+import UISwitch from '@/components/UISwitch.vue' // Need to define this one too
 
-type Accessory = 'chevron' | 'detail' | 'none';
-type CellType = 'default' | 'switch' | 'input';
+type Accessory = 'chevron' | 'detail' | 'none'
+type CellType = 'default' | 'switch' | 'input'
 
 interface Props {
-  label?: string;
-  value?: string;
-  icon?: string;
-  type?: CellType;
-  accessory?: Accessory;
-  switchState?: 'on' | 'off';
+  label?: string
+  value?: string
+  icon?: string
+  type?: CellType
+  accessory?: Accessory
+  switchState?: 'on' | 'off'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -43,26 +43,26 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'default',
   accessory: undefined,
   switchState: 'off',
-});
+})
 
 // For switch: manage its state internally, or use v-model if it were more complex
-const initialSwitchState = ref(props.switchState === 'on');
+const initialSwitchState = ref(props.switchState === 'on')
 
 const handleSwitchChange = (newState: boolean) => {
-  initialSwitchState.value = newState;
+  initialSwitchState.value = newState
   // Emit event if parent component needs to react
   // emit('switchChange', newState);
-};
+}
 
 const getAccessoryIcon = (acc: Accessory): string => {
   switch (acc) {
     case 'chevron':
-      return 'chevron';
+      return 'chevron'
     // Add other accessory icons here if needed
     default:
-      return '';
+      return ''
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

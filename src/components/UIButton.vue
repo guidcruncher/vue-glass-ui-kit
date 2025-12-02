@@ -7,25 +7,25 @@
 
 <script lang="ts" setup>
 // Assuming IconView is a component that renders the appropriate SVG based on the 'name' prop.
-import IconView from '@/components/IconView.vue';
+import IconView from '@/components/IconView.vue'
 
-type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain' | 'icon' | 'prominentGlass' | 'text';
+type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain' | 'icon' | 'prominentGlass' | 'text'
 
 interface Props {
-  variant?: ButtonVariant;
-  icon?: string; // e.g., 'chevron.left'
+  variant?: ButtonVariant
+  icon?: string // e.g., 'chevron.left'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
   icon: undefined,
-});
+})
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
 const handleClick = (event: MouseEvent) => {
-  emit('click', event);
-};
+  emit('click', event)
+}
 </script>
 
 <style lang="scss" scoped>

@@ -5,32 +5,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 
 interface Props {
-  checked?: boolean; // Initial state (use v-model for two-way binding if needed)
+  checked?: boolean // Initial state (use v-model for two-way binding if needed)
 }
 
 const props = withDefaults(defineProps<Props>(), {
   checked: false,
-});
+})
 
-const emit = defineEmits(['update:checked']);
+const emit = defineEmits(['update:checked'])
 
-const isChecked = ref(props.checked);
+const isChecked = ref(props.checked)
 
 // Update internal state if prop changes
 watch(
   () => props.checked,
   (newVal) => {
-    isChecked.value = newVal;
+    isChecked.value = newVal
   },
-);
+)
 
 const toggleSwitch = () => {
-  isChecked.value = !isChecked.value;
-  emit('update:checked', isChecked.value);
-};
+  isChecked.value = !isChecked.value
+  emit('update:checked', isChecked.value)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +58,10 @@ const toggleSwitch = () => {
     top: 2px;
     left: 2px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.2s, background 0.2s;
+    transition:
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      width 0.2s,
+      background 0.2s;
   }
 
   &.on &__knob {

@@ -1,5 +1,6 @@
 // --- 1. Typography ---
-$font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$font-family:
+  -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
 // --- 2. Design Tokens (Light Mode Default) ---
 :root {
@@ -7,13 +8,13 @@ $font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Robo
   --font-family: #{$font-family};
 
   /* Light Mode Tokens */
-  --ios-background: #F2F2F7;
-  --ios-card-bg: #FFFFFF;
+  --ios-background: #f2f2f7;
+  --ios-card-bg: #ffffff;
   --ios-text-primary: #000000;
-  --ios-text-secondary: #8E8E93;
-  --ios-text-tertiary: #C7C7CC;
-  --ios-separator: #C6C6C8;
-  --ios-field-bg: #E3E3E8;
+  --ios-text-secondary: #8e8e93;
+  --ios-text-tertiary: #c7c7cc;
+  --ios-separator: #c6c6c8;
+  --ios-field-bg: #e3e3e8;
 
   /* Liquid Glass Tokens (Light) */
   --glass-bg: rgba(255, 255, 255, 0.75);
@@ -22,43 +23,43 @@ $font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Robo
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 
   /* System Colors */
-  --system-blue: #007AFF;
-  --system-green: #34C759;
-  --system-red: #FF3B30;
-  --system-orange: #FF9500;
-  --system-gray: #8E8E93;
-  --system-gray2: #AEAEB2;
-  --system-gray3: #C7C7CC;
-  --system-gray4: #D1D1D6;
-  --system-gray5: #E5E5EA;
-  --system-gray6: #F2F2F7;
+  --system-blue: #007aff;
+  --system-green: #34c759;
+  --system-red: #ff3b30;
+  --system-orange: #ff9500;
+  --system-gray: #8e8e93;
+  --system-gray2: #aeaeb2;
+  --system-gray3: #c7c7cc;
+  --system-gray4: #d1d1d6;
+  --system-gray5: #e5e5ea;
+  --system-gray6: #f2f2f7;
 }
 
 // --- 3. Dark Mode Overrides ---
 .dark-mode {
   --ios-background: #000000;
-  --ios-card-bg: #1C1C1E;
-  --ios-text-primary: #FFFFFF;
-  --ios-text-secondary: #98989D;
-  --ios-text-tertiary: #5A5A5F;
-  --ios-separator: #38383A;
-  --ios-field-bg: #2C2C2E;
+  --ios-card-bg: #1c1c1e;
+  --ios-text-primary: #ffffff;
+  --ios-text-secondary: #98989d;
+  --ios-text-tertiary: #5a5a5f;
+  --ios-separator: #38383a;
+  --ios-field-bg: #2c2c2e;
 
   /* Liquid Glass Tokens (Dark) */
-  --glass-bg: rgba(30, 30, 30, 0.60);
+  --glass-bg: rgba(30, 30, 30, 0.6);
   --glass-border: rgba(255, 255, 255, 0.12);
   --glass-highlight: rgba(255, 255, 255, 0.1);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 
   /* System Colors Dark Variants */
-  --system-blue: #0A84FF;
-  --system-green: #30D158;
-  --system-red: #FF453A;
-  --system-orange: #FF9F0A;
-  --system-gray: #8E8E93;
+  --system-blue: #0a84ff;
+  --system-green: #30d158;
+  --system-red: #ff453a;
+  --system-orange: #ff9f0a;
+  --system-gray: #8e8e93;
   --system-gray2: #636366;
-  --system-gray3: #48484A;
-  --system-gray4: #3A3A3C;
-  --system-gray5: #2C2C2E;
-  --system-gray6: #1C1C1E;
+  --system-gray3: #48484a;
+  --system-gray4: #3a3a3c;
+  --system-gray5: #2c2c2e;
+  --system-gray6: #1c1c1e;
 }

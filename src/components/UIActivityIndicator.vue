@@ -8,20 +8,20 @@
 
 <script lang="ts" setup>
 interface Props {
-  animating?: boolean | string; // Use boolean | string for prop to handle HTML attribute presence
+  animating?: boolean | string // Use boolean | string for prop to handle HTML attribute presence
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const animating = props.animating === true || props.animating === 'true' || props.animating === '';
+const animating = props.animating === true || props.animating === 'true' || props.animating === ''
 
 const getBarStyle = (i: number) => {
   return {
     transform: `rotate(${(i - 1) * 30}deg) translate(0, -140%)`,
     // Stagger animation delay to create the spinning effect
     animationDelay: `-${1.2 - (i - 1) * 0.1}s`,
-  };
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -67,13 +67,7 @@ const getBarStyle = (i: number) => {
 }
 </style>
 
-***
-
-## 6. UIProgressView (`UIProgressView.vue`)
-
-A simple progress bar.
-
-```vue
+*** ## 6. UIProgressView (`UIProgressView.vue`) A simple progress bar. ```vue
 <template>
   <div class="ui-progress-view">
     <div class="track">
@@ -83,20 +77,20 @@ A simple progress bar.
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 interface Props {
-  value?: number | string; // 0 to 100
+  value?: number | string // 0 to 100
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: 0,
-});
+})
 
 const progressValue = computed(() => {
-  const val = parseFloat(props.value.toString());
-  return Math.max(0, Math.min(100, val));
-});
+  const val = parseFloat(props.value.toString())
+  return Math.max(0, Math.min(100, val))
+})
 </script>
 
 <style lang="scss" scoped>

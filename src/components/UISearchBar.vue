@@ -2,34 +2,29 @@
   <div class="ui-search-bar">
     <div class="wrapper">
       <IconView name="magnifyingglass" class="search-icon" />
-      <input 
-        type="text" 
-        :placeholder="placeholder"
-        :value="modelValue"
-        @input="handleInput"
-      />
+      <input type="text" :placeholder="placeholder" :value="modelValue" @input="handleInput" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import IconView from './IconView.vue'; // Assuming IconView is available
+import IconView from './IconView.vue' // Assuming IconView is available
 
 interface Props {
-  placeholder?: string;
-  modelValue: string;
+  placeholder?: string
+  modelValue: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Search',
-});
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
 const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
-};
+  const target = event.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
 </script>
 
 <style lang="scss" scoped>

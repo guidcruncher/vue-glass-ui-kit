@@ -11,30 +11,30 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue'
 
 interface Props {
-  title: string;
+  title: string
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const isScrolled = ref(false);
+const isScrolled = ref(false)
 
 const handleScroll = () => {
   // Simple logic to check if the user has scrolled past the top of the content.
   // This is often used in iOS to change the appearance of the navigation bar.
-  isScrolled.value = window.scrollY > 0;
-};
+  isScrolled.value = window.scrollY > 0
+}
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Check initial state
-});
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // Check initial state
+})
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +57,9 @@ onUnmounted(() => {
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border-bottom: 1px solid var(--glass-border);
 
-  transition: border-bottom 0.3s ease, background 0.3s ease;
+  transition:
+    border-bottom 0.3s ease,
+    background 0.3s ease;
 
   &__title {
     position: absolute;

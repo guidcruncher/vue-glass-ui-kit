@@ -18,32 +18,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import IconView from './IconView.vue';
+import { ref, watch } from 'vue'
+import IconView from './IconView.vue'
 
 interface Props {
-  placeholder?: string;
-  modelValue: string;
-  clearButton?: boolean;
+  placeholder?: string
+  modelValue: string
+  clearButton?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   clearButton: false,
-});
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
-const isFocused = ref(false);
+const isFocused = ref(false)
 
 const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
-};
+  const target = event.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
 
 const clearInput = () => {
-  emit('update:modelValue', '');
-};
+  emit('update:modelValue', '')
+}
 </script>
 
 <style lang="scss" scoped>

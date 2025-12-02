@@ -6,11 +6,11 @@
 
 <script lang="ts" setup>
 interface Props {
-  activeIndex?: number;
+  activeIndex?: number
 }
 const props = withDefaults(defineProps<Props>(), {
   activeIndex: 0,
-});
+})
 // The active index logic would typically be managed by the parent view
 // which passes the state down to the TabItems via a provide/inject or slot props.
 </script>

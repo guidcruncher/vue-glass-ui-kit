@@ -12,35 +12,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 
 interface Props {
-  pages?: number | string;
-  currentPage?: number | string;
+  pages?: number | string
+  currentPage?: number | string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   pages: 3,
   currentPage: 0,
-});
+})
 
-const emit = defineEmits(['update:currentPage']);
+const emit = defineEmits(['update:currentPage'])
 
-const totalPages = ref(parseInt(props.pages.toString()));
-const currentPage = ref(parseInt(props.currentPage.toString()));
+const totalPages = ref(parseInt(props.pages.toString()))
+const currentPage = ref(parseInt(props.currentPage.toString()))
 
 const selectPage = (index: number) => {
-  currentPage.value = index;
-  emit('update:currentPage', index);
-};
+  currentPage.value = index
+  emit('update:currentPage', index)
+}
 
 // Sync internal state if the parent updates the prop
 watch(
   () => props.currentPage,
   (newVal) => {
-    currentPage.value = parseInt(newVal.toString());
+    currentPage.value = parseInt(newVal.toString())
   },
-);
+)
 </script>
 
 <style lang="scss" scoped>

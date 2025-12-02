@@ -1,56 +1,60 @@
-* { 
-    box-sizing: border-box; 
-    // Prevents the default mobile click highlight box on tappable elements
-    -webkit-tap-highlight-color: transparent; 
+* {
+  box-sizing: border-box;
+  // Prevents the default mobile click highlight box on tappable elements
+  -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: var(--font-family);
-    background-color: var(--ios-background);
-    color: var(--ios-text-primary);
-    
-    // Smooth transition between light and dark modes
-    transition: background-color 0.3s ease, color 0.3s ease;
-    
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding-bottom: 120px; /* Space for fixed TabBar + Toolbar */
+  font-family: var(--font-family);
+  background-color: var(--ios-background);
+  color: var(--ios-text-primary);
+
+  // Smooth transition between light and dark modes
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 120px; /* Space for fixed TabBar + Toolbar */
 }
 
 // Global utility classes for structure
 .container {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
 
-    @media (min-width: 768px) {
-        max-width: 100%; // Used within UISplitView detail pane
-        padding: 0;
-    }
+  @media (min-width: 768px) {
+    max-width: 100%; // Used within UISplitView detail pane
+    padding: 0;
+  }
 }
 
 .section-title {
-    font-size: 13px;
-    text-transform: uppercase;
-    color: var(--ios-text-secondary);
-    margin: 24px 0 8px 16px;
-    font-weight: 400;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--ios-text-secondary);
+  margin: 24px 0 8px 16px;
+  font-weight: 400;
 }
 
 // Reset native input/textarea styles
-input, textarea {
-    font-family: inherit;
-    color: var(--ios-text-primary);
-    background: var(--ios-field-bg);
-    border: none;
-    padding: 0;
-    margin: 0;
+input,
+textarea {
+  font-family: inherit;
+  color: var(--ios-text-primary);
+  background: var(--ios-field-bg);
+  border: none;
+  padding: 0;
+  margin: 0;
 }
