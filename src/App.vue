@@ -175,7 +175,7 @@
             <UITableView>
               <UITableCell label="Airplane Mode" icon="plane" accessory="switch">
                 <template #custom-content>
-                  <UISwitch v-model="airplaneMode" />
+                  <UISwitch v-model="airplaneMode" /> {{ airplaneMode }}
                 </template>
               </UITableCell>
               <UITableCell label="Wi-Fi" icon="wifi" value="LiquidGlass_5G" accessory="chevron" />

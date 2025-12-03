@@ -1,35 +1,41 @@
 <template>
-  <div :class="['ui-switch', { on: isChecked }]" @click="toggleSwitch">
+  <!-- 
+    1. Class binding now uses the standard 'modelValue' prop.
+    2. The click handler remains the same.
+  -->
+  <div :class="['ui-switch', { on: modelValue }]" @click="toggleSwitch">
     <div class="ui-switch__knob"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+// Note: ref and watch are no longer needed as we rely purely on the prop/emit pattern.
 
+// --- 1. Rename Prop to 'modelValue' ---
 interface Props {
-  checked?: boolean // Initial state (use v-model for two-way binding if needed)
+  /** * The state of the switch, automatically bound when using v-model 
+   * e.g., <UISwitch v-model="mySetting" />
+   */
+  modelValue?: boolean 
 }
-
 const props = withDefaults(defineProps<Props>(), {
-  checked: false,
+  modelValue: false,
 })
 
-const emit = defineEmits(['update:checked'])
+// --- 2. Rename Emit Event to 'update:modelValue' ---
+const emit = defineEmits<{
+  // This is the required event for two-way binding with v-model
+  (event: 'update:modelValue', value: boolean): void
+}>()
 
-const isChecked = ref(props.checked)
-
-// Update internal state if prop changes
-watch(
-  () => props.checked,
-  (newVal) => {
-    isChecked.value = newVal
-  },
-)
-
+/**
+ * Toggles the switch state and emits the new value.
+ */
 const toggleSwitch = () => {
-  isChecked.value = !isChecked.value
-  emit('update:checked', isChecked.value)
+  // 3. Directly calculate the new state from props.modelValue 
+  // and emit it back to the parent.
+  const newState = !props.modelValue;
+  emit('update:modelValue', newState)
 }
 </script>
 
@@ -44,11 +50,10 @@ const toggleSwitch = () => {
   cursor: pointer;
   user-select: none;
   flex: 0 0 auto; // Prevent flex from resizing it
-
+  
   &.on {
     background-color: var(--system-green);
   }
-
   &__knob {
     width: 27px;
     height: 27px;
@@ -63,18 +68,15 @@ const toggleSwitch = () => {
       width 0.2s,
       background 0.2s;
   }
-
   &.on &__knob {
     transform: translateX(20px);
   }
-
   // Active (click/touch) states for the 'squash' effect
   &:active &__knob {
     width: 32px;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(4px);
   }
-
   &.on:active &__knob {
     transform: translateX(15px); // Pushes the knob less far for the squash effect
   }
