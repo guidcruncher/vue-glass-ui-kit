@@ -13,10 +13,10 @@
 
 // --- 1. Rename Prop to 'modelValue' ---
 interface Props {
-  /** * The state of the switch, automatically bound when using v-model 
+  /** * The state of the switch, automatically bound when using v-model
    * e.g., <UISwitch v-model="mySetting" />
    */
-  modelValue?: boolean 
+  modelValue?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
@@ -32,9 +32,9 @@ const emit = defineEmits<{
  * Toggles the switch state and emits the new value.
  */
 const toggleSwitch = () => {
-  // 3. Directly calculate the new state from props.modelValue 
+  // 3. Directly calculate the new state from props.modelValue
   // and emit it back to the parent.
-  const newState = !props.modelValue;
+  const newState = !props.modelValue
   emit('update:modelValue', newState)
 }
 </script>
@@ -50,7 +50,7 @@ const toggleSwitch = () => {
   cursor: pointer;
   user-select: none;
   flex: 0 0 auto; // Prevent flex from resizing it
-  
+
   &.on {
     background-color: var(--system-green);
   }

@@ -82,7 +82,7 @@
                 <template #custom-content>
                   <div>
                     <UIListPicker v-model="selectedPlatform" :items="platforms" />
-                    <div> {{selectedPlatform }}</div>
+                    <div>{{ selectedPlatform }}</div>
                   </div>
                 </template>
               </UITableCell>
@@ -194,6 +194,8 @@
               @click="showAlert = true"
               >Show Glass Alert</UIButton
             >
+            <UIAnalogClock size="200" timezone="Europe/London" />
+            <UIFlipClock />
           </div>
         </template>
       </UISplitView>
