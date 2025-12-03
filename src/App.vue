@@ -1,5 +1,5 @@
 <template>
-  <div class="main-body">
+  <div class="main-body" v-background-mesh>
     <UINavigationBar title="UI Components">
       <template #left>
         <UIButton variant="icon" icon="chevron-left">Back</UIButton>
@@ -38,7 +38,9 @@
             <UIImageView
               src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
               alt="Durdle Door in Dorset, UK"
-              width="500px" height="200px" scale="cover"
+              width="500px"
+              height="200px"
+              scale="cover"
             />
 
             <UISearchBar v-model="query" placeholder="Search components" />
@@ -66,7 +68,14 @@
             <UITableView>
               <UITableCell label="Date">
                 <template #custom-content>
-                  <UIDatePicker />
+                  <UIDatePicker v-model="dateValue" />
+                  <div>{{ dateValue }}</div>
+                </template>
+              </UITableCell>
+              <UITableCell label="Time">
+                <template #custom-content>
+                  <UITimePicker v-model="timeValue" />
+                  <div>{{ timeValue }}</div>
                 </template>
               </UITableCell>
               <UITableCell label="Download">
@@ -213,6 +222,8 @@ import { ref, computed } from 'vue'
 // --- App Logic ---
 // State for v-model demonstrations
 const query = ref('')
+const dateValue = ref(new Date())
+const timeValue = ref(new Date())
 const username = ref('guest_user_1')
 const bio = ref('I love the new Liquid Glass design!')
 const airplaneMode = ref(false)

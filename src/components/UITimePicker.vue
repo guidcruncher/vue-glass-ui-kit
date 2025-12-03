@@ -3,21 +3,19 @@
     <div class="picker-container">
       <div class="highlight"></div>
 
-      <div class="wheel" ref="monthWheel" @scroll="debouncedHandleScroll('month', $event)">
+      <div class="wheel" ref="hourWheel" @scroll="debouncedHandleScroll('hour', $event)">
         <div class="padding"></div>
-        <div v-for="(month, index) in months" :key="index" class="item">{{ month }}</div>
-        <div class="padding"></div>
-      </div>
-
-      <div class="wheel" ref="dayWheel" @scroll="debouncedHandleScroll('day', $event)">
-        <div class="padding"></div>
-        <div v-for="(day, index) in days" :key="index" class="item">{{ day }}</div>
+        <div v-for="(hour, index) in hours" :key="index" class="item">
+          {{ String(hour).padStart(2, '0') }}
+        </div>
         <div class="padding"></div>
       </div>
 
-      <div class="wheel" ref="yearWheel" @scroll="debouncedHandleScroll('year', $event)">
+      <div class="wheel" ref="minuteWheel" @scroll="debouncedHandleScroll('minute', $event)">
         <div class="padding"></div>
-        <div v-for="(year, index) in years" :key="index" class="item">{{ year }}</div>
+        <div v-for="(minute, index) in minutes" :key="index" class="item">
+          {{ String(minute).padStart(2, '0') }}
+        </div>
         <div class="padding"></div>
       </div>
     </div>
@@ -30,7 +28,7 @@ import { debounce } from '@/utils/debounce' // ASSUME PATH: '@/utils/debounce'
 
 // --- Props and Emits for v-model ---
 interface Props {
-  /** The current selected date, bound via v-model */
+  /** The current selected time, bound via v-model (expected to be a Date object) */
   modelValue: Date | null
 }
 const props = defineProps<Props>()
@@ -42,36 +40,20 @@ const emit = defineEmits<{
 
 // --- Constants and Refs ---
 const ITEM_HEIGHT = 34
-const START_YEAR = 2025
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-const days = Array.from({ length: 31 }, (_, i) => i + 1)
-const years = Array.from({ length: 10 }, (_, i) => START_YEAR + i)
+const hours = [...Array(24).keys()]
+const minutes = [...Array(60).keys()]
 
-const monthWheel = ref<HTMLElement | null>(null)
-const dayWheel = ref<HTMLElement | null>(null)
-const yearWheel = ref<HTMLElement | null>(null)
+const hourWheel = ref<HTMLElement | null>(null)
+const minuteWheel = ref<HTMLElement | null>(null)
 
 // --- Scroll Utility ---
 const getCenteredIndex = (scrollTop: number): number => {
   return Math.round(scrollTop / ITEM_HEIGHT)
 }
 
-// --- Initialization Logic ---
-const calculateScrollTop = (datePartIndex: number) => {
-  return datePartIndex * ITEM_HEIGHT
+// --- Initialization Logic (FIXED) ---
+const calculateScrollTop = (timePartIndex: number) => {
+  return timePartIndex * ITEM_HEIGHT
 }
 
 const setInitialScroll = () => {
@@ -79,19 +61,13 @@ const setInitialScroll = () => {
 
   // FIX: Use nextTick to ensure the DOM has completed layout calculations
   nextTick(() => {
-    if (monthWheel.value) {
-      const monthIndex = date.getMonth()
-      monthWheel.value.scrollTop = calculateScrollTop(monthIndex)
+    if (hourWheel.value) {
+      const hourIndex = date.getHours()
+      hourWheel.value.scrollTop = calculateScrollTop(hourIndex)
     }
-    if (dayWheel.value) {
-      const dayIndex = date.getDate() - 1
-      dayWheel.value.scrollTop = calculateScrollTop(dayIndex)
-    }
-    if (yearWheel.value) {
-      const yearIndex = date.getFullYear() - START_YEAR
-      if (yearIndex >= 0 && yearIndex < years.length) {
-        yearWheel.value.scrollTop = calculateScrollTop(yearIndex)
-      }
+    if (minuteWheel.value) {
+      const minuteIndex = date.getMinutes()
+      minuteWheel.value.scrollTop = calculateScrollTop(minuteIndex)
     }
   })
 }
@@ -100,7 +76,6 @@ onMounted(() => {
   setTimeout(setInitialScroll, 50)
 })
 
-// Watch modelValue changes from parent and update scroll position
 watch(
   () => props.modelValue,
   () => {
@@ -110,27 +85,25 @@ watch(
 )
 
 // --- Scroll/Selection Logic ---
-const handleScroll = (unit: 'month' | 'day' | 'year', event: Event) => {
+const handleScroll = (unit: 'hour' | 'minute', event: Event) => {
   const target = event.target as HTMLElement
 
   const centeredIndex = getCenteredIndex(target.scrollTop)
 
   const newDate = props.modelValue ? new Date(props.modelValue) : new Date()
 
-  let currentYear = newDate.getFullYear()
-  let currentMonth = newDate.getMonth()
-  let currentDay = newDate.getDate()
+  let currentHour = newDate.getHours()
+  let currentMinute = newDate.getMinutes()
 
-  if (unit === 'month') {
-    currentMonth = centeredIndex % months.length
-  } else if (unit === 'day') {
-    currentDay = (centeredIndex % days.length) + 1
-  } else if (unit === 'year') {
-    currentYear = START_YEAR + (centeredIndex % years.length)
+  if (unit === 'hour') {
+    currentHour = centeredIndex % hours.length
+  } else if (unit === 'minute') {
+    currentMinute = centeredIndex % minutes.length
   }
 
-  const finalDate = new Date(currentYear, currentMonth, currentDay)
-  emit('update:modelValue', finalDate)
+  newDate.setHours(currentHour, currentMinute, 0, 0)
+
+  emit('update:modelValue', newDate)
 }
 
 const debouncedHandleScroll = debounce(handleScroll, 150)

@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { useThemeStore } from '@/stores/themeStore' // Adjust path
-import { onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue' // <-- Add onUnmounted here!
 
 const theme = useThemeStore()
 
