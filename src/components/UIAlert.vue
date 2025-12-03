@@ -93,6 +93,7 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4); // Semi-transparent backdrop
+  backdrop-filter: blur(10px);
   z-index: 9999;
   display: flex;
   align-items: center;

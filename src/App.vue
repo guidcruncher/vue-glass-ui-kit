@@ -38,7 +38,7 @@
             <UIImageView
               src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
               alt="Durdle Door in Dorset, UK"
-              style="margin-bottom: 24px; display: block"
+              width="500px" height="200px" scale="cover"
             />
 
             <UISearchBar v-model="query" placeholder="Search components" />

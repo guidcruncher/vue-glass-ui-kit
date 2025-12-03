@@ -1,4 +1,3 @@
-
 export const VisualEffect = {
   mounted(el: HTMLElement) {
     el.style.backgroundColor = 'var(--glass-bg)'
