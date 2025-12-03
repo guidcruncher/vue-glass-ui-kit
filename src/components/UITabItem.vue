@@ -12,12 +12,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, ref, onMounted } from 'vue'
+import { computed, inject, ref } from 'vue' // 'onMounted' is no longer needed here
 import IconView from './IconView.vue'
 import { TabBarContextKey } from '@/utils/TabBarContext'
 
 interface Props {
-  icon: string // Icon name (e.g., 'star.fill')
+  icon: string
   label: string
 }
 
@@ -30,23 +30,21 @@ if (!context) {
   throw new Error('UITabItem must be used within a UITabBar component.')
 }
 
-// --- Dynamic Index Assignment ---
+// --- Dynamic Index Assignment (FIX: Synchronous Registration) ---
 const tabId = Symbol()
-const assignedIndex = ref<number>(-1)
 
-onMounted(() => {
-  // Register with the parent on mount to get its sequential index
-  assignedIndex.value = context.registerTab(tabId)
-})
+// FIX: Register the tab immediately during the setup phase.
+// This guarantees 'assignedIndex' is set to 0, 1, 2, etc., before rendering.
+const assignedIndex = ref<number>(context.registerTab(tabId))
 
-// --- State Calculation & Action ---
+// --- State Calculation ---
+// isActive reliably accesses a positive index value.
 const isActive = computed(() => assignedIndex.value === context.activeTabIndex.value)
 
+// --- Action ---
 const handleClick = () => {
-  // Use the assigned index to update the state in the parent UITabBar
-  if (assignedIndex.value !== -1) {
-    context.selectTab(assignedIndex.value)
-  }
+  // Since registration is synchronous, we know the index is valid.
+  context.selectTab(assignedIndex.value)
 }
 </script>
 

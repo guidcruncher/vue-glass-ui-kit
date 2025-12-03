@@ -45,6 +45,7 @@ export function GlassUiRegistry(options = {}) {
 ${registryEntries.join('\n')}
 import '../styles/styles.scss'
 import { createPinia } from 'pinia'
+import { VisualEffect } from '../directives/visualEffect'
 import { ClickOutside } from '../directives/clickOutside'
 import { useThemeStore } from '../stores/themeStore'
 
@@ -56,6 +57,7 @@ ${exportEntries.join('\n')}
 export function  UseGlassUi(app) {
     const pinia = createPinia()
     app.directive('click-outside', ClickOutside);
+    app.directive('visual-effect', VisualEffect);
 
     app.use(pinia);
     Object.keys(GlassComponents).forEach((name) => {

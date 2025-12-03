@@ -2,7 +2,7 @@
   <div class="main-body">
     <UINavigationBar title="UI Components">
       <template #left>
-        <UIButton variant="icon" icon="fa-chevron-left">Back</UIButton>
+        <UIButton variant="icon" icon="chevron-left">Back</UIButton>
       </template>
       <template #right>
         <UIThemeChooser />
@@ -155,17 +155,12 @@
 
             <div class="section-title">Controls (v-model Demo)</div>
             <UITableView>
-              <UITableCell label="Airplane Mode" icon="fa-plane" accessory="switch">
+              <UITableCell label="Airplane Mode" icon="plane" accessory="switch">
                 <template #custom-content>
                   <UISwitch v-model="airplaneMode" />
                 </template>
               </UITableCell>
-              <UITableCell
-                label="Wi-Fi"
-                icon="fa-wifi"
-                value="LiquidGlass_5G"
-                accessory="chevron"
-              />
+              <UITableCell label="Wi-Fi" icon="wifi" value="LiquidGlass_5G" accessory="chevron" />
               <UITableCell :label="`Brightness (${brightness}%)`">
                 <template #custom-content>
                   <div style="width: 100%; padding: 10px 0">
@@ -187,17 +182,17 @@
     </div>
 
     <UIToolbar>
-      <UIButton variant="icon" icon="fa-share-from-square" />
+      <UIButton variant="icon" icon="share-from-square" />
       <div style="flex: 1"></div>
-      <UIButton variant="icon" icon="fa-book" />
-      <UIButton variant="icon" icon="fa-copy" />
+      <UIButton variant="icon" icon="book" />
+      <UIButton variant="icon" icon="copy" />
     </UIToolbar>
 
     <UITabBar :active-index="0">
-      <UITabItem icon="fa-star" label="Favorites" />
-      <UITabItem icon="fa-clock" label="Recent" />
-      <UITabItem icon="fa-user-group" label="Contacts" />
-      <UITabItem icon="fa-table-cells" label="Keypad" />
+      <UITabItem icon="star" label="Favorites" />
+      <UITabItem icon="clock" label="Recent" />
+      <UITabItem icon="user-group" label="Contacts" />
+      <UITabItem icon="table-cells" label="Keypad" />
     </UITabBar>
 
     <UIAlert
