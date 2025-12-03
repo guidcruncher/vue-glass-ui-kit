@@ -2,7 +2,6 @@
 import IconView from './IconView.vue'
 import UIActivityIndicator from './UIActivityIndicator.vue'
 import UIAlert from './UIAlert.vue'
-import UIAlertController from './UIAlertController.vue'
 import UIButton from './UIButton.vue'
 import UICollectionView from './UICollectionView.vue'
 import UIDatePicker from './UIDatePicker.vue'
@@ -32,7 +31,6 @@ export const GlassComponents = {
   IconView,
   UIActivityIndicator,
   UIAlert,
-  UIAlertController,
   UIButton,
   UICollectionView,
   UIDatePicker,
@@ -53,16 +51,17 @@ export const GlassComponents = {
   UIThemeChooser,
   UIToolbar,
   UIVisualEffectView,
-}
+};
 
-export function UseGlassUi(app) {
-  const pinia = createPinia()
-  app.directive('click-outside', ClickOutside)
 
-  app.use(pinia)
-  Object.keys(GlassComponents).forEach((name) => {
-    app.component(name, GlassComponents[name])
-  })
-  const themeStore = useThemeStore()
-  themeStore.restoreTheme()
-}
+export function  UseGlassUi(app) {
+    const pinia = createPinia()
+    app.directive('click-outside', ClickOutside);
+
+    app.use(pinia);
+    Object.keys(GlassComponents).forEach((name) => {
+      app.component(name, GlassComponents[name]);
+    });
+    const themeStore = useThemeStore()
+    themeStore.restoreTheme()
+};

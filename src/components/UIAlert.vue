@@ -17,7 +17,7 @@
                 :class="getActionButtonClass(action.style)"
                 @click="handleActionClick(index, action.handler)"
               >
-                {{ action.title }}
+                {{ action.text }}
               </button>
             </div>
           </div>
@@ -176,6 +176,10 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
     // Pressed state feedback
     &:active {
       background: rgba(0, 0, 0, 0.05);
+    }
+
+    &--default {
+      color: var(--system-blue);
     }
 
     // Styles specific to UIAlertActionStyle

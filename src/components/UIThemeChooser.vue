@@ -1,7 +1,5 @@
 <template>
   <div class="theme-chooser">
-    <div class="theme-chooser__label">Theme Mode:</div>
-
     <select :value="theme.preference" @change="handleThemeChange" class="theme-chooser__select">
       <option value="system">System Default</option>
       <option value="light">Light</option>
@@ -50,12 +48,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .theme-chooser {
-  padding: 20px;
   border: 1px solid var(--ios-separator);
   background: var(--ios-card-bg);
   border-radius: 8px;
   max-width: 300px;
-  margin: 20px;
 }
 
 .theme-chooser__label {
