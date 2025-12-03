@@ -78,6 +78,15 @@
                   <div>{{ timeValue }}</div>
                 </template>
               </UITableCell>
+              <UITableCell label="List">
+                <template #custom-content>
+                  <div>
+                    <UIListPicker v-model="selectedPlatform" :items="platforms" />
+                    <div> {{selectedPlatform }}</div>
+                  </div>
+                </template>
+              </UITableCell>
+
               <UITableCell label="Download">
                 <template #custom-content>
                   <UIProgressView :value="65" style="flex: 1; margin-left: 10px" />
@@ -221,6 +230,14 @@ import { ref, computed } from 'vue'
 
 // --- App Logic ---
 // State for v-model demonstrations
+const platforms = [
+  { key: 'ios', value: 'iOS' },
+  { key: 'android', value: 'Android' },
+  { key: 'web', value: 'Web/Desktop' },
+  { key: 'watch', value: 'WatchOS' },
+]
+
+const selectedPlatform = ref('android')
 const query = ref('')
 const dateValue = ref(new Date())
 const timeValue = ref(new Date())

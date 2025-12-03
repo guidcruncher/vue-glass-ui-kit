@@ -6,6 +6,7 @@ import UIButton from './UIButton.vue'
 import UICollectionView from './UICollectionView.vue'
 import UIDatePicker from './UIDatePicker.vue'
 import UIImageView from './UIImageView.vue'
+import UIListPicker from './UIListPicker.vue'
 import UINavigationBar from './UINavigationBar.vue'
 import UIPageControl from './UIPageControl.vue'
 import UIProgressView from './UIProgressView.vue'
@@ -38,6 +39,7 @@ export const GlassComponents = {
   UICollectionView,
   UIDatePicker,
   UIImageView,
+  UIListPicker,
   UINavigationBar,
   UIPageControl,
   UIProgressView,
