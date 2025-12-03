@@ -1,11 +1,11 @@
 <template>
-  <div :class="{ 'dark-mode': isDarkMode }" class="main-body">
+  <div class="main-body">
     <UINavigationBar title="UI Components">
       <template #left>
         <UIButton variant="icon" icon="fa-chevron-left">Back</UIButton>
       </template>
       <template #right>
-        <UIButton variant="text" @click="toggleTheme">{{ isDarkMode ? 'Light' : 'Dark' }}</UIButton>
+        <UIThemeChooser />
       </template>
     </UINavigationBar>
 
@@ -194,10 +194,10 @@
     </UIToolbar>
 
     <UITabBar :active-index="0">
-      <UITabItem index="0" icon="fa-star" label="Favorites" />
-      <UITabItem index="1" icon="fa-clock" label="Recent" />
-      <UITabItem index="2" icon="fa-user-group" label="Contacts" />
-      <UITabItem index="3" icon="fa-table-cells" label="Keypad" />
+      <UITabItem icon="fa-star" label="Favorites" />
+      <UITabItem icon="fa-clock" label="Recent" />
+      <UITabItem icon="fa-user-group" label="Contacts" />
+      <UITabItem icon="fa-table-cells" label="Keypad" />
     </UITabBar>
 
     <UIAlert
@@ -207,8 +207,7 @@
         { text: 'Cancel', style: 'cancel' },
         { text: 'Confirm', style: 'default' },
       ]"
-      :is-visible="showAlert"
-      @close="showAlert = false"
+      v-model="showAlert"
     />
   </div>
 </template>
@@ -218,7 +217,7 @@ import { ref, computed } from 'vue'
 
 // --- App Logic ---
 // State for v-model demonstrations
-const query=ref('')
+const query = ref('')
 const username = ref('guest_user_1')
 const bio = ref('I love the new Liquid Glass design!')
 const airplaneMode = ref(false)

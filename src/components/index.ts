@@ -20,14 +20,12 @@ import UITableCell from './UITableCell.vue'
 import UITableView from './UITableView.vue'
 import UITextField from './UITextField.vue'
 import UITextView from './UITextView.vue'
+import UIThemeChooser from './UIThemeChooser.vue'
 import UIToolbar from './UIToolbar.vue'
 import UIVisualEffectView from './UIVisualEffectView.vue'
 import '../styles/styles.scss'
 import { createPinia } from 'pinia'
 import { ClickOutside } from '../directives/clickOutside'
-import { BackgroundImage } from '../directives/imageBackground'
-import { BackgroundMesh } from '../directives/meshBackground'
-import { BackgroundColor } from '../directives/colorBackground'
 import { useThemeStore } from '../stores/themeStore'
 
 export const GlassComponents = {
@@ -52,22 +50,19 @@ export const GlassComponents = {
   UITableView,
   UITextField,
   UITextView,
+  UIThemeChooser,
   UIToolbar,
   UIVisualEffectView,
-};
+}
 
+export function UseGlassUi(app) {
+  const pinia = createPinia()
+  app.directive('click-outside', ClickOutside)
 
-export function  UseGlassUi(app) {
-    const pinia = createPinia()
-    app.directive('click-outside', ClickOutside);
-    app.directive('background-image', BackgroundImage);
-    app.directive('background-mesh', BackgroundMesh);
-    app.directive('background-color', BackgroundColor);
-
-    app.use(pinia);
-    Object.keys(GlassComponents).forEach((name) => {
-      app.component(name, GlassComponents[name]);
-    });
-    const themeStore = useThemeStore()
-    themeStore.restoreTheme()
-};
+  app.use(pinia)
+  Object.keys(GlassComponents).forEach((name) => {
+    app.component(name, GlassComponents[name])
+  })
+  const themeStore = useThemeStore()
+  themeStore.restoreTheme()
+}

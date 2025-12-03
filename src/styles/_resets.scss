@@ -25,6 +25,15 @@ body {
   flex-direction: column;
   min-height: 100vh;
   padding-bottom: 120px; /* Space for fixed TabBar + Toolbar */
+
+  background-color: var(--ios-background);
+  color: var(--ios-text-primary);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+body.dark-mode {
 }
 
 // Global utility classes for structure

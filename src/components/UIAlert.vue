@@ -9,10 +9,7 @@
               <p v-if="message" class="message">{{ message }}</p>
             </div>
 
-            <div 
-              class="actions"
-              :class="{ 'actions--vertical': actions.length > 2 }"
-            >
+            <div class="actions" :class="{ 'actions--vertical': actions.length > 2 }">
               <button
                 v-for="(action, index) in actions"
                 :key="index"
@@ -31,38 +28,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 
 // --- Type Definitions ---
-export type UIAlertActionStyle = 'default' | 'cancel' | 'destructive';
-export type UIAlertActionHandler = (actionIndex: number) => void;
+export type UIAlertActionStyle = 'default' | 'cancel' | 'destructive'
+export type UIAlertActionHandler = (actionIndex: number) => void
 
 export interface UIAlertAction {
-  title: string;
-  style: UIAlertActionStyle;
-  handler?: UIAlertActionHandler;
+  title: string
+  style: UIAlertActionStyle
+  handler?: UIAlertActionHandler
 }
 
 interface Props {
   // Controls the visibility of the dialog
-  modelValue: boolean; 
-  title?: string;
-  message?: string;
-  actions: UIAlertAction[];
+  modelValue: boolean
+  title?: string
+  message?: string
+  actions: UIAlertAction[]
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(['update:modelValue', 'action-clicked']);
+const props = defineProps<Props>()
+const emit = defineEmits(['update:modelValue', 'action-clicked'])
 
 // Internal state for visibility management
-const isVisible = ref(props.modelValue);
+const isVisible = ref(props.modelValue)
 
 watch(
   () => props.modelValue,
   (newVal) => {
-    isVisible.value = newVal;
+    isVisible.value = newVal
   },
-);
+)
 
 // --- Component Logic ---
 const getActionButtonClass = (style: UIAlertActionStyle) => {
@@ -70,22 +67,22 @@ const getActionButtonClass = (style: UIAlertActionStyle) => {
     'action-button--default': style === 'default',
     'action-button--cancel': style === 'cancel',
     'action-button--destructive': style === 'destructive',
-  };
-};
+  }
+}
 
 const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
   // 1. Execute the handler function if provided
   if (handler) {
-    handler(index);
+    handler(index)
   }
 
   // 2. Emit a general event for parent component tracking
-  emit('action-clicked', index);
+  emit('action-clicked', index)
 
   // 3. Close the alert and update the modelValue prop
-  isVisible.value = false;
-  emit('update:modelValue', false);
-};
+  isVisible.value = false
+  emit('update:modelValue', false)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -113,7 +110,7 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
   background: var(--glass-bg);
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
-  
+
   // No border needed here, separation is done by the action row borders
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
@@ -140,15 +137,15 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
 
   .actions {
     display: flex;
-    border-top: 0.5px solid var(--ios-separator); 
-    
+    border-top: 0.5px solid var(--ios-separator);
+
     &.actions--vertical {
       flex-direction: column;
-      
+
       .action-button {
         border-left: none; // Remove vertical separator
         border-bottom: 0.5px solid var(--ios-separator); // Add horizontal separator
-        
+
         &:last-child {
           border-bottom: none;
         }
@@ -175,7 +172,7 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
     &:not(:last-child) {
       border-right: 0.5px solid var(--ios-separator);
     }
-    
+
     // Pressed state feedback
     &:active {
       background: rgba(0, 0, 0, 0.05);

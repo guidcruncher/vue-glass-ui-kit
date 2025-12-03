@@ -1,7 +1,7 @@
 <template>
-  <div 
-    class="ui-tab-item" 
-    :class="{ active: isActive }" 
+  <div
+    class="ui-tab-item"
+    :class="{ active: isActive }"
     @click="handleClick"
     :aria-selected="isActive"
     role="tab"
@@ -12,42 +12,42 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, ref, onMounted } from 'vue';
-import IconView from './IconView.vue';
-import { TabBarContextKey } from '@/utils/TabBarContext'; 
+import { computed, inject, ref, onMounted } from 'vue'
+import IconView from './IconView.vue'
+import { TabBarContextKey } from '@/utils/TabBarContext'
 
 interface Props {
-  icon: string; // Icon name (e.g., 'star.fill')
-  label: string;
+  icon: string // Icon name (e.g., 'star.fill')
+  label: string
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 // --- Inject Context ---
-const context = inject(TabBarContextKey);
+const context = inject(TabBarContextKey)
 
 if (!context) {
-  throw new Error('UITabItem must be used within a UITabBar component.');
+  throw new Error('UITabItem must be used within a UITabBar component.')
 }
 
 // --- Dynamic Index Assignment ---
-const tabId = Symbol(); 
-const assignedIndex = ref<number>(-1); 
+const tabId = Symbol()
+const assignedIndex = ref<number>(-1)
 
 onMounted(() => {
   // Register with the parent on mount to get its sequential index
-  assignedIndex.value = context.registerTab(tabId);
-});
+  assignedIndex.value = context.registerTab(tabId)
+})
 
 // --- State Calculation & Action ---
-const isActive = computed(() => assignedIndex.value === context.activeTabIndex.value);
+const isActive = computed(() => assignedIndex.value === context.activeTabIndex.value)
 
 const handleClick = () => {
   // Use the assigned index to update the state in the parent UITabBar
   if (assignedIndex.value !== -1) {
-    context.selectTab(assignedIndex.value);
+    context.selectTab(assignedIndex.value)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -65,11 +65,11 @@ const handleClick = () => {
   color: var(--ios-text-secondary);
 
   &.active {
-    color: var(--system-blue); 
+    color: var(--system-blue);
   }
 
   &__icon {
-    font-size: 1.5em; 
+    font-size: 1.5em;
     margin-bottom: 3px;
   }
 
