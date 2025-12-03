@@ -24,7 +24,7 @@ import IconView from './IconView.vue'
 interface Props {
   placeholder?: string
   modelValue: string
-  clearButton?: boolean
+  clearButton?: boolean|string
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -1,9 +1,8 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="main-body">
-    <!-- NAVIGATION BAR -->
     <UINavigationBar title="UI Components">
       <template #left>
-        <UIButton variant="icon" icon="chevron.left">Back</UIButton>
+        <UIButton variant="icon" icon="fa-chevron-left">Back</UIButton>
       </template>
       <template #right>
         <UIButton variant="text" @click="toggleTheme">{{ isDarkMode ? 'Light' : 'Dark' }}</UIButton>
@@ -15,7 +14,6 @@
         UISplitView (Responsive Layout)
       </div>
       <UISplitView>
-        <!-- Master Pane -->
         <template #master>
           <div
             style="
@@ -33,20 +31,17 @@
           </div>
         </template>
 
-        <!-- Detail Pane -->
         <template #detail>
           <div class="container">
             <div class="section-title" style="margin-top: 0">Main Content Area</div>
 
-            <!-- UIImageView DEMO -->
             <UIImageView
               src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
               alt="Durdle Door in Dorset, UK"
               style="margin-bottom: 24px; display: block"
             />
 
-            <!-- SEARCH BAR -->
-            <UISearchBar placeholder="Search components" />
+            <UISearchBar v-model="query" placeholder="Search components" />
 
             <div class="section-title">Inputs & Text (v-model Demo)</div>
             <UITableView>
@@ -160,13 +155,18 @@
 
             <div class="section-title">Controls (v-model Demo)</div>
             <UITableView>
-              <UITableCell label="Airplane Mode" icon="airplane" accessory="switch">
+              <UITableCell label="Airplane Mode" icon="fa-plane" accessory="switch">
                 <template #custom-content>
                   <UISwitch v-model="airplaneMode" />
                 </template>
               </UITableCell>
-              <UITableCell label="Wi-Fi" icon="wifi" value="LiquidGlass_5G" accessory="chevron" />
-              <UITableCell label="Brightness ({{ brightness }}%)">
+              <UITableCell
+                label="Wi-Fi"
+                icon="fa-wifi"
+                value="LiquidGlass_5G"
+                accessory="chevron"
+              />
+              <UITableCell :label="`Brightness (${brightness}%)`">
                 <template #custom-content>
                   <div style="width: 100%; padding: 10px 0">
                     <UISlider v-model="brightness" />
@@ -186,24 +186,20 @@
       </UISplitView>
     </div>
 
-    <!-- TOOLBAR -->
     <UIToolbar>
-      <UIButton variant="icon" icon="square.and.arrow.up" />
+      <UIButton variant="icon" icon="fa-share-from-square" />
       <div style="flex: 1"></div>
-      <!-- Spacer -->
-      <UIButton variant="icon" icon="book" />
-      <UIButton variant="icon" icon="square.on.square" />
+      <UIButton variant="icon" icon="fa-book" />
+      <UIButton variant="icon" icon="fa-copy" />
     </UIToolbar>
 
-    <!-- TAB BAR -->
     <UITabBar :active-index="0">
-      <UITabItem icon="star.fill" label="Favorites" />
-      <UITabItem icon="clock.fill" label="Recent" />
-      <UITabItem icon="person.2.fill" label="Contacts" />
-      <UITabItem icon="circle.grid.3x3.fill" label="Keypad" />
+      <UITabItem index="0" icon="fa-star" label="Favorites" />
+      <UITabItem index="1" icon="fa-clock" label="Recent" />
+      <UITabItem index="2" icon="fa-user-group" label="Contacts" />
+      <UITabItem index="3" icon="fa-table-cells" label="Keypad" />
     </UITabBar>
 
-    <!-- ALERT CONTROLLER -->
     <UIAlert
       title="Liquid Glass"
       message="This is a fully replicated UIAlertController with backdrop blur."
@@ -222,6 +218,7 @@ import { ref, computed } from 'vue'
 
 // --- App Logic ---
 // State for v-model demonstrations
+const query=ref('')
 const username = ref('guest_user_1')
 const bio = ref('I love the new Liquid Glass design!')
 const airplaneMode = ref(false)

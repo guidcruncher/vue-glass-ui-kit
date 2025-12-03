@@ -18,6 +18,9 @@ export default defineConfig({
       scssSpa: true
     }),
   ],
+  optimizeDeps: {
+    include: ['vue'],
+  },
   server: {
     // Enable fast refresh
     hmr: false,

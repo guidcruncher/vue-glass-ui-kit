@@ -5,14 +5,44 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, provide, readonly } from 'vue';
+import { TabBarContext, TabBarContextKey } from '@/utils/TabBarContext'; 
+
 interface Props {
-  activeIndex?: number
+  initialIndex?: number;
 }
 const props = withDefaults(defineProps<Props>(), {
-  activeIndex: 0,
-})
-// The active index logic would typically be managed by the parent view
-// which passes the state down to the TabItems via a provide/inject or slot props.
+  initialIndex: 0,
+});
+
+const emit = defineEmits<{
+  (e: 'update:active-index', index: number): void;
+}>();
+
+// --- State Management ---
+const activeTabIndex = ref<number>(props.initialIndex);
+const registeredTabIds = ref<symbol[]>([]); 
+
+const selectTab = (index: number) => {
+  if (activeTabIndex.value !== index) {
+    activeTabIndex.value = index;
+    emit('update:active-index', index);
+  }
+};
+
+// Returns the tab's sequential position (0, 1, 2, ...)
+const registerTab = (tabId: symbol): number => {
+  const index = registeredTabIds.value.length;
+  registeredTabIds.value.push(tabId);
+  return index;
+};
+
+// --- Provide Context ---
+provide(TabBarContextKey, {
+  activeTabIndex: readonly(activeTabIndex),
+  selectTab,
+  registerTab,
+} as TabBarContext);
 </script>
 
 <style lang="scss" scoped>
@@ -21,14 +51,13 @@ const props = withDefaults(defineProps<Props>(), {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 83px; // 49px tab area + 34px iPhone X safe area (original style)
+  height: 83px; 
   z-index: 1000;
-
   display: flex;
   justify-content: space-around;
   padding-top: 10px;
-  padding-bottom: 34px; // Account for the home indicator/safe area
-
+  padding-bottom: 34px; 
+  
   // Liquid Glass Effect
   background: var(--glass-bg);
   backdrop-filter: blur(25px) saturate(180%);
