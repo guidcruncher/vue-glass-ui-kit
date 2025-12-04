@@ -2,7 +2,12 @@
   <div class="main-body" v-background-mesh>
     <UINavigationBar title="UI Components">
       <template #left>
-        <UIButton variant="icon" icon="chevron-left">Back</UIButton>
+        <UIButton v-if="expanded" variant="icon" icon="chevron-left" @click="expanded = !expanded"
+          >Back</UIButton
+        >
+        <UIButton v-if="!expanded" variant="icon" icon="chevron-right" @click="expanded = !expanded"
+          >Back</UIButton
+        >
       </template>
       <template #right>
         <UIThemeChooser />
@@ -13,7 +18,7 @@
       <div class="section-title" style="margin-top: 0; margin-bottom: 0">
         UISplitView (Responsive Layout)
       </div>
-      <UISplitView>
+      <UISplitView v-model="expanded">
         <template #master>
           <div
             style="
@@ -239,6 +244,7 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
+const expanded = ref(true)
 const selectedPlatform = ref('android')
 const query = ref('')
 const dateValue = ref(new Date())

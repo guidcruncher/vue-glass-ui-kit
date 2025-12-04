@@ -24,7 +24,7 @@
             :transform="`rotate(${m * 6} 50 50)`"
           />
         </g>
-        
+
         <g class="hour-markers">
           <line
             v-for="h in 12"
@@ -43,8 +43,8 @@
           <text
             v-for="h in 12"
             :key="h"
-            :x="50 + 40 * Math.sin(h * 30 * Math.PI / 180)"
-            :y="50 - 40 * Math.cos(h * 30 * Math.PI / 180) + 1.5"
+            :x="50 + 40 * Math.sin((h * 30 * Math.PI) / 180)"
+            :y="50 - 40 * Math.cos((h * 30 * Math.PI) / 180) + 1.5"
             text-anchor="middle"
             alignment-baseline="middle"
             font-size="6"
@@ -91,7 +91,14 @@
           :transform="`rotate(${secondAngle} 50 50)`"
         />
 
-        <circle cx="50" cy="50" r="2.5" fill="var(--ios-background, #ffffff)" stroke="var(--ios-text-tertiary, #8e8e93)" stroke-width="0.5" />
+        <circle
+          cx="50"
+          cy="50"
+          r="2.5"
+          fill="var(--ios-background, #ffffff)"
+          stroke="var(--ios-text-tertiary, #8e8e93)"
+          stroke-width="0.5"
+        />
       </svg>
     </div>
   </div>
@@ -103,13 +110,13 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 interface Props {
   size?: number
   timezone?: string
-  glide?: boolean 
+  glide?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 150,
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  glide: false, 
+  glide: false,
 })
 
 const emit = defineEmits(['tick'])
@@ -129,7 +136,7 @@ function parseTimeComponent(date: Date, timezone: string, type: TimeUnit): numbe
 
   const formatter = new Intl.DateTimeFormat('en-US', options)
   const formattedTime = formatter.format(date)
-  
+
   // Clean string to ensure only digits remain
   const numericalString = formattedTime.replace(/[^0-9]/g, '')
   return parseInt(numericalString, 10) || 0
@@ -143,10 +150,11 @@ const second = computed(() => parseTimeComponent(currentTime.value, props.timezo
 const milliseconds = computed(() => currentTime.value.getMilliseconds())
 const fractionalSecond = computed(() => second.value + milliseconds.value / 1000)
 
-const secondAngle = computed(() => 
-  props.glide 
-    ? fractionalSecond.value * 6 // Smooth rotation using fractional seconds
-    : second.value * 6          // Stepping rotation using whole seconds
+const secondAngle = computed(
+  () =>
+    props.glide
+      ? fractionalSecond.value * 6 // Smooth rotation using fractional seconds
+      : second.value * 6, // Stepping rotation using whole seconds
 )
 
 // The minute and hour angles also use the fractional second for a smoother look
@@ -170,10 +178,10 @@ onMounted(() => {
     // In most Vue environments, props passed to `withDefaults` are treated as static on mount.
     // If you need the interval to change while the component is running, you'd use a watcher,
     // but setting the interval once on mount is often sufficient.
-    
+
     prevTime.value = currentTime.value
     currentTime.value = new Date()
-    
+
     if (prevTime.value.getMinutes() != currentTime.value.getMinutes()) {
       emit('tick')
     }
@@ -189,7 +197,7 @@ onUnmounted(() => {
 .analog-clock-wrapper {
   /* Correctly bind the size prop to a CSS variable with units */
   --size: v-bind('props.size + "px"');
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,13 +215,13 @@ onUnmounted(() => {
 
     svg {
       display: block; /* Removes weird SVG spacing issues */
-      
+
       /* Animate Hour and Minute */
       .hour-hand,
       .minute-hand {
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
       }
-      
+
       /* Second hand does not use CSS transition; gliding is handled by rapid JS updates. */
       .second-hand {
         // No CSS transition needed

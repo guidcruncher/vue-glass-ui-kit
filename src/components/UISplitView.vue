@@ -1,6 +1,6 @@
 <template>
-  <div class="ui-split-view">
-    <div class="ui-split-view__master">
+  <div class="ui-split-view" :class="{ 'ui-split-view--collapsed': !modelValue }">
+    <div v-show="modelValue" class="ui-split-view__master">
       <slot name="master"></slot>
     </div>
 
@@ -11,7 +11,15 @@
 </template>
 
 <script lang="ts" setup>
-// The logic is purely CSS/SCSS based on the media query. No complex script needed.
+// 1. Define Props for v-model
+const modelValue = defineModel({ default: true });
+
+// 2. Define Emits for v-model updates (required for two-way binding)
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void
+}>()
+
+// The logic is now CSS/SCSS based on the media query and the collapsed class.
 </script>
 
 <style lang="scss" scoped>
@@ -22,17 +30,16 @@
   min-height: 100vh; // Ensure it takes full viewport height initially
 
   &__master {
-    // Master pane visible on mobile, takes full width, but hidden by default
-    // in the example structure for a "detail-first" mobile view.
+    // Master pane hidden by default on small screens
     display: none;
   }
 
   &__detail {
-    flex-grow: 1; /* Detail pane always visible, takes up remaining space */
+    flex-grow: 1; /* Detail pane always visible */
     min-height: 100%;
   }
 
-  // Tablet/Desktop Styles: Activate Split View at 768px (iOS/iPad standard)
+  // --- Tablet/Desktop Styles: Activate Split View at 768px ---
   @media (min-width: 768px) {
     flex-direction: row; // Change to side-by-side
 
@@ -41,14 +48,31 @@
       flex: 0 0 320px; // Fixed width for master pane
       max-width: 40%; // Max width constraint
       overflow-y: auto;
-      // Styling from the original JS for separation
       background: var(--ios-background);
       border-right: 1px solid var(--ios-separator);
+
+      // Add a transition for smooth collapsing/expanding
+      transition: all 0.3s ease-in-out;
     }
 
     &__detail {
       flex-grow: 1;
       overflow-y: auto;
+    }
+
+    // --- Collapsed State Styling (when modelValue is false) ---
+    &.ui-split-view--collapsed {
+      &__master {
+        // *** CRITICAL: Force the dimensions to 0 to override default width ***
+        width: 0 !important;
+        min-width: 0 !important;
+        flex: 0 0 0 !important;
+        display: none;
+        // Remove visual separators and content
+        padding: 0;
+        border-right: none;
+        overflow: hidden; // Hides content during transition
+      }
     }
   }
 }

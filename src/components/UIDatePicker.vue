@@ -28,25 +28,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, nextTick } from 'vue';
-import { debounce } from '@/utils/debounce'; 
+import { ref, onMounted, watch, nextTick } from 'vue'
+import { debounce } from '@/utils/debounce'
 
 interface Props {
-  modelValue: Date | null;
+  modelValue: Date | null
 }
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 // FIX: Correctly define emit
 const emit = defineEmits<{
-  (e: 'update:modelValue', date: Date): void;
-}>();
+  (e: 'update:modelValue', date: Date): void
+}>()
 
-const ITEM_HEIGHT = 34;
-const START_YEAR = 2025;
+const ITEM_HEIGHT = 34
+const START_YEAR = 2025
 const months = [
-  'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-  'September', 'October', 'November', 'December',
-];
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
 const years = Array.from({ length: 10 }, (_, i) => START_YEAR + i)
 
@@ -55,54 +65,58 @@ const dayWheel = ref<HTMLElement | null>(null)
 const yearWheel = ref<HTMLElement | null>(null)
 
 // --- Scroll Logic ---
-const getCenteredIndex = (scrollTop: number) => Math.round(scrollTop / ITEM_HEIGHT);
-const calculateScrollTop = (index: number) => index * ITEM_HEIGHT;
+const getCenteredIndex = (scrollTop: number) => Math.round(scrollTop / ITEM_HEIGHT)
+const calculateScrollTop = (index: number) => index * ITEM_HEIGHT
 
 const setInitialScroll = () => {
-  const date = props.modelValue || new Date(); 
-  
+  const date = props.modelValue || new Date()
+
   // FIX: Use nextTick for reliable DOM calculation
   nextTick(() => {
     if (monthWheel.value) {
-      monthWheel.value.scrollTop = calculateScrollTop(date.getMonth());
+      monthWheel.value.scrollTop = calculateScrollTop(date.getMonth())
     }
     if (dayWheel.value) {
-      dayWheel.value.scrollTop = calculateScrollTop(date.getDate() - 1);
+      dayWheel.value.scrollTop = calculateScrollTop(date.getDate() - 1)
     }
     if (yearWheel.value) {
-      const yearIndex = date.getFullYear() - START_YEAR;
+      const yearIndex = date.getFullYear() - START_YEAR
       if (yearIndex >= 0 && yearIndex < years.length) {
-        yearWheel.value.scrollTop = calculateScrollTop(yearIndex);
+        yearWheel.value.scrollTop = calculateScrollTop(yearIndex)
       }
     }
-  });
-};
+  })
+}
 
 onMounted(() => {
-  setTimeout(setInitialScroll, 50); 
-});
+  setTimeout(setInitialScroll, 50)
+})
 
-watch(() => props.modelValue, () => {
-  setTimeout(setInitialScroll, 50); 
-}, { deep: true });
+watch(
+  () => props.modelValue,
+  () => {
+    setTimeout(setInitialScroll, 50)
+  },
+  { deep: true },
+)
 
 const handleScroll = (unit: 'month' | 'day' | 'year', event: Event) => {
-  const target = event.target as HTMLElement;
-  const centeredIndex = getCenteredIndex(target.scrollTop);
-  const newDate = props.modelValue ? new Date(props.modelValue) : new Date();
-  
-  let currentYear = newDate.getFullYear();
-  let currentMonth = newDate.getMonth();
-  let currentDay = newDate.getDate();
+  const target = event.target as HTMLElement
+  const centeredIndex = getCenteredIndex(target.scrollTop)
+  const newDate = props.modelValue ? new Date(props.modelValue) : new Date()
 
-  if (unit === 'month') currentMonth = centeredIndex % months.length;
-  else if (unit === 'day') currentDay = (centeredIndex % days.length) + 1;
-  else if (unit === 'year') currentYear = START_YEAR + (centeredIndex % years.length);
+  let currentYear = newDate.getFullYear()
+  let currentMonth = newDate.getMonth()
+  let currentDay = newDate.getDate()
 
-  emit('update:modelValue', new Date(currentYear, currentMonth, currentDay));
-};
+  if (unit === 'month') currentMonth = centeredIndex % months.length
+  else if (unit === 'day') currentDay = (centeredIndex % days.length) + 1
+  else if (unit === 'year') currentYear = START_YEAR + (centeredIndex % years.length)
 
-const debouncedHandleScroll = debounce(handleScroll, 150);
+  emit('update:modelValue', new Date(currentYear, currentMonth, currentDay))
+}
+
+const debouncedHandleScroll = debounce(handleScroll, 150)
 </script>
 
 <style lang="scss" scoped>
@@ -120,7 +134,9 @@ const debouncedHandleScroll = debounce(handleScroll, 150);
   }
   .highlight {
     position: absolute;
-    top: 50%; left: 0; right: 0;
+    top: 50%;
+    left: 0;
+    right: 0;
     height: 34px;
     background: rgba(120, 120, 128, 0.1);
     transform: translateY(-50%);
@@ -134,8 +150,10 @@ const debouncedHandleScroll = debounce(handleScroll, 150);
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     height: 100%;
-    scrollbar-width: none; 
-    &::-webkit-scrollbar { display: none; }
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   .item {
     height: 34px;
@@ -146,7 +164,8 @@ const debouncedHandleScroll = debounce(handleScroll, 150);
     color: var(--ios-text-primary);
     user-select: none;
   }
-  .padding { height: 63px; }
+  .padding {
+    height: 63px;
+  }
 }
 </style>
-
