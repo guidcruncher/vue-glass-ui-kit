@@ -112,25 +112,25 @@ $font-family: 'Inter', sans-serif;
   --control-maximize-end: #34c759;
   --control-maximize-icon: #006610;
 
-  /* Control/Button Colors */
+  /* Control/Button Colors (Light Theme Defaults) */
   --control-bg: #ffffff;
-  --control-border: #d1d5db; /* gray-300 */
-  --control-border-active: #3b82f6; /* blue-500 */
+  --control-border: #e5e5e5; /* Lighter gray border (UITextField look) */
+  --control-border-width: 1px;
+  --control-border-active: #3b82f6; /* blue-500 for focus */
   /* Text & Icon Colors */
   --primary-text: #1f2937; /* gray-800 */
   --icon-color: #6b7280; /* gray-500 */
   /* List Colors */
   --list-bg: #ffffff;
-  --list-border: #e5e7eb; /* gray-200 */
-  --list-hover-bg: #eff6ff; /* blue-50 */
-  --list-separator: #f3f4f6; /* gray-100 */
+  --list-border: #e5e7eb;
+  --list-hover-bg: #eff6ff;
+  --list-separator: #f3f4f6;
   /* Selected Item Colors */
-  --selected-bg: #3b82f6; /* blue-500 */
+  --selected-bg: #3b82f6;
   --selected-text: #ffffff;
-  --selected-hover-bg: #2563eb; /* blue-600 */
+  --selected-hover-bg: #2563eb;
 
 }
-
 
 // --- 3. Dark Mode Overrides ---
 .dark-mode {
@@ -216,20 +216,20 @@ $font-family: 'Inter', sans-serif;
   --control-maximize-icon: #006610;
 
   /* Control/Button Colors */
-  --control-bg: #1f2937; /* dark gray */
+  --control-bg: #1f2937;
   --control-border: #4b5563; /* gray-600 */
   --control-border-active: #60a5fa; /* blue-400 */
   /* Text & Icon Colors */
-  --primary-text: #f9fafb; /* gray-50 */
-  --icon-color: #9ca3af; /* gray-400 */
+  --primary-text: #f9fafb;
+  --icon-color: #9ca3af;
   /* List Colors */
   --list-bg: #1f2937;
-  --list-border: #374151; /* gray-700 */
-  --list-hover-bg: #374151; /* dark-hover */
-  --list-separator: #374151; /* gray-700 */
+  --list-border: #374151;
+  --list-hover-bg: #374151;
+  --list-separator: #374151;
   /* Selected Item Colors */
-  --selected-bg: #3b82f6; /* blue-500 */
+  --selected-bg: #3b82f6;
   --selected-text: #ffffff;
-  --selected-hover-bg: #60a5fa; /* blue-400 */
+  --selected-hover-bg: #60a5fa;
 
 }

@@ -4,23 +4,24 @@
     class="relative inline-block"
     :style="{ width: computedWidth }"
     
-    /* NOTE: The .dark class must now be applied to this div (or a parent) 
-      by external logic to enable dark mode styling. 
+    /* The .dark class must be applied to this div (or a parent) 
+       by external logic (e.g., the parent component or a global theme store)
+       to enable dark mode styling. 
     */ 
   >
     <div
       @click="toggleDropdown"
       :style="{ width: computedWidth }"
       class="
-        dropdown-control
+        dropdown-control 
         p-2
-        rounded-xl
+        rounded-text-field
         cursor-pointer
         flex
         justify-between
         items-center
-        shadow-sm
-        font-semibold
+        font-normal
+        text-base
         transition
         duration-150
         ease-in-out
@@ -143,16 +144,25 @@ const selectedItemDisplay = computed(() => {
 });
 
 // --- METHODS ---
+/**
+ * Toggles the visibility of the dropdown list.
+ */
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
+/**
+ * Selects an item, updates the modelValue, and hides the dropdown.
+ */
 const selectItem = (item) => {
   emit('update:modelValue', item);
   isDropdownOpen.value = false;
 };
 
 // --- OUTSIDE CLICK LOGIC ---
+/**
+ * Event listener to check if the click was outside the component.
+ */
 const handleClickOutside = (event) => {
   if (isDropdownOpen.value && dropdownRef.value && !dropdownRef.value.contains(event.target)) {
     isDropdownOpen.value = false;
@@ -169,14 +179,22 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+
+/* Custom radius that mimics standard iOS input fields (e.g., 8-10px) */
+.rounded-text-field {
+    border-radius: 0.625rem; /* 10px */
+}
+
 .dropdown-control {
   background-color: var(--control-bg);
-  border: 2px solid var(--control-border);
+  /* Use CSS variables for the border properties */
+  border: var(--control-border-width) solid var(--control-border); 
   color: var(--primary-text);
 }
 
 .control-open {
-  border-color: var(--control-border-active);
+  /* When open/focused, border becomes the active color and gets a bit thicker, like a focus ring */
+  border: calc(var(--control-border-width) + 1px) solid var(--control-border-active);
 }
 
 .dropdown-list {
@@ -213,3 +231,4 @@ onUnmounted(() => {
   transform: translateY(-5px);
 }
 </style>
+

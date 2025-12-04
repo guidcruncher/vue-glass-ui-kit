@@ -75,15 +75,15 @@
                   <div style="color: var(--system-orange); font-size: 14px">{{ username }}</div>
                 </template>
               </UITableCell>
-               <UITableCell label="Username Value">
+              <UITableCell label="Username Value">
                 <template #custom-content>
-   <UIDropdownList
-        v-model="selectedFruit"
-        :items="fruitList"
-        width="320px"
-        dropdown-height="250px"
-        placeholder="Select Your Favorite Fruit"
-      />
+                  <UIDropdownList
+                    v-model="selectedFruit"
+                    :items="fruitList"
+                    width="320px"
+                    dropdown-height="250px"
+                    placeholder="Select Your Favorite Fruit"
+                  />
                 </template>
               </UITableCell>
             </UITableView>
@@ -276,17 +276,9 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
-const selectedFruit = ref('Orange');
+const selectedFruit = ref('Orange')
 // 3. Array of items to display in the dropdown
-const fruitList = ref([
-    'Apple',
-    'Banana',
-    'Orange',
-    'Grape',
-    'Strawberry',
-    'Mango',
-    'Pineapple'
-]);
+const fruitList = ref(['Apple', 'Banana', 'Orange', 'Grape', 'Strawberry', 'Mango', 'Pineapple'])
 
 const viewImage = ref(false)
 const expanded = ref(true)

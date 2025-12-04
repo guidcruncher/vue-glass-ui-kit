@@ -7,6 +7,7 @@ import UIAnalogClock from './UIAnalogClock.vue'
 import UIButton from './UIButton.vue'
 import UICollectionView from './UICollectionView.vue'
 import UIDatePicker from './UIDatePicker.vue'
+import UIDropdownList from './UIDropdownList.vue'
 import UIFlipClock from './UIFlipClock.vue'
 import UIImage from './UIImage.vue'
 import UIImageView from './UIImageView.vue'
@@ -46,6 +47,7 @@ export const GlassComponents = {
   UIButton,
   UICollectionView,
   UIDatePicker,
+  UIDropdownList,
   UIFlipClock,
   UIImage,
   UIImageView,
