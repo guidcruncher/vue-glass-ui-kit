@@ -8,13 +8,17 @@
       <div class="viewer-header">
         <div class="viewer-title">{{ title }}</div>
         <div class="viewer-controls">
+          <button :class="['control-btn']" id="downloadBtn" @click="download" title="Download">
+            <i class="fa-solid fa-download" />
+          </button>
+
           <button
             :class="['control-btn', { active: currentIsFitMode }]"
             id="fitBtn"
             @click="setFitMode"
             title="Fit to screen"
           >
-            <span>⊡</span>
+            <i class="fa-solid fa-expand" />
           </button>
           <button
             :class="['control-btn', { active: !currentIsFitMode }]"
@@ -22,10 +26,10 @@
             @click="setScrollMode"
             title="Full size (scrollable)"
           >
-            <span>⊞</span>
+            <i class="fa-solid fa-maximize" />
           </button>
           <button class="control-btn close-btn" @click="closeViewer" title="Close">
-            <span>×</span>
+            <i class="fa-solid fa-close" />
           </button>
         </div>
       </div>
@@ -67,6 +71,41 @@ const props = defineProps({
     default: true,
   },
 })
+
+const download = () => {
+  try {
+    let imageURL = props.src
+    let imageDescription = props.alt
+    let downloadedImg = new Image()
+
+    const imageReceived = () => {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+
+      canvas.width = downloadedImg.width
+      canvas.height = downloadedImg.height
+      canvas.innerText = downloadedImg.alt
+
+      context.drawImage(downloadedImg, 0, 0)
+
+      try {
+        var link = document.createElement('a')
+        link.download = 'filename.png'
+        link.href = canvas.toDataURL('image/png')
+        link.click()
+      } catch (err) {
+        alert(`Error: ${err}`)
+      }
+    }
+
+    //   downloadedImg.crossOrigin = 'anonymous'
+    downloadedImg.addEventListener('load', imageReceived)
+    downloadedImg.alt = imageDescription
+    downloadedImg.src = imageURL
+  } catch (err) {
+    alert(`Error: ${err}`)
+  }
+}
 
 // --- Define Emits (for v-model updates and events) ---
 const emit = defineEmits(['update:modelValue', 'mode-change'])
