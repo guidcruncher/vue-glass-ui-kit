@@ -1,234 +1,282 @@
 <template>
-  <div
-    ref="dropdownRef"
-    class="relative inline-block"
-    :style="{ width: computedWidth }"
-    
-    /* The .dark class must be applied to this div (or a parent) 
-       by external logic (e.g., the parent component or a global theme store)
-       to enable dark mode styling. 
-    */ 
-  >
+  <div class="ui-dropdown-root">
     <div
-      @click="toggleDropdown"
-      :style="{ width: computedWidth }"
-      class="
-        dropdown-control 
-        p-2
-        rounded-text-field
-        cursor-pointer
-        flex
-        justify-between
-        items-center
-        font-normal
-        text-base
-        transition
-        duration-150
-        ease-in-out
-      "
-      :class="{ 'control-open': isDropdownOpen }"
+      ref="triggerRef"
+      class="selected-display"
+      @click="isOpen ? closeDropdown() : openDropdown()"
     >
-      <span class="text-primary-text">
-        {{ selectedItemDisplay }}
-      </span>
-      <svg
-        :class="{ 'rotate-180': isDropdownOpen }"
-        class="w-4 h-4 text-icon-color transform transition-transform duration-200"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M19 9l-7 7-7-7"
-        ></path>
-      </svg>
+      <div class="label-slot">
+        <slot name="label">
+          <div class="selected-text">
+            <span v-if="selectedLabel">{{ selectedLabel }}</span
+            ><span v-else> {{ placeholder }}</span>
+          </div>
+        </slot>
+      </div>
+      <!-- MODIFICATION: Changed to fa-chevron-down and updated rotation logic -->
+      <i
+        class="fa-solid fa-chevron-down accessory"
+        :style="{ transform: isOpen ? 'rotate(-180deg)' : 'rotate(0deg)' }"
+      />
+      <!-- END MODIFICATION -->
     </div>
 
-    <Transition name="fade-slide">
-      <div
-        v-if="isDropdownOpen"
-        class="
-          absolute
-          mt-2
-          z-10
-          dropdown-list
-          rounded-xl
-          shadow-2xl
-          overflow-hidden
-        "
-        :style="{
-          width: computedWidth,
-          maxHeight: computedHeight,
-          overflowY: 'auto',
-        }"
-      >
-        <ul class="divide-y divide-list-separator">
-          <li
-            v-for="(item, index) in items"
-            :key="index"
-            @click="selectItem(item)"
-            class="
-              list-item
-              p-3
-              cursor-pointer
-              transition-colors
-              duration-150
-              ease-in-out
-            "
-            :class="{
-              'list-item-selected': item === modelValue,
-            }"
-          >
-            {{ item }}
-            <span v-if="item === modelValue" class="float-right text-lg">
-              ✓
-            </span>
-          </li>
-        </ul>
+    <Teleport to="body">
+      <div v-if="isOpen" class="ui-dropdown-overlay" @click.self="closeDropdown">
+        <div
+          ref="dropdownRef"
+          class="ui-dropdown-popover-glass"
+          :style="{
+            top: position.top,
+            left: position.left,
+            minWidth: position.width,
+            maxWidth: '300px',
+          }"
+        >
+          <div class="items-list">
+            <div
+              v-for="item in items"
+              :key="item.value"
+              class="dropdown-item"
+              :class="{ active: item.value === selectedValue }"
+              @click="selectItem(item.value, item.label)"
+            >
+              <div class="label">{{ item.label }}</div>
+              <div v-if="item.value === selectedValue" class="check">✓</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </Transition>
+    </Teleport>
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+<script lang="ts" setup>
+import { ref, computed, onMounted, onUnmounted, watch, reactive, Teleport } from 'vue'
 
-// --- PROPS and EMITS ---
 const props = defineProps({
   modelValue: {
-    type: [String, Number, null],
+    type: [String, Number, Boolean, Object],
     default: null,
   },
   items: {
     type: Array,
     required: true,
-    validator: (arr) => arr.every(item => typeof item === 'string' || typeof item === 'number'),
-  },
-  width: {
-    type: [String, Number],
-    default: '250px',
-  },
-  dropdownHeight: {
-    type: [String, Number],
-    default: '300px',
+    validator: (arr) => arr.every((item) => 'value' in item && 'label' in item),
   },
   placeholder: {
     type: String,
-    default: 'Select an item',
+    default: 'Select an option',
+  },
+})
+
+const emit = defineEmits(['update:modelValue', 'selected'])
+
+const isOpen = ref(false)
+const selectedValue = ref(props.modelValue)
+const triggerRef = ref(null)
+const dropdownRef = ref(null)
+const position = reactive({ top: '0px', left: '0px', width: '0px' })
+
+// Compute the label for the currently selected value
+const selectedLabel = computed(() => {
+  const selected = props.items.find((opt) => opt.value === selectedValue.value)
+  return selected ? selected.label : null
+})
+
+// Watch modelValue changes from parent
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    selectedValue.value = newValue
+  },
+  { immediate: true },
+)
+
+// --- Dropdown Management ---
+
+const openDropdown = () => {
+  if (triggerRef.value) {
+    const rect = triggerRef.value.getBoundingClientRect()
+
+    // Calculate position (8px below the trigger)
+    position.top = `${rect.bottom + 8}px`
+    position.left = `${rect.left}px`
+    position.width = `${rect.width}px`
+
+    // Simple check to ensure the popover doesn't go off-screen right
+    const viewportWidth = window.innerWidth
+    const popoverWidth = 300 // Fixed max width
+    if (rect.left + popoverWidth > viewportWidth - 20) {
+      // 20px margin
+      position.left = `${viewportWidth - popoverWidth - 20}px`
+    }
+
+    isOpen.value = true
   }
-});
+}
 
-const emit = defineEmits(['update:modelValue']);
+const closeDropdown = () => {
+  isOpen.value = false
+}
 
-// --- STATE ---
-const isDropdownOpen = ref(false);
-const dropdownRef = ref(null);
-
-// --- COMPUTED PROPERTIES ---
-const computedWidth = computed(() => {
-  return typeof props.width === 'number' ? `${props.width}px` : props.width;
-});
-
-const computedHeight = computed(() => {
-  return typeof props.dropdownHeight === 'number' ? `${props.dropdownHeight}px` : props.dropdownHeight;
-});
-
-const selectedItemDisplay = computed(() => {
-    return props.modelValue !== null && props.items.includes(props.modelValue)
-        ? props.modelValue
-        : props.placeholder;
-});
-
-// --- METHODS ---
-/**
- * Toggles the visibility of the dropdown list.
- */
-const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
-};
+// --- Core Functionality ---
 
 /**
- * Selects an item, updates the modelValue, and hides the dropdown.
+ * Updates the selected value and emits events.
+ * @param {any} value - The value of the selected item.
+ * @param {string} label - The label of the selected item.
  */
-const selectItem = (item) => {
-  emit('update:modelValue', item);
-  isDropdownOpen.value = false;
-};
+const selectItem = (value, label) => {
+  selectedValue.value = value
+  emit('update:modelValue', value)
+  emit('selected', { value, label })
+  closeDropdown()
+}
 
-// --- OUTSIDE CLICK LOGIC ---
-/**
- * Event listener to check if the click was outside the component.
- */
+// --- Click Outside Listener ---
+
 const handleClickOutside = (event) => {
-  if (isDropdownOpen.value && dropdownRef.value && !dropdownRef.value.contains(event.target)) {
-    isDropdownOpen.value = false;
+  // Check if click is outside the popover and outside the trigger
+  if (
+    isOpen.value &&
+    dropdownRef.value &&
+    !dropdownRef.value.contains(event.target) &&
+    !triggerRef.value.contains(event.target)
+  ) {
+    closeDropdown()
   }
-};
+}
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
+  document.addEventListener('mousedown', handleClickOutside)
+})
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-});
+  document.removeEventListener('mousedown', handleClickOutside)
+})
 </script>
 
 <style scoped>
+/* Scoped styles to match the iOS UI Kit */
 
-/* Custom radius that mimics standard iOS input fields (e.g., 8-10px) */
-.rounded-text-field {
-    border-radius: 0.625rem; /* 10px */
+/* --- UI Dropdown List Root Container --- */
+.ui-dropdown-root {
+  display: block; /* Typically used within a table cell or form */
+  width: 100%;
 }
 
-.dropdown-control {
-  background-color: var(--control-bg);
-  /* Use CSS variables for the border properties */
-  border: var(--control-border-width) solid var(--control-border); 
-  color: var(--primary-text);
+/* --- Selected Display/Trigger --- */
+.selected-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px 16px;
+  background: var(--ios-card-bg); /* Use card background for consistency */
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background 0.1s;
+  border: 1px solid var(--ios-separator); /* Subtle border */
+  min-height: 44px;
+}
+.selected-display:active {
+  background: rgba(120, 120, 128, 0.1);
 }
 
-.control-open {
-  /* When open/focused, border becomes the active color and gets a bit thicker, like a focus ring */
-  border: calc(var(--control-border-width) + 1px) solid var(--control-border-active);
+.label-slot {
+  flex-grow: 1;
 }
 
-.dropdown-list {
-  background-color: var(--list-bg);
-  border: 1px solid var(--list-border);
+.selected-text {
+  font-size: 17px;
+  color: var(--system-blue);
+  font-weight: 500;
 }
 
-.list-item {
-  color: var(--primary-text);
+/* --- Accessory Icon --- */
+.accessory {
+  transition: transform 0.2s;
+  width: 14px;
+  height: 14px;
+  fill: var(--ios-text-secondary);
+  flex-shrink: 0;
+  margin-left: 10px;
 }
 
-.list-item:hover {
-  background-color: var(--list-hover-bg);
+/* --- Teleported Popover --- */
+.ui-dropdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
 }
 
-.list-item-selected {
-  background-color: var(--selected-bg);
-  color: var(--selected-text);
+.ui-dropdown-popover-glass {
+  position: absolute;
+  z-index: 501;
+  /* Glass effect */
+  background: var(--glass-bg);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform-origin: top left;
+  animation: popin 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Min width set in template for responsive positioning */
 }
 
-.list-item-selected:hover {
-  background-color: var(--selected-hover-bg);
+@keyframes popin {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-/* Custom transition for a subtle slide/fade effect */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+/* --- Items List Container --- */
+.items-list {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-.fade-slide-enter-from,
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-5px);
+/* --- Individual Dropdown Item --- */
+.dropdown-item {
+  padding: 12px 16px;
+  font-size: 17px;
+  cursor: pointer;
+  border-bottom: 0.5px solid var(--ios-separator);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--ios-text-primary);
+  transition: background-color 0.1s;
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+.dropdown-item:hover {
+  background-color: rgba(120, 120, 128, 0.1);
+}
+.dropdown-item.active {
+  font-weight: 600;
+  color: var(--system-blue);
+}
+
+.check {
+  color: var(--system-blue);
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1;
 }
 </style>
+
 

@@ -276,9 +276,30 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
-const selectedFruit = ref('Orange')
+const selectedFruit = ref('orange')
 // 3. Array of items to display in the dropdown
-const fruitList = ref(['Apple', 'Banana', 'Orange', 'Grape', 'Strawberry', 'Mango', 'Pineapple'])
+const fruitList = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'orange', label: 'Orange' },
+  { value: 'grape', label: 'Grape' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'mango', label: 'Mango' },
+  { value: 'pineapple', label: 'Pineapple' },
+  { value: 'watermelon', label: 'Watermelon' },
+  { value: 'kiwi', label: 'Kiwi' },
+  { value: 'blueberry', label: 'Blueberry' },
+  { value: 'raspberry', label: 'Raspberry' },
+  { value: 'peach', label: 'Peach' },
+  { value: 'plum', label: 'Plum' },
+  { value: 'pear', label: 'Pear' },
+  { value: 'cherry', label: 'Cherry' },
+  { value: 'lemon', label: 'Lemon' },
+  { value: 'lime', label: 'Lime' },
+  { value: 'pomegranate', label: 'Pomegranate' },
+  { value: 'apricot', label: 'Apricot' },
+  { value: 'fig', label: 'Fig' }
+];
 
 const viewImage = ref(false)
 const expanded = ref(true)
