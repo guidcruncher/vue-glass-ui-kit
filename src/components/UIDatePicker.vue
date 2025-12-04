@@ -3,18 +3,21 @@
     <div class="picker-container">
       <div class="highlight"></div>
 
+      <!-- Month Wheel -->
       <div class="wheel" ref="monthWheel" @scroll="debouncedHandleScroll('month', $event)">
         <div class="padding"></div>
         <div v-for="(month, index) in months" :key="index" class="item">{{ month }}</div>
         <div class="padding"></div>
       </div>
 
+      <!-- Day Wheel -->
       <div class="wheel" ref="dayWheel" @scroll="debouncedHandleScroll('day', $event)">
         <div class="padding"></div>
         <div v-for="(day, index) in days" :key="index" class="item">{{ day }}</div>
         <div class="padding"></div>
       </div>
 
+      <!-- Year Wheel -->
       <div class="wheel" ref="yearWheel" @scroll="debouncedHandleScroll('year', $event)">
         <div class="padding"></div>
         <div v-for="(year, index) in years" :key="index" class="item">{{ year }}</div>
@@ -25,38 +28,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
-import { debounce } from '@/utils/debounce' // ASSUME PATH: '@/utils/debounce'
+import { ref, onMounted, watch, nextTick } from 'vue';
+import { debounce } from '@/utils/debounce'; 
 
-// --- Props and Emits for v-model ---
 interface Props {
-  /** The current selected date, bound via v-model */
-  modelValue: Date | null
+  modelValue: Date | null;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
-// FIX: Correctly define and assign the emit function
+// FIX: Correctly define emit
 const emit = defineEmits<{
-  (e: 'update:modelValue', date: Date): void
-}>()
+  (e: 'update:modelValue', date: Date): void;
+}>();
 
-// --- Constants and Refs ---
-const ITEM_HEIGHT = 34
-const START_YEAR = 2025
+const ITEM_HEIGHT = 34;
+const START_YEAR = 2025;
 const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+  'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+  'September', 'October', 'November', 'December',
+];
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
 const years = Array.from({ length: 10 }, (_, i) => START_YEAR + i)
 
@@ -64,82 +54,60 @@ const monthWheel = ref<HTMLElement | null>(null)
 const dayWheel = ref<HTMLElement | null>(null)
 const yearWheel = ref<HTMLElement | null>(null)
 
-// --- Scroll Utility ---
-const getCenteredIndex = (scrollTop: number): number => {
-  return Math.round(scrollTop / ITEM_HEIGHT)
-}
-
-// --- Initialization Logic ---
-const calculateScrollTop = (datePartIndex: number) => {
-  return datePartIndex * ITEM_HEIGHT
-}
+// --- Scroll Logic ---
+const getCenteredIndex = (scrollTop: number) => Math.round(scrollTop / ITEM_HEIGHT);
+const calculateScrollTop = (index: number) => index * ITEM_HEIGHT;
 
 const setInitialScroll = () => {
-  const date = props.modelValue || new Date()
-
-  // FIX: Use nextTick to ensure the DOM has completed layout calculations
+  const date = props.modelValue || new Date(); 
+  
+  // FIX: Use nextTick for reliable DOM calculation
   nextTick(() => {
     if (monthWheel.value) {
-      const monthIndex = date.getMonth()
-      monthWheel.value.scrollTop = calculateScrollTop(monthIndex)
+      monthWheel.value.scrollTop = calculateScrollTop(date.getMonth());
     }
     if (dayWheel.value) {
-      const dayIndex = date.getDate() - 1
-      dayWheel.value.scrollTop = calculateScrollTop(dayIndex)
+      dayWheel.value.scrollTop = calculateScrollTop(date.getDate() - 1);
     }
     if (yearWheel.value) {
-      const yearIndex = date.getFullYear() - START_YEAR
+      const yearIndex = date.getFullYear() - START_YEAR;
       if (yearIndex >= 0 && yearIndex < years.length) {
-        yearWheel.value.scrollTop = calculateScrollTop(yearIndex)
+        yearWheel.value.scrollTop = calculateScrollTop(yearIndex);
       }
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
-  setTimeout(setInitialScroll, 50)
-})
+  setTimeout(setInitialScroll, 50); 
+});
 
-// Watch modelValue changes from parent and update scroll position
-watch(
-  () => props.modelValue,
-  () => {
-    setTimeout(setInitialScroll, 50)
-  },
-  { deep: true },
-)
+watch(() => props.modelValue, () => {
+  setTimeout(setInitialScroll, 50); 
+}, { deep: true });
 
-// --- Scroll/Selection Logic ---
 const handleScroll = (unit: 'month' | 'day' | 'year', event: Event) => {
-  const target = event.target as HTMLElement
+  const target = event.target as HTMLElement;
+  const centeredIndex = getCenteredIndex(target.scrollTop);
+  const newDate = props.modelValue ? new Date(props.modelValue) : new Date();
+  
+  let currentYear = newDate.getFullYear();
+  let currentMonth = newDate.getMonth();
+  let currentDay = newDate.getDate();
 
-  const centeredIndex = getCenteredIndex(target.scrollTop)
+  if (unit === 'month') currentMonth = centeredIndex % months.length;
+  else if (unit === 'day') currentDay = (centeredIndex % days.length) + 1;
+  else if (unit === 'year') currentYear = START_YEAR + (centeredIndex % years.length);
 
-  const newDate = props.modelValue ? new Date(props.modelValue) : new Date()
+  emit('update:modelValue', new Date(currentYear, currentMonth, currentDay));
+};
 
-  let currentYear = newDate.getFullYear()
-  let currentMonth = newDate.getMonth()
-  let currentDay = newDate.getDate()
-
-  if (unit === 'month') {
-    currentMonth = centeredIndex % months.length
-  } else if (unit === 'day') {
-    currentDay = (centeredIndex % days.length) + 1
-  } else if (unit === 'year') {
-    currentYear = START_YEAR + (centeredIndex % years.length)
-  }
-
-  const finalDate = new Date(currentYear, currentMonth, currentDay)
-  emit('update:modelValue', finalDate)
-}
-
-const debouncedHandleScroll = debounce(handleScroll, 150)
+const debouncedHandleScroll = debounce(handleScroll, 150);
 </script>
 
 <style lang="scss" scoped>
 .ui-date-picker {
   display: inline-block;
-
   .picker-container {
     display: flex;
     height: 160px;
@@ -150,12 +118,9 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     width: 300px;
     margin: 0 auto;
   }
-
   .highlight {
     position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
+    top: 50%; left: 0; right: 0;
     height: 34px;
     background: rgba(120, 120, 128, 0.1);
     transform: translateY(-50%);
@@ -164,19 +129,14 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     border-top: 0.5px solid rgba(0, 0, 0, 0.05);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
   }
-
   .wheel {
     flex: 1;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     height: 100%;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    scrollbar-width: none; 
+    &::-webkit-scrollbar { display: none; }
   }
-
   .item {
     height: 34px;
     line-height: 34px;
@@ -186,9 +146,7 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     color: var(--ios-text-primary);
     user-select: none;
   }
-
-  .padding {
-    height: 63px;
-  }
+  .padding { height: 63px; }
 }
 </style>
+

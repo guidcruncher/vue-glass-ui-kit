@@ -6,8 +6,8 @@
           cx="50"
           cy="50"
           r="50"
-          fill="transparent"
-          stroke="rgba(var(--ios-text-primary), 0.2)"
+          fill="var(--clock-face-color, #ffffff)"
+          stroke="rgba(var(--clock-border-color, 0,0,0), 0.1)"
           stroke-width="1"
         />
 
@@ -19,22 +19,22 @@
             y1="2"
             x2="50"
             y2="7"
-            stroke="var(--ios-text-tertiary)"
+            stroke="var(--ios-text-tertiary, #8e8e93)"
             stroke-width="1.5"
             :transform="`rotate(${(h * 30) % 360} 50 50)`"
           />
         </g>
 
         <line
-          class="second-hand"
+          class="hour-hand"
           x1="50"
           y1="55"
           x2="50"
-          y2="10"
-          stroke="var(--system-red)"
-          stroke-width="1"
+          y2="28"
+          stroke="var(--ios-text-primary, #000000)"
+          stroke-width="3"
           stroke-linecap="round"
-          :transform="`rotate(${secondAngle} 50 50)`"
+          :transform="`rotate(${hourAngle} 50 50)`"
         />
 
         <line
@@ -43,25 +43,25 @@
           y1="55"
           x2="50"
           y2="15"
-          stroke="var(--ios-text-tertiary)"
+          stroke="var(--ios-text-primary, #000000)"
           stroke-width="2"
           stroke-linecap="round"
           :transform="`rotate(${minuteAngle} 50 50)`"
         />
 
         <line
-          class="hour-hand"
+          class="second-hand"
           x1="50"
           y1="55"
           x2="50"
-          y2="28"
-          stroke="var(--ios-text-tertiary)"
-          stroke-width="3"
+          y2="10"
+          stroke="var(--system-red, #ff3b30)"
+          stroke-width="1.5"
           stroke-linecap="round"
-          :transform="`rotate(${hourAngle} 50 50)`"
+          :transform="`rotate(${secondAngle} 50 50)`"
         />
 
-        <circle cx="50" cy="50" r="3" fill="var(--ios-background)" />
+        <circle cx="50" cy="50" r="2.5" fill="var(--ios-background, #ffffff)" stroke="var(--ios-text-tertiary, #8e8e93)" stroke-width="0.5" />
       </svg>
     </div>
   </div>
@@ -72,7 +72,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 interface Props {
   size?: number
-  timezone?: string
+   timezone?: string
   showLabel?: boolean
 }
 
@@ -99,10 +99,9 @@ function parseTimeComponent(date: Date, timezone: string, type: TimeUnit): numbe
 
   const formatter = new Intl.DateTimeFormat('en-US', options)
   const formattedTime = formatter.format(date)
-
-  // Aggressively clean the string to ensure only Latin digits (0-9) remain.
+  
+  // Clean string to ensure only digits remain
   const numericalString = formattedTime.replace(/[^0-9]/g, '')
-
   return parseInt(numericalString, 10) || 0
 }
 
@@ -116,21 +115,7 @@ const hourAngle = computed(
   () => (hour.value % 12) * 30 + minute.value * 0.5 + second.value * (0.5 / 60),
 )
 
-const timeLabel = computed(() => {
-  try {
-    const parts = props.timezone.split('/')
-    const city = parts[parts.length - 1].replace(/_/g, ' ')
-    const time = currentTime.value.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: props.timezone,
-    })
-    return `${city} (${time})`
-  } catch (e) {
-    return `Error: Invalid Timezone`
-  }
-})
-
+// Computed style for the container
 const clockPanelStyle = computed(() => ({
   width: `${props.size}px`,
   height: `${props.size}px`,
@@ -153,35 +138,46 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .analog-clock-wrapper {
-  scriptSetup {
-    --size: v-bind('size');
-  }
+  /* Correctly bind the size prop to a CSS variable with units */
+  --size: v-bind('props.size + "px"');
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .analog-clock {
+    position: relative;
+    display: flex;
     flex-direction: column;
     border-radius: 50%;
     padding: 0;
 
+    /* Use the variable or fallback */
     width: var(--size);
     height: var(--size);
 
     svg {
+      display: block; /* Removes weird SVG spacing issues */
+      
+      /* Only animate Hour and Minute. 
+         Animating the Second hand causes it to spin backwards at 00s. */
       .hour-hand,
-      .minute-hand,
-      .second-hand {
+      .minute-hand {
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
       }
-    }
-
-    .hour-hand {
-      fill: var(--color-label-primary);
-    }
-    .minute-hand {
-      fill: var(--color-label-primary);
-    }
-    .second-hand {
-      stroke: var(--color-error);
+      
+      /* Ensure colors apply even if variables are missing */
+      .hour-hand {
+        stroke: var(--clock-hand-hour, #000);
+      }
+      .minute-hand {
+        stroke: var(--clock-hand-minute, #000);
+      }
+      .second-hand {
+        stroke: var(--clock-hand-second, #ff3b30);
+      }
     }
   }
 }
 </style>
+

@@ -52,6 +52,15 @@ $font-family: 'Inter', sans-serif;
   --system-gray4: #d1d1d6;
   --system-gray5: #e5e5ea;
   --system-gray6: #f2f2f7;
+  --system-white: #ffffff;
+  --system-black: #000000;
+  --system-red: #ff3b30;
+  
+  --clock-face-color: var(--system-white);
+  --clock-border-color: rgba(0, 0, 0, 0.15); /* Subtle gray border */
+  --clock-hand-hour: var(--system-black);
+  --clock-hand-minute: var(--system-black);
+  --clock-hand-second: var(--system-red);
 }
 
 // --- 3. Dark Mode Overrides ---
@@ -81,4 +90,10 @@ $font-family: 'Inter', sans-serif;
   --system-gray4: #3a3a3c;
   --system-gray5: #2c2c2e;
   --system-gray6: #1c1c1e;
+
+  --clock-face-color: #2c2c2e; /* Darker gray face */
+  --clock-border-color: rgba(255, 255, 255, 0.1);
+  --clock-hand-hour: var(--system-white);
+  --clock-hand-minute: var(--system-white);
+  --clock-hand-second: var(--system-red);
 }
