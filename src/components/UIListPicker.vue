@@ -40,8 +40,8 @@ interface Props {
   disabled?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
-    width: 200,
-    disabled: false,
+  width: 200,
+  disabled: false,
 })
 
 const emit = defineEmits<{
@@ -51,7 +51,7 @@ const emit = defineEmits<{
 // --- State ---
 // The UIWheelListView works with index, so we compute the index from the key.
 const currentIndex = computed(() => {
-  return props.items.findIndex(item => item.key === props.modelValue)
+  return props.items.findIndex((item) => item.key === props.modelValue)
 })
 
 const pickerWidth = computed(() => props.width)
@@ -68,7 +68,7 @@ const handleIndexUpdate = (newIndex: number) => {
 <style lang="scss" scoped>
 .ui-list-picker {
   display: inline-block;
-  
+
   &.disabled {
     opacity: 0.6;
     pointer-events: none;
@@ -99,12 +99,12 @@ const handleIndexUpdate = (newIndex: number) => {
     border-top: 0.5px solid rgba(0, 0, 0, 0.05);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
   }
-  
+
   // Custom styling for the list item label (passed via slot)
   :deep(.item > div) {
     font-size: 17px;
     color: var(--ios-text-primary);
-    
+
     &.selected {
       font-weight: 600;
       color: var(--system-blue);

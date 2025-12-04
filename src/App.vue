@@ -32,6 +32,9 @@
               <UITableCell label="Inbox (12)" accessory="chevron" />
               <UITableCell label="Sent Items" accessory="chevron" />
               <UITableCell label="Spam" accessory="chevron" />
+              <UITableCell label="Disabled"
+                ><template #custom-content><UISwitch v-model="disabled" /></template
+              ></UITableCell>
             </UITableView>
           </div>
         </template>

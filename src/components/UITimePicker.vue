@@ -41,8 +41,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    width: 300,
-    disabled: false,
+  width: 300,
+  disabled: false,
 })
 
 const emit = defineEmits<{ (e: 'update:modelValue', date: Date): void }>()
@@ -53,12 +53,16 @@ const minutes = [...Array(60).keys()]
 const pickerWidth = computed(() => props.width)
 
 // Compute indices from the modelValue
-const currentHourIndex = computed(() => (props.modelValue ? props.modelValue.getHours() : new Date().getHours()))
-const currentMinuteIndex = computed(() => (props.modelValue ? props.modelValue.getMinutes() : new Date().getMinutes()))
+const currentHourIndex = computed(() =>
+  props.modelValue ? props.modelValue.getHours() : new Date().getHours(),
+)
+const currentMinuteIndex = computed(() =>
+  props.modelValue ? props.modelValue.getMinutes() : new Date().getMinutes(),
+)
 
 // Helper to create a new Date object based on the current modelValue
 const getNewDate = () => {
-    return props.modelValue ? new Date(props.modelValue) : new Date()
+  return props.modelValue ? new Date(props.modelValue) : new Date()
 }
 
 // --- Handlers ---
@@ -79,13 +83,13 @@ const handleMinuteUpdate = (newIndex: number) => {
 <style lang="scss" scoped>
 .ui-date-picker {
   display: inline-block;
-  
+
   &.disabled {
     opacity: 0.6;
     pointer-events: none;
     cursor: not-allowed;
   }
-  
+
   .picker-container {
     display: flex;
     height: 160px;

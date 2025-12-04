@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="wheel"
-    ref="wheelRef"
-    @scroll="!disabled && debouncedHandleScroll($event)"
-  >
+  <div class="wheel" ref="wheelRef" @scroll="!disabled && debouncedHandleScroll($event)">
     <!-- Top padding to allow the first item to center -->
     <div class="padding" :style="{ height: paddingHeight }"></div>
 
@@ -28,12 +24,12 @@ import { ref, onMounted, watch, nextTick, computed } from 'vue'
 // --- Simple Local Debounce Utility ---
 // Included locally as the previous path was relative
 const debounce = (fn: Function, delay: number) => {
-  let timeoutId: number;
-  return function(this: any, ...args: any[]) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), delay) as any;
-  };
-};
+  let timeoutId: number
+  return function (this: any, ...args: any[]) {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => fn.apply(this, args), delay) as any
+  }
+}
 
 interface Props {
   /** The array of items to display (e.g., months, hours, list items) */
@@ -65,7 +61,6 @@ const paddingHeight = computed(() => {
   return `${(props.containerHeight - props.itemHeight) / 2}px`
 })
 
-
 /**
  * Sets the wheel's scrollTop to center the item corresponding to the initial index.
  */
@@ -82,19 +77,19 @@ const calculateInitialScroll = () => {
  */
 const handleScroll = (event: Event) => {
   const target = event.target as HTMLElement
-  
+
   const currentScrollTop = target.scrollTop
-  
+
   // 1. Calculate the 0-based data index (N) by rounding to the nearest snap point.
   // This is the core fix for the off-by-one error.
   const itemIndex = Math.round(currentScrollTop / props.itemHeight)
-  
+
   // 2. Snap the scroll position precisely to the calculated center
   target.scrollTop = itemIndex * props.itemHeight
 
   // 3. Emit the index, clamped within the bounds of the actual data array
   const clampedIndex = Math.min(Math.max(0, itemIndex), props.items.length - 1)
-  
+
   if (clampedIndex !== props.selectedIndex) {
     emit('update:selectedIndex', clampedIndex)
   }
@@ -103,9 +98,13 @@ const handleScroll = (event: Event) => {
 const debouncedHandleScroll = debounce(handleScroll, 150)
 
 // Watch the selectedIndex prop to update scroll position externally
-watch(() => props.selectedIndex, () => {
-  nextTick(calculateInitialScroll)
-}, { immediate: true })
+watch(
+  () => props.selectedIndex,
+  () => {
+    nextTick(calculateInitialScroll)
+  },
+  { immediate: true },
+)
 
 onMounted(() => {
   calculateInitialScroll()
@@ -121,7 +120,7 @@ onMounted(() => {
   height: 100%;
   scrollbar-width: none;
   padding: 0 4px;
-  
+
   &::-webkit-scrollbar {
     display: none;
   }

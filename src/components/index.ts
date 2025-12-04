@@ -30,6 +30,7 @@ import UIThemeChooser from './UIThemeChooser.vue'
 import UITimePicker from './UITimePicker.vue'
 import UIToolbar from './UIToolbar.vue'
 import UIVisualEffectView from './UIVisualEffectView.vue'
+import UIWheelListView from './UIWheelListView.vue'
 import UIWidgetView from './UIWidgetView.vue'
 import '../styles/styles.scss'
 import { createPinia } from 'pinia'
@@ -70,6 +71,7 @@ export const GlassComponents = {
   UITimePicker,
   UIToolbar,
   UIVisualEffectView,
+  UIWheelListView,
   UIWidgetView,
 }
 

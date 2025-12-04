@@ -47,8 +47,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    width: 300,
-    disabled: false,
+  width: 300,
+  disabled: false,
 })
 
 const emit = defineEmits<{ (e: 'update:modelValue', date: Date): void }>()
@@ -57,8 +57,18 @@ const START_YEAR = 1900
 const END_YEAR = 2100
 
 const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ]
 const days = Array.from({ length: 31 }, (_, i) => i + 1) // 1-based days
 const years = Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) => START_YEAR + i)
@@ -66,32 +76,40 @@ const years = Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) => START_
 const pickerWidth = computed(() => props.width)
 
 // Compute indices from the modelValue
-const currentMonthIndex = computed(() => (props.modelValue ? props.modelValue.getMonth() : new Date().getMonth())) // 0-11
-const currentDayIndex = computed(() => (props.modelValue ? props.modelValue.getDate() - 1 : new Date().getDate() - 1)) // 0-30
-const currentYearIndex = computed(() => (props.modelValue ? props.modelValue.getFullYear() - START_YEAR : new Date().getFullYear() - START_YEAR))
+const currentMonthIndex = computed(() =>
+  props.modelValue ? props.modelValue.getMonth() : new Date().getMonth(),
+) // 0-11
+const currentDayIndex = computed(() =>
+  props.modelValue ? props.modelValue.getDate() - 1 : new Date().getDate() - 1,
+) // 0-30
+const currentYearIndex = computed(() =>
+  props.modelValue
+    ? props.modelValue.getFullYear() - START_YEAR
+    : new Date().getFullYear() - START_YEAR,
+)
 
 // Helper to create a new Date object based on the current modelValue
 const getNewDate = () => {
-    return props.modelValue ? new Date(props.modelValue) : new Date()
+  return props.modelValue ? new Date(props.modelValue) : new Date()
 }
 
 // --- Handlers ---
 
 const handleDateUpdate = (newDate: Date) => {
-    // This logic ensures that if the day chosen is invalid for the new month/year (e.g., Feb 30),
-    // the day automatically snaps to the last valid day (Feb 28/29).
-    const currentDayOfMonth = newDate.getDate();
-    newDate.setDate(currentDayOfMonth); // Reset the day to handle month change correctly
+  // This logic ensures that if the day chosen is invalid for the new month/year (e.g., Feb 30),
+  // the day automatically snaps to the last valid day (Feb 28/29).
+  const currentDayOfMonth = newDate.getDate()
+  newDate.setDate(currentDayOfMonth) // Reset the day to handle month change correctly
 
-    if (newDate.getDate() !== currentDayOfMonth) {
-        // If the date changed because the day was too high (e.g., setMonth(1) for Feb 31st),
-        // use setDate(0) to get the last day of the desired month
-        newDate.setDate(0); 
-    }
-    
-    if (!isNaN(newDate.getTime())) {
-        emit('update:modelValue', newDate)
-    }
+  if (newDate.getDate() !== currentDayOfMonth) {
+    // If the date changed because the day was too high (e.g., setMonth(1) for Feb 31st),
+    // use setDate(0) to get the last day of the desired month
+    newDate.setDate(0)
+  }
+
+  if (!isNaN(newDate.getTime())) {
+    emit('update:modelValue', newDate)
+  }
 }
 
 const handleMonthUpdate = (newIndex: number) => {
@@ -103,7 +121,7 @@ const handleMonthUpdate = (newIndex: number) => {
 const handleDayUpdate = (newIndex: number) => {
   // New index is 0-based, but Date requires 1-based day
   const newDate = getNewDate()
-  newDate.setDate(newIndex + 1) 
+  newDate.setDate(newIndex + 1)
   handleDateUpdate(newDate)
 }
 
@@ -118,7 +136,7 @@ const handleYearUpdate = (newIndex: number) => {
 <style lang="scss" scoped>
 .ui-date-picker {
   display: inline-block;
-  
+
   &.disabled {
     opacity: 0.6;
     pointer-events: none;
