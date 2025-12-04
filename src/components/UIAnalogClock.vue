@@ -11,6 +11,20 @@
           stroke-width="1"
         />
 
+        <g class="minute-markers">
+          <line
+            v-for="m in 60"
+            :key="m"
+            x1="50"
+            y1="2"
+            x2="50"
+            y2="4"
+            stroke="var(--ios-text-tertiary, #8e8e93)"
+            stroke-width="0.5"
+            :transform="`rotate(${m * 6} 50 50)`"
+          />
+        </g>
+        
         <g class="hour-markers">
           <line
             v-for="h in 12"
@@ -23,6 +37,22 @@
             stroke-width="1.5"
             :transform="`rotate(${(h * 30) % 360} 50 50)`"
           />
+        </g>
+
+        <g class="hour-numbers">
+          <text
+            v-for="h in 12"
+            :key="h"
+            :x="50 + 40 * Math.sin(h * 30 * Math.PI / 180)"
+            :y="50 - 40 * Math.cos(h * 30 * Math.PI / 180) + 1.5"
+            text-anchor="middle"
+            alignment-baseline="middle"
+            font-size="6"
+            font-weight="bold"
+            fill="var(--ios-text-primary, #000000)"
+          >
+            {{ h }}
+          </text>
         </g>
 
         <line
@@ -180,4 +210,4 @@ onUnmounted(() => {
   }
 }
 </style>
-
+ 

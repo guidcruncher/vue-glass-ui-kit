@@ -195,7 +195,6 @@
               >Show Glass Alert</UIButton
             >
             <UIAnalogClock size="200" timezone="Europe/London" />
-<UIAnalogClock size="200" timezone="Europe/Madrid" />
             <UIFlipClock timezone="Europe/Madrid" />
           </div>
         </template>
