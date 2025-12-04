@@ -1,27 +1,27 @@
 <template>
-  <div class="ui-list-picker">
-    <div class="picker-container">
+  <div class="ui-list-picker" :class="{ disabled: disabled }">
+    <div class="picker-container" :style="{ width: pickerWidth + 'px' }">
       <div class="highlight"></div>
 
-      <div class="wheel" ref="pickerWheel" @scroll="debouncedHandleScroll($event)">
-        <div class="padding"></div>
-        <div
-          v-for="item in items"
-          :key="item.key"
-          class="item"
-          :class="{ selected: item.key === modelValue }"
-        >
-          {{ item.value }}
-        </div>
-        <div class="padding"></div>
-      </div>
+      <UIWheelListView
+        :items="items"
+        :selected-index="currentIndex"
+        @update:selected-index="handleIndexUpdate"
+        :disabled="disabled"
+      >
+        <template #default="{ item }">
+          <div :class="{ selected: item.key === modelValue }">
+            {{ item.value }}
+          </div>
+        </template>
+      </UIWheelListView>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
-import { debounce } from '@/utils/debounce' // ASSUME PATH: '@/utils/debounce'
+import { ref, watch, computed } from 'vue'
+import UIWheelListView from './UIWheelListView.vue'
 
 // --- Types ---
 interface ListItem {
@@ -35,97 +35,55 @@ interface Props {
   modelValue: string | number | null
   /** The list of selectable items (key/value pairs) */
   items: ListItem[]
+  /** Width override for the entire picker container */
+  width?: number
+  disabled?: boolean
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+    width: 200,
+    disabled: false,
+})
+
 const emit = defineEmits<{
   (e: 'update:modelValue', key: string | number): void
 }>()
 
-// --- Constants and Refs ---
-const ITEM_HEIGHT = 34 // Must match SCSS
-const pickerWheel = ref<HTMLElement | null>(null)
-
-// --- Scroll Utility ---
-/** Calculates the index of the item closest to the center line based on scrollTop. */
-const getCenteredIndex = (scrollTop: number): number => {
-  return Math.round(scrollTop / ITEM_HEIGHT)
-}
-
-/** Calculates the required scrollTop value for a given item index. */
-const calculateScrollTop = (itemIndex: number) => {
-  return itemIndex * ITEM_HEIGHT
-}
-
-// --- Initialization Logic ---
-const setInitialScroll = () => {
-  const initialKey = props.modelValue
-
-  if (pickerWheel.value && initialKey !== null) {
-    // 1. Find the index of the item matching the modelValue key
-    const initialIndex = props.items.findIndex((item) => item.key === initialKey)
-
-    // 2. If found, scroll to that position
-    if (initialIndex !== -1) {
-      // FIX: Use nextTick to ensure the DOM has completed layout calculations
-      nextTick(() => {
-        pickerWheel.value!.scrollTop = calculateScrollTop(initialIndex)
-      })
-    }
-  }
-}
-
-onMounted(() => {
-  // Use a slight delay for maximum reliability, especially inside transitions
-  setTimeout(setInitialScroll, 50)
+// --- State ---
+// The UIWheelListView works with index, so we compute the index from the key.
+const currentIndex = computed(() => {
+  return props.items.findIndex(item => item.key === props.modelValue)
 })
 
-// Watch external changes to modelValue and update scroll position
-watch(
-  () => props.modelValue,
-  () => {
-    setTimeout(setInitialScroll, 50)
-  },
-  { deep: true },
-)
+const pickerWidth = computed(() => props.width)
 
-// --- Scroll/Selection Logic ---
-const handleScroll = (event: Event) => {
-  const target = event.target as HTMLElement
-
-  // 1. Calculate the centered index
-  const centeredIndex = getCenteredIndex(target.scrollTop)
-
-  // Ensure the index is within bounds of the items array
-  const finalIndex = centeredIndex % props.items.length
-
-  if (finalIndex >= 0 && finalIndex < props.items.length) {
-    // 2. Look up the key of the selected item
-    const selectedItem = props.items[finalIndex]
-
-    // 3. Emit the selected key
-    emit('update:modelValue', selectedItem.key)
+// --- Handlers ---
+const handleIndexUpdate = (newIndex: number) => {
+  const newItem = props.items[newIndex]
+  if (newItem && newItem.key !== props.modelValue) {
+    emit('update:modelValue', newItem.key)
   }
 }
-
-// Debounce the scroll handling to prevent excessive updates while scrolling
-const debouncedHandleScroll = debounce(handleScroll, 150)
 </script>
 
 <style lang="scss" scoped>
-@use 'sass:math';
-
 .ui-list-picker {
   display: inline-block;
+  
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 
   .picker-container {
     display: flex;
-    height: 160px; /* Standard picker height */
+    height: 160px;
     background: var(--ios-background);
     border-radius: 12px;
     overflow: hidden;
     position: relative;
-    width: 200px; /* Default width for a single wheel */
     margin: 0 auto;
+    // Width is controlled via prop/computed style
   }
 
   .highlight {
@@ -133,7 +91,7 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     top: 50%;
     left: 0;
     right: 0;
-    height: 34px; /* Standard item height */
+    height: 34px;
     background: rgba(120, 120, 128, 0.1);
     transform: translateY(-50%);
     pointer-events: none;
@@ -141,40 +99,16 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     border-top: 0.5px solid rgba(0, 0, 0, 0.05);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
   }
-
-  .wheel {
-    flex: 1;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    height: 100%;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .item {
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    font-size: 19px;
-    scroll-snap-align: center;
+  
+  // Custom styling for the list item label (passed via slot)
+  :deep(.item > div) {
+    font-size: 17px;
     color: var(--ios-text-primary);
-    user-select: none;
-
-    // Optional: Highlight text in the center (depends on external JS/CSS,
-    // but the `highlight` bar usually suffices)
-    /* &.selected {
-        color: var(--system-blue); 
-        font-weight: 600;
+    
+    &.selected {
+      font-weight: 600;
+      color: var(--system-blue);
     }
-    */
-  }
-
-  .padding {
-    // Height needed to center one item: (Total Height - Item Height) / 2
-    height: math.div((160px - 34px), 2); /* 63px */
   }
 }
 </style>

@@ -1,127 +1,130 @@
 <template>
-  <div class="ui-date-picker">
-    <div class="picker-container">
+  <div class="ui-date-picker" :class="{ disabled: disabled }">
+    <div class="picker-container" :style="{ width: pickerWidth + 'px' }">
       <div class="highlight"></div>
 
       <!-- Month Wheel -->
-      <div class="wheel" ref="monthWheel" @scroll="debouncedHandleScroll('month', $event)">
-        <div class="padding"></div>
-        <div v-for="(month, index) in months" :key="index" class="item">{{ month }}</div>
-        <div class="padding"></div>
-      </div>
+      <UIWheelListView
+        :items="months"
+        :selected-index="currentMonthIndex"
+        @update:selected-index="handleMonthUpdate"
+        :disabled="disabled"
+      >
+        <template #default="{ item }">{{ item }}</template>
+      </UIWheelListView>
 
       <!-- Day Wheel -->
-      <div class="wheel" ref="dayWheel" @scroll="debouncedHandleScroll('day', $event)">
-        <div class="padding"></div>
-        <div v-for="(day, index) in days" :key="index" class="item">{{ day }}</div>
-        <div class="padding"></div>
-      </div>
+      <UIWheelListView
+        :items="days"
+        :selected-index="currentDayIndex"
+        @update:selected-index="handleDayUpdate"
+        :disabled="disabled"
+      >
+        <template #default="{ item }">{{ item }}</template>
+      </UIWheelListView>
 
       <!-- Year Wheel -->
-      <div class="wheel" ref="yearWheel" @scroll="debouncedHandleScroll('year', $event)">
-        <div class="padding"></div>
-        <div v-for="(year, index) in years" :key="index" class="item">{{ year }}</div>
-        <div class="padding"></div>
-      </div>
+      <UIWheelListView
+        :items="years"
+        :selected-index="currentYearIndex"
+        @update:selected-index="handleYearUpdate"
+        :disabled="disabled"
+      >
+        <template #default="{ item }">{{ item }}</template>
+      </UIWheelListView>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
-import { debounce } from '@/utils/debounce'
+import { computed } from 'vue'
+import UIWheelListView from './UIWheelListView.vue'
 
 interface Props {
   modelValue: Date | null
-}
-const props = defineProps<Props>()
-
-// FIX: Correctly define emit
-const emit = defineEmits<{
-  (e: 'update:modelValue', date: Date): void
-}>()
-
-const ITEM_HEIGHT = 34
-const START_YEAR = 2025
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-const days = Array.from({ length: 31 }, (_, i) => i + 1)
-const years = Array.from({ length: 10 }, (_, i) => START_YEAR + i)
-
-const monthWheel = ref<HTMLElement | null>(null)
-const dayWheel = ref<HTMLElement | null>(null)
-const yearWheel = ref<HTMLElement | null>(null)
-
-// --- Scroll Logic ---
-const getCenteredIndex = (scrollTop: number) => Math.round(scrollTop / ITEM_HEIGHT)
-const calculateScrollTop = (index: number) => index * ITEM_HEIGHT
-
-const setInitialScroll = () => {
-  const date = props.modelValue || new Date()
-
-  // FIX: Use nextTick for reliable DOM calculation
-  nextTick(() => {
-    if (monthWheel.value) {
-      monthWheel.value.scrollTop = calculateScrollTop(date.getMonth())
-    }
-    if (dayWheel.value) {
-      dayWheel.value.scrollTop = calculateScrollTop(date.getDate() - 1)
-    }
-    if (yearWheel.value) {
-      const yearIndex = date.getFullYear() - START_YEAR
-      if (yearIndex >= 0 && yearIndex < years.length) {
-        yearWheel.value.scrollTop = calculateScrollTop(yearIndex)
-      }
-    }
-  })
+  width?: number
+  disabled?: boolean
 }
 
-onMounted(() => {
-  setTimeout(setInitialScroll, 50)
+const props = withDefaults(defineProps<Props>(), {
+    width: 300,
+    disabled: false,
 })
 
-watch(
-  () => props.modelValue,
-  () => {
-    setTimeout(setInitialScroll, 50)
-  },
-  { deep: true },
-)
+const emit = defineEmits<{ (e: 'update:modelValue', date: Date): void }>()
 
-const handleScroll = (unit: 'month' | 'day' | 'year', event: Event) => {
-  const target = event.target as HTMLElement
-  const centeredIndex = getCenteredIndex(target.scrollTop)
-  const newDate = props.modelValue ? new Date(props.modelValue) : new Date()
+const START_YEAR = 1900
+const END_YEAR = 2100
 
-  let currentYear = newDate.getFullYear()
-  let currentMonth = newDate.getMonth()
-  let currentDay = newDate.getDate()
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+]
+const days = Array.from({ length: 31 }, (_, i) => i + 1) // 1-based days
+const years = Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) => START_YEAR + i)
 
-  if (unit === 'month') currentMonth = centeredIndex % months.length
-  else if (unit === 'day') currentDay = (centeredIndex % days.length) + 1
-  else if (unit === 'year') currentYear = START_YEAR + (centeredIndex % years.length)
+const pickerWidth = computed(() => props.width)
 
-  emit('update:modelValue', new Date(currentYear, currentMonth, currentDay))
+// Compute indices from the modelValue
+const currentMonthIndex = computed(() => (props.modelValue ? props.modelValue.getMonth() : new Date().getMonth())) // 0-11
+const currentDayIndex = computed(() => (props.modelValue ? props.modelValue.getDate() - 1 : new Date().getDate() - 1)) // 0-30
+const currentYearIndex = computed(() => (props.modelValue ? props.modelValue.getFullYear() - START_YEAR : new Date().getFullYear() - START_YEAR))
+
+// Helper to create a new Date object based on the current modelValue
+const getNewDate = () => {
+    return props.modelValue ? new Date(props.modelValue) : new Date()
 }
 
-const debouncedHandleScroll = debounce(handleScroll, 150)
+// --- Handlers ---
+
+const handleDateUpdate = (newDate: Date) => {
+    // This logic ensures that if the day chosen is invalid for the new month/year (e.g., Feb 30),
+    // the day automatically snaps to the last valid day (Feb 28/29).
+    const currentDayOfMonth = newDate.getDate();
+    newDate.setDate(currentDayOfMonth); // Reset the day to handle month change correctly
+
+    if (newDate.getDate() !== currentDayOfMonth) {
+        // If the date changed because the day was too high (e.g., setMonth(1) for Feb 31st),
+        // use setDate(0) to get the last day of the desired month
+        newDate.setDate(0); 
+    }
+    
+    if (!isNaN(newDate.getTime())) {
+        emit('update:modelValue', newDate)
+    }
+}
+
+const handleMonthUpdate = (newIndex: number) => {
+  const newDate = getNewDate()
+  newDate.setMonth(newIndex)
+  handleDateUpdate(newDate)
+}
+
+const handleDayUpdate = (newIndex: number) => {
+  // New index is 0-based, but Date requires 1-based day
+  const newDate = getNewDate()
+  newDate.setDate(newIndex + 1) 
+  handleDateUpdate(newDate)
+}
+
+const handleYearUpdate = (newIndex: number) => {
+  const newYear = START_YEAR + newIndex
+  const newDate = getNewDate()
+  newDate.setFullYear(newYear)
+  handleDateUpdate(newDate)
+}
 </script>
 
 <style lang="scss" scoped>
 .ui-date-picker {
   display: inline-block;
+  
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
   .picker-container {
     display: flex;
     height: 160px;
@@ -129,7 +132,6 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     border-radius: 12px;
     overflow: hidden;
     position: relative;
-    width: 300px;
     margin: 0 auto;
   }
   .highlight {
@@ -144,28 +146,6 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     z-index: 10;
     border-top: 0.5px solid rgba(0, 0, 0, 0.05);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
-  }
-  .wheel {
-    flex: 1;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    height: 100%;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  .item {
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    font-size: 19px;
-    scroll-snap-align: center;
-    color: var(--ios-text-primary);
-    user-select: none;
-  }
-  .padding {
-    height: 63px;
   }
 }
 </style>

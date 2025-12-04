@@ -1,5 +1,5 @@
 <template>
-  <button :class="['ui-button', variant]" @click="handleClick">
+  <button :class="['ui-button', variant]" :disabled="disabled" @click="handleClick">
     <IconView v-if="icon" :name="icon" class="ui-button__icon" />
     <slot></slot>
   </button>
@@ -14,17 +14,23 @@ type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain' | 'icon' | 'prominen
 interface Props {
   variant?: ButtonVariant
   icon?: string // e.g., 'chevron.left'
+  /** New: Controls the disabled state of the button */
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'filled',
   icon: undefined,
+  disabled: false,
 })
 
 const emit = defineEmits(['click'])
 
 const handleClick = (event: MouseEvent) => {
-  emit('click', event)
+  // The native disabled attribute prevents the click event, but guarding here for consistency
+  if (!props.disabled) {
+    emit('click', event)
+  }
 }
 </script>
 
@@ -46,9 +52,16 @@ const handleClick = (event: MouseEvent) => {
   user-select: none;
   background: transparent;
 
-  &:active {
+  &:active:not(:disabled) {
     transform: scale(0.96);
     opacity: 0.8;
+  }
+
+  // NEW: Disabled State Styling
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5; /* Fade out the button */
+    transform: none; /* Prevent the active scale effect */
   }
 
   // --- Variants ---
@@ -65,7 +78,7 @@ const handleClick = (event: MouseEvent) => {
 
   &.gray {
     background: var(--system-gray5);
-    color: var(--system-blue);
+    color: var(--ios-text-primary);
   }
 
   &.plain,
@@ -75,27 +88,20 @@ const handleClick = (event: MouseEvent) => {
     width: auto;
   }
 
-  &.icon {
-    padding: 8px;
-    width: 44px;
-    height: 44px;
-    color: var(--system-blue);
-    border-radius: 50%;
-  }
-
+  // High contrast button for prominent actions
   &.prominentGlass {
-    background: var(--glass-bg);
-    color: var(--system-blue);
+    background: var(--prominent-glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
     font-weight: 600;
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
-  &__icon {
+  .ui-button__icon {
     width: 20px;
     height: 20px;
-    fill: currentColor;
+    fill: currentColor; // Icon color matches text color
   }
 }
 </style>

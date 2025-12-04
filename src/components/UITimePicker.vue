@@ -1,101 +1,91 @@
 <template>
-  <div class="ui-date-picker">
-    <div class="picker-container">
+  <div class="ui-date-picker" :class="{ disabled: disabled }">
+    <div class="picker-container" :style="{ width: pickerWidth + 'px' }">
       <div class="highlight"></div>
 
       <!-- Hour Wheel -->
-      <div class="wheel" ref="hourWheel" @scroll="debouncedHandleScroll('hour', $event)">
-        <div class="padding"></div>
-        <div v-for="(hour, index) in hours" :key="index" class="item">
-          {{ String(hour).padStart(2, '0') }}
-        </div>
-        <div class="padding"></div>
-      </div>
+      <UIWheelListView
+        :items="hours"
+        :selected-index="currentHourIndex"
+        @update:selected-index="handleHourUpdate"
+        :disabled="disabled"
+      >
+        <template #default="{ item }">
+          {{ String(item).padStart(2, '0') }}
+        </template>
+      </UIWheelListView>
 
       <!-- Minute Wheel -->
-      <div class="wheel" ref="minuteWheel" @scroll="debouncedHandleScroll('minute', $event)">
-        <div class="padding"></div>
-        <div v-for="(minute, index) in minutes" :key="index" class="item">
-          {{ String(minute).padStart(2, '0') }}
-        </div>
-        <div class="padding"></div>
-      </div>
+      <UIWheelListView
+        :items="minutes"
+        :selected-index="currentMinuteIndex"
+        @update:selected-index="handleMinuteUpdate"
+        :disabled="disabled"
+      >
+        <template #default="{ item }">
+          {{ String(item).padStart(2, '0') }}
+        </template>
+      </UIWheelListView>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, nextTick } from 'vue'
-import { debounce } from '@/utils/debounce'
+import { computed } from 'vue'
+import UIWheelListView from './UIWheelListView.vue'
 
 interface Props {
   modelValue: Date | null
+  width?: number
+  disabled?: boolean
 }
-const props = defineProps<Props>()
 
-// FIX: Correctly define emit
-const emit = defineEmits<{
-  (e: 'update:modelValue', date: Date): void
-}>()
+const props = withDefaults(defineProps<Props>(), {
+    width: 300,
+    disabled: false,
+})
 
-const ITEM_HEIGHT = 34
+const emit = defineEmits<{ (e: 'update:modelValue', date: Date): void }>()
+
 const hours = [...Array(24).keys()]
 const minutes = [...Array(60).keys()]
 
-const hourWheel = ref<HTMLElement | null>(null)
-const minuteWheel = ref<HTMLElement | null>(null)
+const pickerWidth = computed(() => props.width)
 
-// --- Scroll Logic ---
-const getCenteredIndex = (scrollTop: number) => Math.round(scrollTop / ITEM_HEIGHT)
-const calculateScrollTop = (index: number) => index * ITEM_HEIGHT
+// Compute indices from the modelValue
+const currentHourIndex = computed(() => (props.modelValue ? props.modelValue.getHours() : new Date().getHours()))
+const currentMinuteIndex = computed(() => (props.modelValue ? props.modelValue.getMinutes() : new Date().getMinutes()))
 
-const setInitialScroll = () => {
-  const date = props.modelValue || new Date()
-
-  // FIX: Use nextTick
-  nextTick(() => {
-    if (hourWheel.value) {
-      hourWheel.value.scrollTop = calculateScrollTop(date.getHours())
-    }
-    if (minuteWheel.value) {
-      minuteWheel.value.scrollTop = calculateScrollTop(date.getMinutes())
-    }
-  })
+// Helper to create a new Date object based on the current modelValue
+const getNewDate = () => {
+    return props.modelValue ? new Date(props.modelValue) : new Date()
 }
 
-onMounted(() => {
-  setTimeout(setInitialScroll, 50)
-})
+// --- Handlers ---
 
-watch(
-  () => props.modelValue,
-  () => {
-    setTimeout(setInitialScroll, 50)
-  },
-  { deep: true },
-)
-
-const handleScroll = (unit: 'hour' | 'minute', event: Event) => {
-  const target = event.target as HTMLElement
-  const centeredIndex = getCenteredIndex(target.scrollTop)
-  const newDate = props.modelValue ? new Date(props.modelValue) : new Date()
-
-  let currentHour = newDate.getHours()
-  let currentMinute = newDate.getMinutes()
-
-  if (unit === 'hour') currentHour = centeredIndex % hours.length
-  else if (unit === 'minute') currentMinute = centeredIndex % minutes.length
-
-  newDate.setHours(currentHour, currentMinute, 0, 0)
+const handleHourUpdate = (newIndex: number) => {
+  const newDate = getNewDate()
+  newDate.setHours(newIndex, newDate.getMinutes(), 0, 0)
   emit('update:modelValue', newDate)
 }
 
-const debouncedHandleScroll = debounce(handleScroll, 150)
+const handleMinuteUpdate = (newIndex: number) => {
+  const newDate = getNewDate()
+  newDate.setMinutes(newIndex, 0, 0)
+  emit('update:modelValue', newDate)
+}
 </script>
 
 <style lang="scss" scoped>
 .ui-date-picker {
   display: inline-block;
+  
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  
   .picker-container {
     display: flex;
     height: 160px;
@@ -103,7 +93,6 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     border-radius: 12px;
     overflow: hidden;
     position: relative;
-    width: 300px;
     margin: 0 auto;
   }
   .highlight {
@@ -118,28 +107,6 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
     z-index: 10;
     border-top: 0.5px solid rgba(0, 0, 0, 0.05);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
-  }
-  .wheel {
-    flex: 1;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    height: 100%;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  .item {
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    font-size: 19px;
-    scroll-snap-align: center;
-    color: var(--ios-text-primary);
-    user-select: none;
-  }
-  .padding {
-    height: 63px;
   }
 }
 </style>

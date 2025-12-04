@@ -62,12 +62,22 @@
             <UITableView>
               <UITableCell label="Username">
                 <template #custom-content>
-                  <UITextField v-model="username" placeholder="Required" clear-button="true" />
+                  <UITextField
+                    v-model="username"
+                    placeholder="Required"
+                    clear-button="true"
+                    :disabled="disabled"
+                  />
                 </template>
               </UITableCell>
               <UITableCell>
                 <template #custom-content>
-                  <UITextView v-model="bio" placeholder="Bio description..." :rows="3" />
+                  <UITextView
+                    v-model="bio"
+                    placeholder="Bio description..."
+                    :rows="3"
+                    :disabled="disabled"
+                  />
                 </template>
               </UITableCell>
               <UITableCell label="Username Value">
@@ -82,6 +92,7 @@
                     :items="fruitList"
                     width="320px"
                     dropdown-height="250px"
+                    :disabled="disabled"
                     placeholder="Select Your Favorite Fruit"
                   />
                 </template>
@@ -92,20 +103,24 @@
             <UITableView>
               <UITableCell label="Date">
                 <template #custom-content>
-                  <UIDatePicker v-model="dateValue" />
+                  <UIDatePicker v-model="dateValue" :disabled="disabled" />
                   <div>{{ dateValue }}</div>
                 </template>
               </UITableCell>
               <UITableCell label="Time">
                 <template #custom-content>
-                  <UITimePicker v-model="timeValue" />
+                  <UITimePicker v-model="timeValue" :disabled="disabled" />
                   <div>{{ timeValue }}</div>
                 </template>
               </UITableCell>
               <UITableCell label="List">
                 <template #custom-content>
                   <div>
-                    <UIListPicker v-model="selectedPlatform" :items="platforms" />
+                    <UIListPicker
+                      v-model="selectedPlatform"
+                      :items="platforms"
+                      :disabled="disabled"
+                    />
                     <div>{{ selectedPlatform }}</div>
                   </div>
                 </template>
@@ -199,20 +214,22 @@
             <UITableView>
               <UITableCell label="Airplane Mode" icon="plane" accessory="switch">
                 <template #custom-content>
-                  <UISwitch v-model="airplaneMode" /> {{ airplaneMode }}
+                  <UISwitch v-model="airplaneMode" :disabled="disabled" /> {{ airplaneMode }}
                 </template>
               </UITableCell>
               <UITableCell label="Wi-Fi" icon="wifi" value="LiquidGlass_5G" accessory="chevron" />
               <UITableCell :label="`Brightness (${brightness}%)`">
                 <template #custom-content>
                   <div style="width: 100%; padding: 10px 0">
-                    <UISlider v-model="brightness" />
+                    <UISlider v-model="brightness" :disabled="disabled" />
                   </div>
                 </template>
               </UITableCell>
             </UITableView>
 
-            <UIButton @click="showBasicModal = true"> Open Basic Modal </UIButton>
+            <UIButton @click="showBasicModal = true" :disabled="disabled">
+              Open Basic Modal
+            </UIButton>
             <UIModalDialog v-model="showBasicModal">
               <template #header>Welcome</template>
               <template #body>
@@ -223,6 +240,7 @@
 
             <UIButton
               variant="prominentGlass"
+              :disabled="disabled"
               style="width: 100%; margin-top: 20px"
               @click="showAlert = true"
               >Show Glass Alert</UIButton
@@ -276,6 +294,7 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
+const disabled = ref(false)
 const selectedFruit = ref('orange')
 // 3. Array of items to display in the dropdown
 const fruitList = [
@@ -298,8 +317,8 @@ const fruitList = [
   { value: 'lime', label: 'Lime' },
   { value: 'pomegranate', label: 'Pomegranate' },
   { value: 'apricot', label: 'Apricot' },
-  { value: 'fig', label: 'Fig' }
-];
+  { value: 'fig', label: 'Fig' },
+]
 
 const viewImage = ref(false)
 const expanded = ref(true)
