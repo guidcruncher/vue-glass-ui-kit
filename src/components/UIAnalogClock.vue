@@ -102,14 +102,14 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 interface Props {
   size?: number
-   timezone?: string
-  showLabel?: boolean
+  timezone?: string
+  glide?: boolean 
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 150,
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  showLabel: false,
+  glide: false, 
 })
 
 const emit = defineEmits(['tick'])
@@ -139,10 +139,20 @@ const hour = computed(() => parseTimeComponent(currentTime.value, props.timezone
 const minute = computed(() => parseTimeComponent(currentTime.value, props.timezone, 'minute'))
 const second = computed(() => parseTimeComponent(currentTime.value, props.timezone, 'second'))
 
-const secondAngle = computed(() => second.value * 6)
-const minuteAngle = computed(() => minute.value * 6 + second.value * 0.1)
+// Millisecond-based calculations for smooth movement
+const milliseconds = computed(() => currentTime.value.getMilliseconds())
+const fractionalSecond = computed(() => second.value + milliseconds.value / 1000)
+
+const secondAngle = computed(() => 
+  props.glide 
+    ? fractionalSecond.value * 6 // Smooth rotation using fractional seconds
+    : second.value * 6          // Stepping rotation using whole seconds
+)
+
+// The minute and hour angles also use the fractional second for a smoother look
+const minuteAngle = computed(() => minute.value * 6 + fractionalSecond.value * 0.1)
 const hourAngle = computed(
-  () => (hour.value % 12) * 30 + minute.value * 0.5 + second.value * (0.5 / 60),
+  () => (hour.value % 12) * 30 + minute.value * 0.5 + fractionalSecond.value * (0.5 / 60),
 )
 
 // Computed style for the container
@@ -152,13 +162,22 @@ const clockPanelStyle = computed(() => ({
 }))
 
 onMounted(() => {
+  // Set a fast interval (16ms ≈ 60 FPS) when glide is true, otherwise use 1000ms (1 FPS)
+  const intervalDuration = props.glide ? 16 : 1000
+
   interval = window.setInterval(() => {
+    // Only re-initialize the interval if the glide prop changes dynamically.
+    // In most Vue environments, props passed to `withDefaults` are treated as static on mount.
+    // If you need the interval to change while the component is running, you'd use a watcher,
+    // but setting the interval once on mount is often sufficient.
+    
     prevTime.value = currentTime.value
     currentTime.value = new Date()
+    
     if (prevTime.value.getMinutes() != currentTime.value.getMinutes()) {
       emit('tick')
     }
-  }, 1000)
+  }, intervalDuration)
 })
 
 onUnmounted(() => {
@@ -189,13 +208,17 @@ onUnmounted(() => {
     svg {
       display: block; /* Removes weird SVG spacing issues */
       
-      /* Only animate Hour and Minute. 
-         Animating the Second hand causes it to spin backwards at 00s. */
+      /* Animate Hour and Minute */
       .hour-hand,
       .minute-hand {
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
       }
       
+      /* Second hand does not use CSS transition; gliding is handled by rapid JS updates. */
+      .second-hand {
+        // No CSS transition needed
+      }
+
       /* Ensure colors apply even if variables are missing */
       .hour-hand {
         stroke: var(--clock-hand-hour, #000);
@@ -210,4 +233,3 @@ onUnmounted(() => {
   }
 }
 </style>
- 
