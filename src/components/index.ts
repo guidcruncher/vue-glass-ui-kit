@@ -28,6 +28,7 @@ import UIThemeChooser from './UIThemeChooser.vue'
 import UITimePicker from './UITimePicker.vue'
 import UIToolbar from './UIToolbar.vue'
 import UIVisualEffectView from './UIVisualEffectView.vue'
+import UIWidgetView from './UIWidgetView.vue'
 import '../styles/styles.scss'
 import { createPinia } from 'pinia'
 import { VisualEffect } from '@/directives/visualEffect'
@@ -65,18 +66,20 @@ export const GlassComponents = {
   UITimePicker,
   UIToolbar,
   UIVisualEffectView,
-}
+  UIWidgetView,
+};
 
-export function UseGlassUi(app) {
-  const pinia = createPinia()
-  app.directive('click-outside', ClickOutside)
-  app.directive('visual-effect', VisualEffect)
-  app.directive('background-mesh', BackgroundMesh)
 
-  app.use(pinia)
-  Object.keys(GlassComponents).forEach((name) => {
-    app.component(name, GlassComponents[name])
-  })
-  const themeStore = useThemeStore()
-  themeStore.restoreTheme()
-}
+export function  UseGlassUi(app) {
+    const pinia = createPinia()
+    app.directive('click-outside', ClickOutside);
+    app.directive('visual-effect', VisualEffect);
+    app.directive('background-mesh', BackgroundMesh);
+
+    app.use(pinia);
+    Object.keys(GlassComponents).forEach((name) => {
+      app.component(name, GlassComponents[name]);
+    });
+    const themeStore = useThemeStore()
+    themeStore.restoreTheme()
+};

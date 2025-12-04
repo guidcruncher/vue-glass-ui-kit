@@ -207,7 +207,10 @@
               @click="showAlert = true"
               >Show Glass Alert</UIButton
             >
-            <UIAnalogClock size="200" timezone="Europe/London" />
+            <UIWidgetView>
+              <UIAnalogClock size="200" timezone="Europe/London" />
+            </UIWidgetView>
+
             <UIFlipClock timezone="Europe/Madrid" />
           </div>
         </template>

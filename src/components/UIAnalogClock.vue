@@ -6,8 +6,8 @@
           cx="50"
           cy="50"
           r="50"
-          fill="var(--clock-face-color, #ffffff)"
-          stroke="rgba(var(--clock-border-color, 0,0,0), 0.1)"
+          :fill="faceColor || 'var(--clock-face-color, #ffffff)'"
+          :stroke="borderColor || 'rgba(var(--clock-border-color, 0,0,0), 0.1)'"
           stroke-width="1"
         />
 
@@ -61,7 +61,7 @@
           y1="55"
           x2="50"
           y2="28"
-          stroke="var(--ios-text-primary, #000000)"
+          :stroke="hourHandColor || 'var(--clock-hand-hour, #000000)'"
           stroke-width="3"
           stroke-linecap="round"
           :transform="`rotate(${hourAngle} 50 50)`"
@@ -73,7 +73,7 @@
           y1="55"
           x2="50"
           y2="15"
-          stroke="var(--ios-text-primary, #000000)"
+          :stroke="minuteHandColor || 'var(--clock-hand-minute, #000000)'"
           stroke-width="2"
           stroke-linecap="round"
           :transform="`rotate(${minuteAngle} 50 50)`"
@@ -85,7 +85,7 @@
           y1="55"
           x2="50"
           y2="10"
-          stroke="var(--system-red, #ff3b30)"
+          :stroke="secondHandColor || 'var(--clock-hand-second, #ff3b30)'"
           stroke-width="1.5"
           stroke-linecap="round"
           :transform="`rotate(${secondAngle} 50 50)`"
@@ -111,12 +111,20 @@ interface Props {
   size?: number
   timezone?: string
   glide?: boolean
+  // New Optional Color Props
+  faceColor?: string
+  borderColor?: string
+  hourHandColor?: string
+  minuteHandColor?: string
+  secondHandColor?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 150,
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   glide: false,
+  // No defaults needed for color props, they will be undefined
+  // and fall back to the CSS variables in the template.
 })
 
 const emit = defineEmits(['tick'])
@@ -174,11 +182,6 @@ onMounted(() => {
   const intervalDuration = props.glide ? 16 : 1000
 
   interval = window.setInterval(() => {
-    // Only re-initialize the interval if the glide prop changes dynamically.
-    // In most Vue environments, props passed to `withDefaults` are treated as static on mount.
-    // If you need the interval to change while the component is running, you'd use a watcher,
-    // but setting the interval once on mount is often sufficient.
-
     prevTime.value = currentTime.value
     currentTime.value = new Date()
 
@@ -197,7 +200,6 @@ onUnmounted(() => {
 .analog-clock-wrapper {
   /* Correctly bind the size prop to a CSS variable with units */
   --size: v-bind('props.size + "px"');
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -227,16 +229,11 @@ onUnmounted(() => {
         // No CSS transition needed
       }
 
-      /* Ensure colors apply even if variables are missing */
-      .hour-hand {
-        stroke: var(--clock-hand-hour, #000);
-      }
-      .minute-hand {
-        stroke: var(--clock-hand-minute, #000);
-      }
-      .second-hand {
-        stroke: var(--clock-hand-second, #ff3b30);
-      }
+      /*
+        NOTE: The color assignments are now handled directly in the <template>
+        using the new props, and falling back to these CSS variables if the
+        props are not provided.
+      */
     }
   }
 }
