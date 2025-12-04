@@ -201,12 +201,22 @@
               </UITableCell>
             </UITableView>
 
+            <UIButton @click="showBasicModal = true"> Open Basic Modal </UIButton>
+            <UIModalDialog v-model="showBasicModal">
+              <template #header>Welcome</template>
+              <template #body>
+                <h2>Hello World!</h2>
+                <p>This is a basic modal with default content.</p>
+              </template>
+            </UIModalDialog>
+
             <UIButton
               variant="prominentGlass"
               style="width: 100%; margin-top: 20px"
               @click="showAlert = true"
               >Show Glass Alert</UIButton
             >
+
             <UIWidgetView>
               <UIAnalogClock size="200" timezone="Europe/London" />
             </UIWidgetView>
@@ -266,6 +276,7 @@ const bio = ref('I love the new Liquid Glass design!')
 const airplaneMode = ref(false)
 const brightness = ref(75)
 const showAlert = ref(false)
+const showBasicModal = ref(false)
 
 // Theme logic
 const isDarkMode = ref(false)

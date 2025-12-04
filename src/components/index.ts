@@ -11,6 +11,7 @@ import UIFlipClock from './UIFlipClock.vue'
 import UIImage from './UIImage.vue'
 import UIImageView from './UIImageView.vue'
 import UIListPicker from './UIListPicker.vue'
+import UIModalDialog from './UIModalDialog.vue'
 import UINavigationBar from './UINavigationBar.vue'
 import UIPageControl from './UIPageControl.vue'
 import UIProgressView from './UIProgressView.vue'
@@ -49,6 +50,7 @@ export const GlassComponents = {
   UIImage,
   UIImageView,
   UIListPicker,
+  UIModalDialog,
   UINavigationBar,
   UIPageControl,
   UIProgressView,

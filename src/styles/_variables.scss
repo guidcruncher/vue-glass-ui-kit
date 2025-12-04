@@ -66,12 +66,58 @@ $font-family: 'Inter', sans-serif;
   --shadow-base: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   --border-color: 1px solid rgba(255, 255, 255, 0.6);
+
+  /* Overlay & Container */
+  --modal-overlay-bg: rgba(0, 0, 0, 0.4);
+  --modal-container-bg: rgba(255, 255, 255, 0.95);
+  --modal-shadow: rgba(0, 0, 0, 0.3);
+
+  /* Header */
+  --modal-header-bg-start: rgba(255, 255, 255, 0.8);
+  --modal-header-bg-end: rgba(245, 245, 247, 0.8);
+  --modal-header-border: rgba(0, 0, 0, 0.08);
+  --modal-title-color: #1d1d1f;
+
+  /* Body */
+  --modal-body-color: #1d1d1f;
+  --modal-body-secondary: #6e6e73;
+
+  /* Footer */
+  --modal-footer-bg: rgba(245, 245, 247, 0.6);
+  --modal-footer-border: rgba(0, 0, 0, 0.08);
+
+  /* Primary Button */
+  --btn-primary-bg-start: #007aff;
+  --btn-primary-bg-end: #0051d5;
+  --btn-primary-color: #ffffff;
+  --btn-primary-shadow: rgba(0, 122, 255, 0.4);
+
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-bg-hover: rgba(0, 0, 0, 0.1);
+  --btn-secondary-color: #007aff;
+
+  /* Window Control - Close (Red) */
+  --control-close-start: #ff5f57;
+  --control-close-end: #ff3b30;
+  --control-close-icon: #4d0000;
+
+  /* Window Control - Minimize (Orange) */
+  --control-minimize-start: #ffbd2e;
+  --control-minimize-end: #ff9500;
+  --control-minimize-icon: #995700;
+
+  /* Window Control - Maximize (Green) */
+  --control-maximize-start: #28cd41;
+  --control-maximize-end: #34c759;
+  --control-maximize-icon: #006610;
 }
 
 // --- 3. Dark Mode Overrides ---
 .dark-mode {
   --ios-background: #000000;
   --ios-card-bg: #1c1c1e;
+
   --ios-text-primary: #ffffff;
   --ios-text-secondary: #98989d;
   --ios-text-tertiary: #5a5a5f;
@@ -106,4 +152,47 @@ $font-family: 'Inter', sans-serif;
   --shadow-base: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   --border-color: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* Overlay & Container */
+  --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+  --modal-container-bg: rgba(30, 30, 30, 0.95);
+  --modal-shadow: rgba(0, 0, 0, 0.6);
+
+  /* Header */
+  --modal-header-bg-start: rgba(45, 45, 45, 0.8);
+  --modal-header-bg-end: rgba(28, 28, 30, 0.8);
+  --modal-header-border: rgba(255, 255, 255, 0.1);
+  --modal-title-color: #f5f5f7;
+
+  /* Body */
+  --modal-body-color: #f5f5f7;
+  --modal-body-secondary: #a1a1a6;
+
+  /* Footer */
+  --modal-footer-bg: rgba(28, 28, 30, 0.6);
+  --modal-footer-border: rgba(255, 255, 255, 0.1);
+
+  /* Primary Button */
+  --btn-primary-bg-start: #0a84ff;
+  --btn-primary-bg-end: #0066cc;
+  --btn-primary-color: #ffffff;
+  --btn-primary-shadow: rgba(10, 132, 255, 0.4);
+
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-bg-hover: rgba(255, 255, 255, 0.15);
+  --btn-secondary-color: #0a84ff;
+
+  /* Window Control Colors - Same as light theme */
+  --control-close-start: #ff5f57;
+  --control-close-end: #ff3b30;
+  --control-close-icon: #4d0000;
+
+  --control-minimize-start: #ffbd2e;
+  --control-minimize-end: #ff9500;
+  --control-minimize-icon: #995700;
+
+  --control-maximize-start: #28cd41;
+  --control-maximize-end: #34c759;
+  --control-maximize-icon: #006610;
 }

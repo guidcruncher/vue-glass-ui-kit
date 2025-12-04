@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <transition name="fade">
-      <div v-if="isVisible" class="ui-alert__overlay">
+      <div v-if="isVisible" class="overlay">
         <transition name="pop">
           <div v-if="isVisible" class="ui-alert__dialog">
             <div class="content">
@@ -86,21 +86,6 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
 </script>
 
 <style lang="scss" scoped>
-.ui-alert__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4); // Semi-transparent backdrop
-  backdrop-filter: blur(10px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-}
-
 .ui-alert__dialog {
   max-width: 270px;
   width: 100%;
