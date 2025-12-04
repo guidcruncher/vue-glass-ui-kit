@@ -1,9 +1,9 @@
 <template>
-  <div class="ui-dropdown-root">
+  <div class="ui-dropdown-root" :class="{ disabled: disabled }">
     <div
       ref="triggerRef"
       class="selected-display"
-      @click="isOpen ? closeDropdown() : openDropdown()"
+      @click="!disabled && (isOpen ? closeDropdown() : openDropdown())"
     >
       <div class="label-slot">
         <slot name="label">
@@ -13,12 +13,11 @@
           </div>
         </slot>
       </div>
-      <!-- MODIFICATION: Changed to fa-chevron-down and updated rotation logic -->
+      <!-- Chevron Icon: fa-chevron-down points down when closed (0deg) and up when open (-180deg) -->
       <i
         class="fa-solid fa-chevron-down accessory"
         :style="{ transform: isOpen ? 'rotate(-180deg)' : 'rotate(0deg)' }"
       />
-      <!-- END MODIFICATION -->
     </div>
 
     <Teleport to="body">
@@ -62,11 +61,17 @@ const props = defineProps({
   items: {
     type: Array,
     required: true,
+    // Validator ensures each item has 'value' and 'label' keys
     validator: (arr) => arr.every((item) => 'value' in item && 'label' in item),
   },
   placeholder: {
     type: String,
     default: 'Select an option',
+  },
+  // NEW: Disabled state prop to prevent interaction
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 })
 
@@ -96,6 +101,9 @@ watch(
 // --- Dropdown Management ---
 
 const openDropdown = () => {
+  // Guard clause: Do not open if disabled
+  if (props.disabled) return
+
   if (triggerRef.value) {
     const rect = triggerRef.value.getBoundingClientRect()
 
@@ -128,6 +136,9 @@ const closeDropdown = () => {
  * @param {string} label - The label of the selected item.
  */
 const selectItem = (value, label) => {
+  // Ensure interaction is blocked if disabled
+  if (props.disabled) return
+
   selectedValue.value = value
   emit('update:modelValue', value)
   emit('selected', { value, label })
@@ -164,6 +175,18 @@ onUnmounted(() => {
 .ui-dropdown-root {
   display: block; /* Typically used within a table cell or form */
   width: 100%;
+}
+
+/* Disabled state styling: applied via the class binding in the template */
+.ui-dropdown-root.disabled .selected-display {
+  cursor: not-allowed;
+  background-color: var(--ios-card-bg-disabled, #f0f0f0);
+  border-color: var(--ios-separator-disabled, #e0e0e0);
+  opacity: 0.6; /* Dim the component */
+}
+
+.ui-dropdown-root.disabled .selected-display .selected-text {
+  color: var(--ios-text-secondary); /* Grey out the text */
 }
 
 /* --- Selected Display/Trigger --- */
@@ -278,5 +301,4 @@ onUnmounted(() => {
   line-height: 1;
 }
 </style>
-
 
