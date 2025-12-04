@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 // 1. Define Props for v-model
-const modelValue = defineModel({ default: true });
+const modelValue = defineModel({ default: true })
 
 // 2. Define Emits for v-model updates (required for two-way binding)
 const emit = defineEmits<{

@@ -1,101 +1,369 @@
 <template>
-  <div class="ui-image-view" :style="containerStyles">
-    <img :src="src" :alt="alt" :style="{ 'object-fit': imageObjectFit }" loading="lazy" />
+  <div class="image-viewer-wrapper">
+    <div
+      :class="['image-viewer-overlay', { active: modelValue }]"
+      id="imageViewer"
+      @click="handleOverlayClick"
+    >
+      <div class="viewer-header">
+        <div class="viewer-title">{{ title }}</div>
+        <div class="viewer-controls">
+          <button
+            :class="['control-btn', { active: currentIsFitMode }]"
+            id="fitBtn"
+            @click="setFitMode"
+            title="Fit to screen"
+          >
+            <span>⊡</span>
+          </button>
+          <button
+            :class="['control-btn', { active: !currentIsFitMode }]"
+            id="scrollBtn"
+            @click="setScrollMode"
+            title="Full size (scrollable)"
+          >
+            <span>⊞</span>
+          </button>
+          <button class="control-btn close-btn" @click="closeViewer" title="Close">
+            <span>×</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="viewer-content">
+        <div :class="['image-container', containerModeClass]" ref="imageContainerRef">
+          <img class="viewer-image" :src="src" :alt="title" @dragstart.prevent />
+        </div>
+      </div>
+
+      <div class="viewer-footer">
+        <div class="image-info">{{ alt }}</div>
+        <div class="mode-indicator">{{ modeIndicatorText }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { computed } from 'vue'
-
-// Define the available CSS object-fit values, using 'contain' as the requested default
-export type ObjectFitValue = 'fill' | 'contain' | 'cover' | 'scale-down' | 'none'
-
-interface Props {
-  /** Image source URL */
-  src: string
-  /** Alternative text for accessibility */
-  alt?: string
-  /** Optional fixed width (e.g., '100px', '50%', 'auto') */
-  width?: string
-  /** Optional fixed height (e.g., '100px', 'auto') */
-  height?: string
-  /** Aspect ratio as a number (e.g., 16/9, 4/3, 1/1). 0 disables aspect ratio control. */
-  aspectRatio?: string
-  /** Border radius for the container (e.g., '12px', '50%') */
-  borderRadius?: string
-  /** * CSS object-fit value (equivalent to iOS Content Mode).
-   * 'contain' scales to fit (Aspect Fit).
-   * 'cover' scales to fill (Aspect Fill).
-   */
-  scale?: ObjectFitValue
-}
-
-// Set defaults for the props
-const props = withDefaults(defineProps<Props>(), {
-  alt: 'Image',
-  aspectRatio: '16 / 9',
-  borderRadius: '12px',
-  // Renaming 'content' to 'contain' for standard CSS terminology
-  scale: 'contain',
+<script setup>
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+const modelValue = defineModel({ default: false })
+// --- Define Props ---
+const props = defineProps({
+  title: {
+    type: String,
+    default: 'Image Viewer',
+  },
+  src: {
+    type: String,
+    required: true,
+    default: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600',
+  },
+  alt: {
+    type: String,
+    default: 'Image details not provided.',
+  },
+  initialFitMode: {
+    type: Boolean,
+    default: true,
+  },
 })
+
+// --- Define Emits (for v-model updates and events) ---
+const emit = defineEmits(['update:modelValue', 'mode-change'])
+
+// --- Internal State (for mode control) ---
+const currentIsFitMode = ref(props.initialFitMode)
+const imageContainerRef = ref(null)
 
 // --- Computed Properties ---
+const containerModeClass = computed(() => (currentIsFitMode.value ? 'fit-mode' : 'scroll-mode'))
 
-// Check if any explicit sizing props (width/height) are set by the user.
-const hasExplicitSizing = computed(() => !!props.width || !!props.height)
+const modeIndicatorText = computed(() => (currentIsFitMode.value ? 'Fit to Screen' : 'Full Size'))
 
-// Dynamic styles for the outer container <div>.
-const containerStyles = computed(() => {
-  const styles: Record<string, string | number> = {}
+// --- Watcher for Visibility Prop ---
+watch(
+  () => modelValue,
+  (newVisible) => {
+    if (newVisible.value) {
+      document.body.style.overflow = 'hidden'
+      currentIsFitMode.value = props.initialFitMode
+      if (currentIsFitMode.value) {
+        setFitModeScrollReset()
+      }
+    } else {
+      document.body.style.overflow = ''
+    }
+  },
+  { immediate: true },
+)
 
-  // 1. Sizing and Responsiveness Logic
-  if (hasExplicitSizing.value) {
-    styles.width = props.width || 'auto'
-    styles.height = props.height || 'auto'
-  } else {
-    // Default behavior: Fit to parent width
-    styles.width = '100%'
-    styles.height = 'auto'
+// --- Methods ---
+const closeViewer = () => {
+  emit('update:modelValue', false)
+}
+
+const setFitModeScrollReset = () => {
+  if (imageContainerRef.value) {
+    imageContainerRef.value.scrollTop = 0
+    imageContainerRef.value.scrollLeft = 0
   }
+}
 
-  // 2. Aspect Ratio Control
-  if (props.aspectRatio > 0) {
-    styles.aspectRatio = props.aspectRatio
+const setFitMode = () => {
+  currentIsFitMode.value = true
+  setFitModeScrollReset()
+  emit('mode-change', 'fit')
+}
+
+const setScrollMode = () => {
+  currentIsFitMode.value = false
+  emit('mode-change', 'scroll')
+}
+
+const handleOverlayClick = (event) => {
+  if (event.target === event.currentTarget) {
+    closeViewer()
   }
+}
 
-  // 3. Border Radius
-  styles.borderRadius = props.borderRadius
+// --- Keyboard Event Handling ---
+const handleKeydown = (e) => {
+  if (!modelValue) return
 
-  // 4. Base Display Settings
-  styles.display = 'block'
-  styles.overflow = 'hidden'
-  styles.flexShrink = '0'
+  if (e.key === 'Escape') {
+    closeViewer()
+  } else if (e.key === 'f' || e.key === 'F') {
+    setFitMode()
+  } else if (e.key === 's' || e.key === 'S') {
+    setScrollMode()
+  }
+}
 
-  return styles
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
 })
 
-// Determines the object-fit style for the <img> tag
-const imageObjectFit = computed<ObjectFitValue>(() => {
-  // If aspect ratio is controlled OR explicit sizing is provided,
-  // we use the backgroundSize prop (defaulting to 'contain').
-  if (props.aspectRatio > 0 || hasExplicitSizing.value) {
-    return props.scale
-  }
-  // If no sizing is specified, allow the image to fill the available space naturally (stretch/cover is often implied)
-  return props.scale
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
 })
 </script>
 
 <style lang="scss" scoped>
-.ui-image-view {
-  position: relative;
-  // Base styles are handled by the dynamic 'style' binding.
-
-  img {
-    display: block;
+.image-viewer-wrapper {
+  .image-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%; // Image fills the container
-    // object-fit is now controlled by the dynamic style binding.
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    z-index: 8000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.active {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .viewer-header {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.active .viewer-header {
+      transform: translateY(0);
+    }
+
+    .viewer-title {
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .viewer-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .control-btn {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 18px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      &.close-btn {
+        background: rgba(255, 59, 48, 0.8);
+        border-color: rgba(255, 59, 48, 0.5);
+
+        &:hover {
+          background: rgba(255, 59, 48, 1);
+        }
+      }
+    }
+
+    .viewer-content {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      transform: scale(0.9);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &.fit-mode {
+        overflow: hidden;
+      }
+
+      &.scroll-mode {
+        overflow: auto;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        &::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 4px;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+    }
+
+    &.active .image-container {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .viewer-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .image-container.scroll-mode .viewer-image {
+      max-width: none;
+      max-height: none;
+      width: auto;
+      height: auto;
+    }
+
+    .viewer-footer {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.active .viewer-footer {
+      transform: translateY(0);
+    }
+
+    .image-info {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .mode-indicator {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    @media (max-width: 768px) {
+      .viewer-header,
+      .viewer-footer {
+        padding: 12px 16px;
+      }
+
+      .viewer-title {
+        font-size: 14px;
+      }
+
+      .image-container {
+        padding: 20px;
+      }
+
+      .control-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+      }
+    }
   }
 }
 </style>

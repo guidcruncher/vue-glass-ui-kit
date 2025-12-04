@@ -40,14 +40,22 @@
           <div class="container">
             <div class="section-title" style="margin-top: 0">Main Content Area</div>
 
+            <UIImage
+              src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
+              alt="Durdle Door in Dorset, UK"
+              width="500px"
+              height="200px"
+              scale="cover"
+              @click="viewImage = true"
+            />
             <UIImageView
+              v-model="viewImage"
               src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
               alt="Durdle Door in Dorset, UK"
               width="500px"
               height="200px"
               scale="cover"
             />
-
             <UISearchBar v-model="query" placeholder="Search components" />
 
             <div class="section-title">Inputs & Text (v-model Demo)</div>
@@ -244,6 +252,7 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
+const viewImage = ref(false)
 const expanded = ref(true)
 const selectedPlatform = ref('android')
 const query = ref('')
