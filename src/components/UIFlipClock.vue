@@ -2,24 +2,80 @@
   <div class="clock-container">
     <div class="clock-card">
       <div class="time-display">
-        <FlipCard :value="hours[0]" :prev-value="prevHours[0]" />
-        <FlipCard :value="hours[1]" :prev-value="prevHours[1]" />
+        <FlipCard
+          :value="hours[0]"
+          :prev-value="prevHours[0]"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
+          :font-size="fontSize"
+          :text-offset-y="textOffsetY"
+          :center-line-height="centerLineHeight"
+          :margin="margin"
+        />
+        <FlipCard
+          :value="hours[1]"
+          :prev-value="prevHours[1]"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
+          :font-size="fontSize"
+          :text-offset-y="textOffsetY"
+          :center-line-height="centerLineHeight"
+          :margin="margin"
+        />
 
         <div class="colon">
           <div class="dot"></div>
           <div class="dot"></div>
         </div>
 
-        <FlipCard :value="minutes[0]" :prev-value="prevMinutes[0]" />
-        <FlipCard :value="minutes[1]" :prev-value="prevMinutes[1]" />
+        <FlipCard
+          :value="minutes[0]"
+          :prev-value="prevMinutes[0]"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
+          :font-size="fontSize"
+          :text-offset-y="textOffsetY"
+          :center-line-height="centerLineHeight"
+          :margin="margin"
+        />
+        <FlipCard
+          :value="minutes[1]"
+          :prev-value="prevMinutes[1]"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
+          :font-size="fontSize"
+          :text-offset-y="textOffsetY"
+          :center-line-height="centerLineHeight"
+          :margin="margin"
+        />
 
         <div v-if="showSeconds" class="colon">
           <div class="dot"></div>
           <div class="dot"></div>
         </div>
 
-        <FlipCard v-if="showSeconds" :value="seconds[0]" :prev-value="prevSeconds[0]" />
-        <FlipCard v-if="showSeconds" :value="seconds[1]" :prev-value="prevSeconds[1]" />
+        <FlipCard
+          v-if="showSeconds"
+          :value="seconds[0]"
+          :prev-value="prevSeconds[0]"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
+          :font-size="fontSize"
+          :text-offset-y="textOffsetY"
+          :center-line-height="centerLineHeight"
+          :margin="margin"
+        />
+        <FlipCard
+          v-if="showSeconds"
+          :value="seconds[1]"
+          :prev-value="prevSeconds[1]"
+          :card-width="cardWidth"
+          :card-height="cardHeight"
+          :font-size="fontSize"
+          :text-offset-y="textOffsetY"
+          :center-line-height="centerLineHeight"
+          :margin="margin"
+        />
       </div>
 
       <div class="date-display">
@@ -39,6 +95,14 @@ interface Props {
   showDate?: boolean
   showTimezone?: boolean
   showSeconds?: boolean
+
+  // New Configurable Props for FlipCard
+  cardWidth?: number
+  cardHeight?: number
+  fontSize?: number
+  textOffsetY?: number
+  centerLineHeight?: number
+  margin?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -46,9 +110,20 @@ const props = withDefaults(defineProps<Props>(), {
   showDate: true,
   showTimezone: true,
   showSeconds: false,
+
+  // FlipCard Defaults
+  cardWidth: 80,
+  cardHeight: 60,
+  fontSize: 72,
+  textOffsetY: 5,
+  centerLineHeight: 1,
+  margin: '0 4px',
 })
 
 const emit = defineEmits(['tick'])
+
+// Assuming currentTime is meant to reference time.value
+const currentTime = computed(() => time.value)
 
 const timezoneLabel = computed(() => {
   try {
