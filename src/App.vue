@@ -304,6 +304,8 @@
                 <small>Powered by Vue 3</small>
               </template>
             </UIContentPanel>
+
+            <MKMapView :lat="40.7128" :lng="-74.006" :zoom="12" marker-title="New York City" />
           </div>
         </template>
       </UISplitView>

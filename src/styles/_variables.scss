@@ -159,6 +159,21 @@ $font-family: 'Inter', sans-serif;
   --stepper-text-color: #000000;
   --stepper-icon-color: var(--stepper-primary);
   --stepper-disabled-icon: rgba(0, 0, 0, 0.3);
+
+  --map-bg-primary: #ffffff;
+  --map-bg-secondary: #f2f2f7;
+  --map-bg-tertiary: #e5e5ea;
+  --map-text-primary: #000000;
+  --map-text-secondary: #8e8e93;
+  --map-accent-color: #007aff;
+  --map-accent-destructive: #ff3b30;
+  --map-control-bg: rgba(255, 255, 255, 0.95);
+  --map-control-border: rgba(0, 0, 0, 0.04);
+  --map-control-divider: rgba(0, 0, 0, 0.08);
+  --map-control-hover: rgba(0, 0, 0, 0.05);
+  --map-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --map-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --map-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 // --- 3. Dark Mode Overrides ---
@@ -284,6 +299,21 @@ $font-family: 'Inter', sans-serif;
   --stepper-text-color: #ffffff;
   --stepper-icon-color: var(--stepper-primary);
   --stepper-disabled-icon: rgba(255, 255, 255, 0.4);
+
+  --map-bg-primary: #1c1c1e;
+  --map-bg-secondary: #000000;
+  --map-bg-tertiary: #2c2c2e;
+  --map-text-primary: #ffffff;
+  --map-text-secondary: #98989d;
+  --map-accent-color: #0a84ff;
+  --map-accent-destructive: #ff453a;
+  --map-control-bg: rgba(28, 28, 30, 0.95);
+  --map-control-border: rgba(255, 255, 255, 0.1);
+  --map-control-divider: rgba(255, 255, 255, 0.15);
+  --map-control-hover: rgba(255, 255, 255, 0.1);
+  --map-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --map-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.6);
+  --map-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 html,
