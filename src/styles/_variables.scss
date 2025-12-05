@@ -139,6 +139,14 @@ $font-family: 'Inter', sans-serif;
   --notify-text-color-secondary: #3c3c43; // Darker gray
   --notify-border-color: rgba(0, 0, 0, 0.08);
   --notify-close-btn-color: #8e8e93; // Medium gray
+
+  /* Panel Customization Variables */
+  --panel-bg: var(--color-system-background-tertiary); /* #ffffff */
+  --panel-radius: 8px; /* Example fixed radius */
+  --panel-color: var(--color-label); /* #000000 */
+
+  /* Already defined system variable, included for completeness */
+  --color-glass-rgb: 255, 255, 255;
 }
 
 // --- 3. Dark Mode Overrides ---
@@ -250,4 +258,11 @@ $font-family: 'Inter', sans-serif;
   --notify-text-color-secondary: #e5e5ea;
   --notify-border-color: rgba(255, 255, 255, 0.1);
   --notify-close-btn-color: #98989d; // Lighter
+
+  /* Panel Customization Variables Overrides */
+  --panel-bg: #2c2c2e; /* Directly set to dark tertiary background */
+  --panel-color: #ffffff; /* Directly set to dark label color */
+
+  /* Already defined system variable, included for completeness */
+  --color-glass-rgb: 0, 0, 0;
 }

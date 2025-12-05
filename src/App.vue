@@ -262,6 +262,36 @@
             </UIWidgetView>
 
             <UIFlipClock timezone="Europe/Madrid" />
+
+            <UIContentPanel
+              background="linear-gradient(135deg, #6e8efb, #a777e3)"
+              :border-radius="15"
+            >
+              <template #header> Panel Header (Gradient) </template>
+
+              <p>
+                This is the main body content. The overall panel has a purple-to-blue gradient
+                background.
+              </p>
+              <template #footer>
+                <button class="footer-button">Action</button>
+              </template>
+            </UIContentPanel>
+
+            <UIContentPanel
+              background="url(https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg)"
+              :border-radius="5"
+              color="#ffffff"
+            >
+              <template #header>Panel Header (Image)</template>
+              <p>
+                This panel uses an image URL for its background. The glassmorphic effect in the
+                footer is even more noticeable with an image background!
+              </p>
+              <template #footer>
+                <small>Powered by Vue 3</small>
+              </template>
+            </UIContentPanel>
           </div>
         </template>
       </UISplitView>
