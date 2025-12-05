@@ -101,7 +101,8 @@ const handleClick = (event: MouseEvent) => {
   .ui-button__icon {
     width: 20px;
     height: 20px;
-    fill: currentColor; // Icon color matches text color
+    fill: var(--system-blue);
+    color: var(--system-blue);
   }
 }
 </style>

@@ -152,6 +152,13 @@ $font-family: 'Inter', sans-serif;
 
   /* Already defined system variable, included for completeness */
   --color-glass-rgb: 255, 255, 255;
+
+  --stepper-primary: #007aff; /* Apple Blue for action */
+  --stepper-bg: rgba(255, 255, 255, 0.75); /* Liquid Glass effect light */
+  --stepper-border-color: rgba(0, 0, 0, 0.1);
+  --stepper-text-color: #000000;
+  --stepper-icon-color: var(--stepper-primary);
+  --stepper-disabled-icon: rgba(0, 0, 0, 0.3);
 }
 
 // --- 3. Dark Mode Overrides ---
@@ -270,4 +277,16 @@ $font-family: 'Inter', sans-serif;
 
   /* Already defined system variable, included for completeness */
   --color-glass-rgb: 0, 0, 0;
+
+  --stepper-primary: #0a84ff; /* Slightly brighter blue for dark mode */
+  --stepper-bg: rgba(28, 28, 30, 0.75); /* Liquid Glass effect dark */
+  --stepper-border-color: rgba(255, 255, 255, 0.2);
+  --stepper-text-color: #ffffff;
+  --stepper-icon-color: var(--stepper-primary);
+  --stepper-disabled-icon: rgba(255, 255, 255, 0.4);
+}
+
+html,
+body {
+  color: var(--ios-text-primary);
 }

@@ -2,12 +2,18 @@
   <div class="main-body" v-background-mesh>
     <UINavigationBar title="UI Components">
       <template #left>
-        <UIButton v-if="expanded" variant="icon" icon="chevron-left" @click="expanded = !expanded"
-          >Back</UIButton
-        >
-        <UIButton v-if="!expanded" variant="icon" icon="chevron-right" @click="expanded = !expanded"
-          >Back</UIButton
-        >
+        <UIButton
+          v-if="expanded"
+          variant="icon"
+          icon="chevron-left"
+          @click="expanded = !expanded"
+        ></UIButton>
+        <UIButton
+          v-if="!expanded"
+          variant="icon"
+          icon="chevron-right"
+          @click="expanded = !expanded"
+        ></UIButton>
       </template>
       <template #right>
         <UIThemeChooser />
@@ -90,7 +96,8 @@
               </UITableCell>
               <UITableCell label="Stepper">
                 <template #custom-content>
-                  <UIStepper v-model="stepperValue" :min="0" :max="10" />
+                  <UIStepper :disabled="disabled" v-model="stepperValue" :min="0" :max="10" />
+                  {{ stepperValue }}
                 </template>
               </UITableCell>
               <UITableCell label="Username Value">

@@ -1,9 +1,7 @@
 <template>
   <div class="wheel" ref="wheelRef" @scroll="!disabled && debouncedHandleScroll($event)">
-    <!-- Top padding to allow the first item to center -->
     <div class="padding" :style="{ height: paddingHeight }"></div>
 
-    <!-- Render the actual items -->
     <div
       v-for="(item, index) in items"
       :key="index"
@@ -13,7 +11,6 @@
       <slot :item="item" :index="index">{{ item }}</slot>
     </div>
 
-    <!-- Bottom padding to allow the last item to center -->
     <div class="padding" :style="{ height: paddingHeight }"></div>
   </div>
 </template>
@@ -22,7 +19,6 @@
 import { ref, onMounted, watch, nextTick, computed } from 'vue'
 
 // --- Simple Local Debounce Utility ---
-// Included locally as the previous path was relative
 const debounce = (fn: Function, delay: number) => {
   let timeoutId: number
   return function (this: any, ...args: any[]) {
@@ -68,12 +64,13 @@ const calculateInitialScroll = () => {
   if (!wheelRef.value) return
 
   // Centering the Nth item (0-based) requires a scrollTop of N * ITEM_HEIGHT.
-  // The scroll position is based on the top edge of the item being scrolled to.
   wheelRef.value.scrollTop = props.selectedIndex * props.itemHeight
 }
 
 /**
- * Handles scroll events: snaps the scroll position and emits the new selected index.
+ * Handles scroll events: determines the new selected index based on scroll position and emits it.
+ * NOTE: The manual scroll-snapping line (target.scrollTop = ...) has been removed.
+ * The visual snapping is now handled solely by CSS (scroll-snap-type).
  */
 const handleScroll = (event: Event) => {
   const target = event.target as HTMLElement
@@ -81,11 +78,10 @@ const handleScroll = (event: Event) => {
   const currentScrollTop = target.scrollTop
 
   // 1. Calculate the 0-based data index (N) by rounding to the nearest snap point.
-  // This is the core fix for the off-by-one error.
+  // This is how the selected item is determined, even while scrolling.
   const itemIndex = Math.round(currentScrollTop / props.itemHeight)
 
-  // 2. Snap the scroll position precisely to the calculated center
-  target.scrollTop = itemIndex * props.itemHeight
+  // 2. We skip manual snapping (target.scrollTop = ...), relying on CSS scroll-snap.
 
   // 3. Emit the index, clamped within the bounds of the actual data array
   const clampedIndex = Math.min(Math.max(0, itemIndex), props.items.length - 1)
@@ -101,6 +97,9 @@ const debouncedHandleScroll = debounce(handleScroll, 150)
 watch(
   () => props.selectedIndex,
   () => {
+    // We only update the scroll position if the prop change was external
+    // and not a result of the local 'update:selectedIndex' emit.
+    // nextTick ensures the DOM is ready for scroll manipulation.
     nextTick(calculateInitialScroll)
   },
   { immediate: true },
