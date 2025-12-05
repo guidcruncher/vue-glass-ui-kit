@@ -217,6 +217,7 @@ onUnmounted(() => {
 
     svg {
       display: block; /* Removes weird SVG spacing issues */
+      shape-rendering: geometricPrecision;
 
       /* Animate Hour and Minute */
       .hour-hand,

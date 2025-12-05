@@ -1,5 +1,5 @@
 <template>
- <div class="apple-notification">
+  <div class="apple-notification">
     <div class="notification-content">
       <span class="icon-placeholder">🔔</span>
 
@@ -52,7 +52,7 @@ const closeNotification = () => {
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
-  z-index:9000;
+  z-index: 9000;
 
   // Apply CSS variables for dynamic coloring
   background-color: var(--notify-bg-color);

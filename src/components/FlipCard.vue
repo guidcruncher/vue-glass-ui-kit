@@ -159,6 +159,10 @@ watch(isFlipping, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
+svg {
+  shape-rendering: geometricPrecision;
+}
+
 @keyframes flipTop {
   from {
     transform: rotateX(0deg);
