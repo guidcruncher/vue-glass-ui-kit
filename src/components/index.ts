@@ -15,6 +15,7 @@ import UIListPicker from './UIListPicker.vue'
 import UIModalDialog from './UIModalDialog.vue'
 import UINavigationBar from './UINavigationBar.vue'
 import UIPageControl from './UIPageControl.vue'
+import UIPopover from './UIPopover.vue'
 import UIProgressView from './UIProgressView.vue'
 import UISearchBar from './UISearchBar.vue'
 import UISlider from './UISlider.vue'
@@ -56,6 +57,7 @@ export const GlassComponents = {
   UIModalDialog,
   UINavigationBar,
   UIPageControl,
+  UIPopover,
   UIProgressView,
   UISearchBar,
   UISlider,
@@ -73,18 +75,19 @@ export const GlassComponents = {
   UIVisualEffectView,
   UIWheelListView,
   UIWidgetView,
-}
+};
 
-export function UseGlassUi(app) {
-  const pinia = createPinia()
-  app.directive('click-outside', ClickOutside)
-  app.directive('visual-effect', VisualEffect)
-  app.directive('background-mesh', BackgroundMesh)
 
-  app.use(pinia)
-  Object.keys(GlassComponents).forEach((name) => {
-    app.component(name, GlassComponents[name])
-  })
-  const themeStore = useThemeStore()
-  themeStore.restoreTheme()
-}
+export function  UseGlassUi(app) {
+    const pinia = createPinia()
+    app.directive('click-outside', ClickOutside);
+    app.directive('visual-effect', VisualEffect);
+    app.directive('background-mesh', BackgroundMesh);
+
+    app.use(pinia);
+    Object.keys(GlassComponents).forEach((name) => {
+      app.component(name, GlassComponents[name]);
+    });
+    const themeStore = useThemeStore()
+    themeStore.restoreTheme()
+};

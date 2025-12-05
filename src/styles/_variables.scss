@@ -129,6 +129,10 @@ $font-family: 'Inter', sans-serif;
   --selected-bg: #3b82f6;
   --selected-text: #ffffff;
   --selected-hover-bg: #2563eb;
+
+  --popover-bg: rgba(255, 255, 255, 0.95);
+  --popover-text: #1c1c1e;
+  --popover-border: rgba(0, 0, 0, 0.15);
 }
 
 // --- 3. Dark Mode Overrides ---
@@ -230,4 +234,8 @@ $font-family: 'Inter', sans-serif;
   --selected-bg: #3b82f6;
   --selected-text: #ffffff;
   --selected-hover-bg: #60a5fa;
+
+  --popover-bg: rgba(40, 40, 40, 0.95);
+  --popover-text: #ffffff;
+  --popover-border: rgba(255, 255, 255, 0.15);
 }

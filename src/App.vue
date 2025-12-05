@@ -107,13 +107,11 @@
               <UITableCell label="Date">
                 <template #custom-content>
                   <UIDatePicker v-model="dateValue" :disabled="disabled" />
-                  <div>{{ dateValue }}</div>
                 </template>
               </UITableCell>
               <UITableCell label="Time">
                 <template #custom-content>
                   <UITimePicker v-model="timeValue" :disabled="disabled" />
-                  <div>{{ timeValue }}</div>
                 </template>
               </UITableCell>
               <UITableCell label="List">
@@ -124,7 +122,6 @@
                       :items="platforms"
                       :disabled="disabled"
                     />
-                    <div>{{ selectedPlatform }}</div>
                   </div>
                 </template>
               </UITableCell>
@@ -230,6 +227,8 @@
               </UITableCell>
             </UITableView>
 
+            <UIButton @click="popover = true" :disabled="disabled"> Show Popover </UIButton>
+            <UIPopover v-model="popover" />
             <UIButton @click="showBasicModal = true" :disabled="disabled">
               Open Basic Modal
             </UIButton>
@@ -297,6 +296,7 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
+const popover = ref(false)
 const disabled = ref(false)
 const selectedFruit = ref('orange')
 // 3. Array of items to display in the dropdown
