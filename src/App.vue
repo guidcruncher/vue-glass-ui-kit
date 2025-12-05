@@ -88,6 +88,11 @@
                   <div style="color: var(--system-orange); font-size: 14px">{{ username }}</div>
                 </template>
               </UITableCell>
+              <UITableCell label="Stepper">
+                <template #custom-content>
+                  <UIStepper v-model="stepperValue" :min="0" :max="10" />
+                </template>
+              </UITableCell>
               <UITableCell label="Username Value">
                 <template #custom-content>
                   <UIDropdownList
@@ -335,6 +340,7 @@ const platforms = [
   { key: 'watch', value: 'WatchOS' },
 ]
 
+const stepperValue = ref(5)
 const popover = ref(false)
 const disabled = ref(false)
 const selectedFruit = ref('orange')

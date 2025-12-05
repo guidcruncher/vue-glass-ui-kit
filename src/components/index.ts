@@ -22,6 +22,7 @@ import UIProgressView from './UIProgressView.vue'
 import UISearchBar from './UISearchBar.vue'
 import UISlider from './UISlider.vue'
 import UISplitView from './UISplitView.vue'
+import UIStepper from './UIStepper.vue'
 import UISwitch from './UISwitch.vue'
 import UITabBar from './UITabBar.vue'
 import UITabItem from './UITabItem.vue'
@@ -66,6 +67,7 @@ export const GlassComponents = {
   UISearchBar,
   UISlider,
   UISplitView,
+  UIStepper,
   UISwitch,
   UITabBar,
   UITabItem,

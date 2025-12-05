@@ -50,7 +50,6 @@ const panelStyle = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-
 .custom-panel {
   background: var(--panel-bg);
   border-radius: var(--panel-radius);

@@ -40,6 +40,11 @@ $font-family: 'Inter', sans-serif;
   --glass-border: rgba(255, 255, 255, 0.4);
   --glass-highlight: rgba(255, 255, 255, 0.5);
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --glass-bg-opacity: 0.15;
+  --glass-border-opacity: 0.25;
+  --blur-radius-base: 20px;
+  --theming-transition:
+    background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 
   /* System Colors */
   --system-blue: #007aff;
