@@ -133,6 +133,12 @@ $font-family: 'Inter', sans-serif;
   --popover-bg: rgba(255, 255, 255, 0.95);
   --popover-text: #1c1c1e;
   --popover-border: rgba(0, 0, 0, 0.15);
+
+  --notify-bg-color: rgba(255, 255, 255, 0.9);
+  --notify-text-color-primary: #1c1c1e; // Nearly black
+  --notify-text-color-secondary: #3c3c43; // Darker gray
+  --notify-border-color: rgba(0, 0, 0, 0.08);
+  --notify-close-btn-color: #8e8e93; // Medium gray
 }
 
 // --- 3. Dark Mode Overrides ---
@@ -238,4 +244,10 @@ $font-family: 'Inter', sans-serif;
   --popover-bg: rgba(40, 40, 40, 0.95);
   --popover-text: #ffffff;
   --popover-border: rgba(255, 255, 255, 0.15);
+
+  --notify-bg-color: rgba(28, 28, 30, 0.9);
+  --notify-text-color-primary: #ffffff;
+  --notify-text-color-secondary: #e5e5ea;
+  --notify-border-color: rgba(255, 255, 255, 0.1);
+  --notify-close-btn-color: #98989d; // Lighter
 }

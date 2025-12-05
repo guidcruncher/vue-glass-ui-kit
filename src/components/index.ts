@@ -14,6 +14,7 @@ import UIImageView from './UIImageView.vue'
 import UIListPicker from './UIListPicker.vue'
 import UIModalDialog from './UIModalDialog.vue'
 import UINavigationBar from './UINavigationBar.vue'
+import UINotificationBar from './UINotificationBar.vue'
 import UIPageControl from './UIPageControl.vue'
 import UIPopover from './UIPopover.vue'
 import UIProgressView from './UIProgressView.vue'
@@ -56,6 +57,7 @@ export const GlassComponents = {
   UIListPicker,
   UIModalDialog,
   UINavigationBar,
+  UINotificationBar,
   UIPageControl,
   UIPopover,
   UIProgressView,

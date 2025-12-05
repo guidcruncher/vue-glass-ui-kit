@@ -229,6 +229,15 @@
 
             <UIButton @click="popover = true" :disabled="disabled"> Show Popover </UIButton>
             <UIPopover v-model="popover" />
+
+            <UINotificationBar
+              v-if="popover"
+              v-model="popover"
+              title="Mail Alert"
+              message="You received 3 new emails."
+              @close="popover = false"
+            />
+
             <UIButton @click="showBasicModal = true" :disabled="disabled">
               Open Basic Modal
             </UIButton>

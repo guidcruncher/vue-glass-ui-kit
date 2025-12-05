@@ -40,8 +40,8 @@ watch(
       const durationMs = parseFloat(props.durationSeconds) * 1000
       // Set a new timer
       timer = setTimeout(() => {
-        // Hide the popover by emitting the update event  
-        props.modelValue=false 
+        // Hide the popover by emitting the update event
+        props.modelValue = false
         emit('update:modelValue', false)
         // Clear the timer reference after execution
         timer = null
@@ -60,8 +60,8 @@ watch(
   .popover-content {
     /* Popover positioning and styling for an Apple-like look */
     position: absolute;
-    top:-5px; // Position below the trigger
-    z-index:9000;
+    top: -5px; // Position below the trigger
+    z-index: 9000;
 
     min-width: 250px;
     padding: 15px;
@@ -87,7 +87,7 @@ watch(
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       border-bottom: 10px solid var(--popover-bg);
-      z-imdex:9000;
+      z-imdex: 9000;
     }
 
     p {
