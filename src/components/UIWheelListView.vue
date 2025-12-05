@@ -128,7 +128,7 @@ onMounted(() => {
 .item {
   text-align: center;
   font-size: 17px;
-  color: var(--ios-text-primary);
+  color: var(--ui-text-primary);
   scroll-snap-align: center;
   user-select: none;
 }

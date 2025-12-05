@@ -48,8 +48,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .theme-chooser {
-  border: 1px solid var(--ios-separator);
-  background: var(--ios-card-bg);
+  border: 1px solid var(--ui-separator);
+  background: var(--ui-card-bg);
   border-radius: 8px;
   max-width: 300px;
 }
@@ -57,14 +57,14 @@ onMounted(() => {
 .theme-chooser__label {
   font-weight: 600;
   margin-bottom: 8px;
-  color: var(--ios-text-primary);
+  color: var(--ui-text-primary);
 }
 
 .theme-chooser__select {
   padding: 8px;
   border-radius: 4px;
-  border: 1px solid var(--ios-separator);
-  background: var(--ios-background);
-  color: var(--ios-text-primary);
+  border: 1px solid var(--ui-separator);
+  background: var(--ui-background);
+  color: var(--ui-text-primary);
 }
 </style>

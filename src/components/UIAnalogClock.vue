@@ -19,7 +19,7 @@
             y1="2"
             x2="50"
             y2="4"
-            stroke="var(--ios-text-tertiary, #8e8e93)"
+            stroke="var(--ui-text-tertiary, #8e8e93)"
             stroke-width="0.5"
             :transform="`rotate(${m * 6} 50 50)`"
           />
@@ -33,7 +33,7 @@
             y1="2"
             x2="50"
             y2="7"
-            stroke="var(--ios-text-tertiary, #8e8e93)"
+            stroke="var(--ui-text-tertiary, #8e8e93)"
             stroke-width="1.5"
             :transform="`rotate(${(h * 30) % 360} 50 50)`"
           />
@@ -49,7 +49,7 @@
             alignment-baseline="middle"
             font-size="6"
             font-weight="bold"
-            fill="var(--ios-text-primary, #000000)"
+            fill="var(--ui-text-primary, #000000)"
           >
             {{ h }}
           </text>
@@ -95,8 +95,8 @@
           cx="50"
           cy="50"
           r="2.5"
-          fill="var(--ios-background, #ffffff)"
-          stroke="var(--ios-text-tertiary, #8e8e93)"
+          fill="var(--ui-background, #ffffff)"
+          stroke="var(--ui-text-tertiary, #8e8e93)"
           stroke-width="0.5"
         />
       </svg>

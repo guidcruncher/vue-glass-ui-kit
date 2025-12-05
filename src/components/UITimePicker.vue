@@ -93,7 +93,7 @@ const handleMinuteUpdate = (newIndex: number) => {
   .picker-container {
     display: flex;
     height: 160px;
-    background: var(--ios-background);
+    background: var(--ui-background);
     border-radius: 12px;
     overflow: hidden;
     position: relative;

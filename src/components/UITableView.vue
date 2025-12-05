@@ -16,7 +16,7 @@
   margin-bottom: 24px;
 
   .table-group {
-    background: var(--ios-card-bg);
+    background: var(--ui-card-bg);
     border-radius: 12px;
     overflow: hidden;
     margin: 0 16px; // Apply margin for grouped style look

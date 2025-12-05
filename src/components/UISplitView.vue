@@ -48,8 +48,8 @@ const emit = defineEmits<{
       flex: 0 0 320px; // Fixed width for master pane
       max-width: 40%; // Max width constraint
       overflow-y: auto;
-      background: var(--ios-background);
-      border-right: 1px solid var(--ios-separator);
+      background: var(--ui-background);
+      border-right: 1px solid var(--ui-separator);
 
       // Add a transition for smooth collapsing/expanding
       transition: all 0.3s ease-in-out;

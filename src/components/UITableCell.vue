@@ -71,8 +71,8 @@ const getAccessoryIcon = (acc: Accessory): string => {
   align-items: center;
   padding: 12px 16px;
   min-height: 48px;
-  background: var(--ios-card-bg);
-  border-bottom: 0.5px solid var(--ios-separator);
+  background: var(--ui-card-bg);
+  border-bottom: 0.5px solid var(--ui-separator);
   font-size: 17px;
 
   // The parent (UITableView) handles the first/last-child logic to clear borders,
@@ -102,14 +102,14 @@ const getAccessoryIcon = (acc: Accessory): string => {
 
   &__label {
     flex: 0 0 auto;
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
     margin-right: 10px;
   }
 
   &__value {
     flex: 1;
     text-align: right;
-    color: var(--ios-text-secondary);
+    color: var(--ui-text-secondary);
     margin-right: 8px;
   }
 
@@ -122,7 +122,7 @@ const getAccessoryIcon = (acc: Accessory): string => {
   }
 
   &__accessory {
-    color: var(--ios-text-tertiary);
+    color: var(--ui-text-tertiary);
     width: 14px;
     height: 14px;
     fill: currentColor;

@@ -40,7 +40,7 @@ const getBarStyle = (i: number) => {
   .bar {
     width: 8%;
     height: 25%;
-    background: var(--ios-text-secondary);
+    background: var(--ui-text-secondary);
     position: absolute;
     left: 46%;
     top: 40%;

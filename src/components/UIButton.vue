@@ -78,7 +78,7 @@ const handleClick = (event: MouseEvent) => {
 
   &.gray {
     background: var(--system-gray5);
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
   }
 
   &.plain,

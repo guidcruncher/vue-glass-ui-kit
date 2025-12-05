@@ -24,7 +24,7 @@
       <div class="section-title" style="margin-top: 0; margin-bottom: 0">
         UISplitView (Responsive Layout)
       </div>
-      <UISplitView v-model="expanded">
+      <UISplitView v-model="expanded" v-background-mesh>
         <template #master>
           <div
             style="
@@ -305,7 +305,14 @@
               </template>
             </UIContentPanel>
 
-            <MKMapView :lat="40.7128" :lng="-74.006" :zoom="12" marker-title="New York City" />
+            <MKMapView
+              width="600px"
+              height="300px"
+              :lat="40.7128"
+              :lng="-74.006"
+              :zoom="12"
+              marker-title="New York City"
+            />
           </div>
         </template>
       </UISplitView>

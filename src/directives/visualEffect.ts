@@ -1,5 +1,5 @@
 export const VisualEffect = {
-  mounted(el: HTMLElement) {
+  beforeMount(el: HTMLElement) {
     el.style.backgroundColor = 'var(--glass-bg)'
     el.style.backdropFilter = 'blur(25px) saturate(180%)'
     el.style.webkitBackdropFilter = 'blur(25px) saturate(180%)'

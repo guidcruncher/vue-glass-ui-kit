@@ -1,6 +1,6 @@
 <template>
   <div class="widget-container">
-    <div class="ios-widget">
+    <div class="ui-widget">
       <slot></slot>
     </div>
   </div>
@@ -20,7 +20,7 @@ import { ref } from 'vue'
 }
 
 /* Widget */
-.ios-widget {
+.ui-widget {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 28px;
@@ -39,12 +39,12 @@ import { ref } from 'vue'
 }
 
 /* Widget Interaction Styles (Also using variables) */
-.ios-widget:hover {
+.ui-widget:hover {
   transform: scale(1.02);
   box-shadow: var(--shadow-hover); /* Only the box-shadow changes on hover */
 }
 
-.ios-widget:active {
+.ui-widget:active {
   transform: scale(0.98);
 }
 </style>

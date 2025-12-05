@@ -60,7 +60,7 @@ const handleClick = () => {
   user-select: none;
   transition: color 0.2s ease;
   padding: 0 4px;
-  color: var(--ios-text-secondary);
+  color: var(--ui-text-secondary);
 
   &.active {
     color: var(--system-blue);

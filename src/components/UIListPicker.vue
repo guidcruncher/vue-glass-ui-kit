@@ -78,7 +78,7 @@ const handleIndexUpdate = (newIndex: number) => {
   .picker-container {
     display: flex;
     height: 160px;
-    background: var(--ios-background);
+    background: var(--ui-background);
     border-radius: 12px;
     overflow: hidden;
     position: relative;
@@ -103,7 +103,7 @@ const handleIndexUpdate = (newIndex: number) => {
   // Custom styling for the list item label (passed via slot)
   :deep(.item > div) {
     font-size: 17px;
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
 
     &.selected {
       font-weight: 600;

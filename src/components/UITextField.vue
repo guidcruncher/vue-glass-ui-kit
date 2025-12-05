@@ -70,7 +70,7 @@ const clearInput = () => {
     border: none;
     background: transparent;
     font-size: 17px;
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
     outline: none;
     padding: 0;
     margin: 0;
@@ -78,7 +78,7 @@ const clearInput = () => {
     height: 100%; // Match wrapper height
 
     &::placeholder {
-      color: var(--ios-text-secondary);
+      color: var(--ui-text-secondary);
     }
 
     // Disabled state for input
@@ -92,7 +92,7 @@ const clearInput = () => {
   .clear-btn {
     width: 20px;
     height: 20px;
-    color: var(--ios-text-secondary);
+    color: var(--ui-text-secondary);
     cursor: pointer;
     margin-left: 8px;
     flex-shrink: 0;

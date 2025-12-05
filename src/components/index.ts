@@ -21,6 +21,7 @@ import UIPageControl from './UIPageControl.vue'
 import UIPopover from './UIPopover.vue'
 import UIProgressView from './UIProgressView.vue'
 import UISearchBar from './UISearchBar.vue'
+import UISegmentedControl from './UISegmentedControl.vue'
 import UISlider from './UISlider.vue'
 import UISplitView from './UISplitView.vue'
 import UIStepper from './UIStepper.vue'
@@ -67,6 +68,7 @@ export const GlassComponents = {
   UIPopover,
   UIProgressView,
   UISearchBar,
+  UISegmentedControl,
   UISlider,
   UISplitView,
   UIStepper,

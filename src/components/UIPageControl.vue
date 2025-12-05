@@ -57,12 +57,12 @@ watch(
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--ios-text-tertiary);
+    background: var(--ui-text-tertiary);
     transition: all 0.2s;
     cursor: pointer;
 
     &.active {
-      background: var(--ios-text-primary);
+      background: var(--ui-text-primary);
       transform: scale(1.1);
     }
   }

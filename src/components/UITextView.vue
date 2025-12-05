@@ -54,7 +54,7 @@ const handleInput = (event: Event) => {
     border: none;
     background: transparent;
     font-size: 17px;
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
     outline: none;
     resize: none;
     padding: 0;
@@ -63,14 +63,14 @@ const handleInput = (event: Event) => {
 
     // Native disabled styling override
     &:disabled {
-      color: var(--ios-text-secondary); /* Use secondary text color when disabled */
-      -webkit-text-fill-color: var(--ios-text-secondary); /* Safari fix */
+      color: var(--ui-text-secondary); /* Use secondary text color when disabled */
+      -webkit-text-fill-color: var(--ui-text-secondary); /* Safari fix */
       opacity: 1; /* Reset native opacity if applied, let wrapper handle it */
     }
   }
 
   textarea::placeholder {
-    color: var(--ios-text-tertiary);
+    color: var(--ui-text-tertiary);
   }
 }
 </style>

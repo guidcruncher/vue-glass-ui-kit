@@ -180,13 +180,13 @@ onUnmounted(() => {
 /* Disabled state styling: applied via the class binding in the template */
 .ui-dropdown-root.disabled .selected-display {
   cursor: not-allowed;
-  background-color: var(--ios-card-bg-disabled, #f0f0f0);
-  border-color: var(--ios-separator-disabled, #e0e0e0);
+  background-color: var(--ui-card-bg-disabled, #f0f0f0);
+  border-color: var(--ui-separator-disabled, #e0e0e0);
   opacity: 0.6; /* Dim the component */
 }
 
 .ui-dropdown-root.disabled .selected-display .selected-text {
-  color: var(--ios-text-secondary); /* Grey out the text */
+  color: var(--ui-text-secondary); /* Grey out the text */
 }
 
 /* --- Selected Display/Trigger --- */
@@ -196,11 +196,11 @@ onUnmounted(() => {
   justify-content: space-between;
   cursor: pointer;
   padding: 10px 16px;
-  background: var(--ios-card-bg); /* Use card background for consistency */
+  background: var(--ui-card-bg); /* Use card background for consistency */
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: background 0.1s;
-  border: 1px solid var(--ios-separator); /* Subtle border */
+  border: 1px solid var(--ui-separator); /* Subtle border */
   min-height: 44px;
 }
 .selected-display:active {
@@ -222,7 +222,7 @@ onUnmounted(() => {
   transition: transform 0.2s;
   width: 14px;
   height: 14px;
-  fill: var(--ios-text-secondary);
+  fill: var(--ui-text-secondary);
   flex-shrink: 0;
   margin-left: 10px;
 }
@@ -276,11 +276,11 @@ onUnmounted(() => {
   padding: 12px 16px;
   font-size: 17px;
   cursor: pointer;
-  border-bottom: 0.5px solid var(--ios-separator);
+  border-bottom: 0.5px solid var(--ui-separator);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--ios-text-primary);
+  color: var(--ui-text-primary);
   transition: background-color 0.1s;
 }
 .dropdown-item:last-child {

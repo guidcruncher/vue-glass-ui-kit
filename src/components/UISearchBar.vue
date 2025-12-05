@@ -40,7 +40,7 @@ const handleInput = (event: Event) => {
     display: flex;
     align-items: center;
     padding: 0 8px;
-    color: var(--ios-text-secondary);
+    color: var(--ui-text-secondary);
     transition: background 0.2s ease;
   }
 
@@ -58,12 +58,12 @@ const handleInput = (event: Event) => {
     font-size: 17px;
     width: 100%;
     outline: none;
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
     font-family: inherit;
   }
 
   input::placeholder {
-    color: var(--ios-text-secondary);
+    color: var(--ui-text-secondary);
   }
 }
 </style>

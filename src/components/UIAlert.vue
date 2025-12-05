@@ -103,7 +103,7 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
   .content {
     padding: 20px 16px 15px;
     text-align: center;
-    color: var(--ios-text-primary);
+    color: var(--ui-text-primary);
 
     .title {
       font-size: 17px;
@@ -115,7 +115,7 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
     .message {
       font-size: 13px;
       font-weight: 400;
-      color: var(--ios-text-primary);
+      color: var(--ui-text-primary);
       margin: 0;
       opacity: 0.9;
     }
@@ -123,14 +123,14 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
 
   .actions {
     display: flex;
-    border-top: 0.5px solid var(--ios-separator);
+    border-top: 0.5px solid var(--ui-separator);
 
     &.actions--vertical {
       flex-direction: column;
 
       .action-button {
         border-left: none; // Remove vertical separator
-        border-bottom: 0.5px solid var(--ios-separator); // Add horizontal separator
+        border-bottom: 0.5px solid var(--ui-separator); // Add horizontal separator
 
         &:last-child {
           border-bottom: none;
@@ -156,7 +156,7 @@ const handleActionClick = (index: number, handler?: UIAlertActionHandler) => {
 
     // Separator for horizontal buttons (1 or 2 actions)
     &:not(:last-child) {
-      border-right: 0.5px solid var(--ios-separator);
+      border-right: 0.5px solid var(--ui-separator);
     }
 
     // Pressed state feedback
