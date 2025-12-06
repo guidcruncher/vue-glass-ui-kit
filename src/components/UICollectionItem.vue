@@ -1,10 +1,8 @@
-<script setup>
-import { ref } from 'vue'
-</script>
-
 <template>
-  <div class="collection-view">
-    <slot>></slot>
+  <div class="cell">
+    <div class="cell-content">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -46,16 +44,5 @@ import { ref } from 'vue'
 
 .cell:active .cell-content {
   transform: scale(0.9);
-}
-
-.icon {
-  font-size: 36px;
-}
-
-.cell-label {
-  font-size: 13px;
-  color: var(--primary-text);
-  text-align: center;
-  font-weight: 400;
 }
 </style>

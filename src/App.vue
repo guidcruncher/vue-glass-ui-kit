@@ -152,50 +152,58 @@
 
             <div class="section-title">Collection View (Grid)</div>
             <UICollectionView>
-              <UIVisualEffectView
-                style="
-                  height: 100px;
-                  border-radius: 12px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
-                <span style="font-size: 30px">🍎</span>
-              </UIVisualEffectView>
-              <UIVisualEffectView
-                style="
-                  height: 100px;
-                  border-radius: 12px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
-                <span style="font-size: 30px">🎨</span>
-              </UIVisualEffectView>
-              <UIVisualEffectView
-                style="
-                  height: 100px;
-                  border-radius: 12px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
-                <span style="font-size: 30px">🛠️</span>
-              </UIVisualEffectView>
-              <UIVisualEffectView
-                style="
-                  height: 100px;
-                  border-radius: 12px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
-                <span style="font-size: 30px">📱</span>
-              </UIVisualEffectView>
+              <UICollectionViewItem>
+                <UIVisualEffectView
+                  style="
+                    height: 100px;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <span style="font-size: 30px">🍎</span>
+                </UIVisualEffectView>
+              </UICollectionViewItem>
+              <UICollectionViewItem>
+                <UIVisualEffectView
+                  style="
+                    height: 100px;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <span style="font-size: 30px">🎨</span>
+                </UIVisualEffectView>
+              </UICollectionViewItem>
+              <UICollectionViewItem>
+                <UIVisualEffectView
+                  style="
+                    height: 100px;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <span style="font-size: 30px">🛠️</span>
+                </UIVisualEffectView>
+              </UICollectionViewItem>
+              <UICollectionViewItem>
+                <UIVisualEffectView
+                  style="
+                    height: 100px;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <span style="font-size: 30px">📱</span>
+                </UIVisualEffectView>
+              </UICollectionViewItem>
             </UICollectionView>
 
             <div class="section-title">Page Control</div>

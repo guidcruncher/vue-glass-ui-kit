@@ -6,6 +6,7 @@ import UIActivityIndicator from './UIActivityIndicator.vue'
 import UIAlert from './UIAlert.vue'
 import UIAnalogClock from './UIAnalogClock.vue'
 import UIButton from './UIButton.vue'
+import UICollectionItem from './UICollectionItem.vue'
 import UICollectionView from './UICollectionView.vue'
 import UIContentPanel from './UIContentPanel.vue'
 import UIDatePicker from './UIDatePicker.vue'
@@ -53,6 +54,7 @@ export const GlassComponents = {
   UIAlert,
   UIAnalogClock,
   UIButton,
+  UICollectionItem,
   UICollectionView,
   UIContentPanel,
   UIDatePicker,
