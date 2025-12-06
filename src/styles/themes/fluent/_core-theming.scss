@@ -1,30 +1,30 @@
 // --- Core Theming: General UI & Aero/Glass Effects (Windows 11) ---
 :root {
   /* UI Palette (Fluent Base) */
-  --ui-background: #F3F3F3; /* App background */
-  --ui-card-bg: #FFFFFF; /* Primary surface/Card background */
+  --ui-background: #f3f3f3; /* App background */
+  --ui-card-bg: #ffffff; /* Primary surface/Card background */
   --ui-text-primary: #000000;
-  --ui-text-secondary: #605E5C;
-  --ui-text-tertiary: #A19F9D;
-  --ui-separator: #E1E1E1;
-  --ui-field-bg: #FFFFFF;
+  --ui-text-secondary: #605e5c;
+  --ui-text-tertiary: #a19f9d;
+  --ui-separator: #e1e1e1;
+  --ui-field-bg: #ffffff;
 
   /* General Backgrounds/Text */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F3F3F3;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f3f3;
   --text-primary: #000000;
-  --text-secondary: #605E5C;
-  --text-tertiary: #A19F9D;
+  --text-secondary: #605e5c;
+  --text-tertiary: #a19f9d;
 
   /* Borders & Dividers */
-  --border-color: #E1E1E1;
-  --divider-color: #E1E1E1;
+  --border-color: #e1e1e1;
+  --divider-color: #e1e1e1;
 
   /* Accents & States */
-  --accent-color: #0078D4;
-  --accent-hover: #0063B1;
+  --accent-color: #0078d4;
+  --accent-hover: #0063b1;
   --badge-bg: rgba(0, 120, 212, 0.1);
-  --badge-text: #0078D4;
+  --badge-text: #0078d4;
 
   /* Shadows */
   --shadow-default: 0 0 5px rgba(0, 0, 0, 0.1); /* Lighter shadow */
@@ -46,29 +46,29 @@
 .dark-mode {
   /* UI Palette (Fluent Base) */
   --ui-background: #202020; /* App background */
-  --ui-card-bg: #2D2D2D; /* Primary surface/Card background */
-  --ui-text-primary: #FFFFFF;
+  --ui-card-bg: #2d2d2d; /* Primary surface/Card background */
+  --ui-text-primary: #ffffff;
   --ui-text-secondary: #979695;
-  --ui-text-tertiary: #605E5C;
+  --ui-text-tertiary: #605e5c;
   --ui-separator: #484848;
-  --ui-field-bg: #1C1C1C;
+  --ui-field-bg: #1c1c1c;
 
   /* General Backgrounds/Text */
-  --bg-primary: #2D2D2D;
+  --bg-primary: #2d2d2d;
   --bg-secondary: #202020;
-  --text-primary: #FFFFFF;
+  --text-primary: #ffffff;
   --text-secondary: #979695;
-  --text-tertiary: #605E5C;
+  --text-tertiary: #605e5c;
 
   /* Borders & Dividers */
   --border-color: #484848;
   --divider-color: #484848;
 
   /* Accents & States */
-  --accent-color: #4FC2FF;
-  --accent-hover: #00A9E0;
+  --accent-color: #4fc2ff;
+  --accent-hover: #00a9e0;
   --badge-bg: rgba(79, 194, 255, 0.2);
-  --badge-text: #4FC2FF;
+  --badge-text: #4fc2ff;
 
   /* Shadows */
   --shadow-default: 0 0 5px rgba(0, 0, 0, 0.4);

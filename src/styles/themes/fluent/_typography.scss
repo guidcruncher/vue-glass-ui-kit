@@ -17,11 +17,29 @@
   --radius-large: 12px;
 }
 
-$font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family:
+  'Segoe UI Variable',
+  'Segoe UI',
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
 
 @supports (font-variation-settings: normal) {
   /* Segoe UI Variable is often not variable on web, so we simplify the check */
-  $font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  $font-family:
+    'Segoe UI Variable',
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
 }
 
 :root {
