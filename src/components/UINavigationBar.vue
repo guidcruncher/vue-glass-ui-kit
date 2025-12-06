@@ -38,7 +38,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 .navigation-bar {
   position: sticky;
   top: 0;
