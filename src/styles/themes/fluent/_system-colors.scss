@@ -1,0 +1,30 @@
+// --- System Colors (Utility/Base) (Windows 11) ---
+:root {
+  /* Light Mode */
+  --system-white: #ffffff;
+  --system-black: #000000;
+  --system-blue: #0078D4; /* Windows Accent Blue */
+  --system-green: #107C10; /* Windows Success Green */
+  --system-red: #D13438; /* Windows Error/Danger Red */
+  --system-orange: #FF8C00; /* Windows Caution Orange */
+  --system-gray: #605E5C;
+  --system-gray2: #8A8886;
+  --system-gray3: #C8C6C4;
+  --system-gray4: #E1E1E1;
+  --system-gray5: #F3F3F3;
+  --system-gray6: #FAFAFA;
+}
+
+.dark-mode {
+  /* Dark Mode */
+  --system-blue: #4FC2FF; /* Bright accent for dark mode contrast */
+  --system-green: #069006;
+  --system-red: #D13438;
+  --system-orange: #FF8C00;
+  --system-gray: #B3B0AD;
+  --system-gray2: #8A8886;
+  --system-gray3: #605E5C;
+  --system-gray4: #484848;
+  --system-gray5: #333333;
+  --system-gray6: #2D2D2D;
+}

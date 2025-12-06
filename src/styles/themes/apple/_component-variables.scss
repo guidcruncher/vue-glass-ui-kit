@@ -1,181 +1,79 @@
-// --- 1. Typography ---
-@import 'https://rsms.me/inter/inter.css';
-@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css';
-
+// --- Component-Specific Variables ---
 :root {
-  --spacing-xxs: 4px;
-  --spacing-xs: 8px;
-  --spacing-s: 12px;
-  --spacing-m: 16px;
-  --spacing-l: 20px;
-  --spacing-xl: 24px;
-  --spacing-xxl: 32px;
-
-  --radius-small: 8px;
-  --radius-medium: 12px;
-  --radius-large: 16px;
-}
-
-$font-family: 'Inter', sans-serif;
-
-@supports (font-variation-settings: normal) {
-  $font-family: InterVariable, sans-serif;
-}
-
-:root {
-  --font-family: #{$font-family};
-
-  font-family: var(--font-family);
-  font-feature-settings:
-    'liga' 1,
-    'calt' 1;
-
-  /* Light Mode Tokens */
-  --ui-background: #f2f2f7;
-  --ui-card-bg: #ffffff;
-  --ui-text-primary: #000000;
-  --ui-text-secondary: #8e8e93;
-  --ui-text-tertiary: #c7c7cc;
-  --ui-separator: #c6c6c8;
-  --ui-field-bg: #e3e3e8;
-
-  --bg-primary: rgba(255, 255, 255, 0.95);
-  --bg-secondary: #f5f5f7;
-
-  --text-primary: #1d1d1f;
-  --text-secondary: rgba(0, 0, 0, 0.6);
-  --text-tertiary: rgba(0, 0, 0, 0.85);
-
-  --border-color: rgba(0, 0, 0, 0.05);
-  --divider-color: rgba(0, 0, 0, 0.1);
-
-  --accent-color: #007aff;
-  --accent-hover: #0051d5;
-
-  --badge-bg: rgba(0, 122, 255, 0.1);
-  --badge-text: #007aff;
-
-  --shadow-default: 0 2px 12px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
-
-  /* Liquid Glass Tokens (Light) */
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-highlight: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-  --glass-bg-opacity: 0.15;
-  --glass-border-opacity: 0.25;
-  --blur-radius-base: 20px;
-  --theming-transition:
-    background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-
-  /* System Colors */
-  --system-blue: #007aff;
-  --system-green: #34c759;
-  --system-red: #ff3b30;
-  --system-orange: #ff9500;
-  --system-gray: #8e8e93;
-  --system-gray2: #aeaeb2;
-  --system-gray3: #c7c7cc;
-  --system-gray4: #d1d1d6;
-  --system-gray5: #e5e5ea;
-  --system-gray6: #f2f2f7;
-  --system-white: #ffffff;
-  --system-black: #000000;
-  --system-red: #ff3b30;
-
-  --clock-face-color: var(--system-white);
-  --clock-border-color: rgba(0, 0, 0, 0.15); /* Subtle gray border */
-  --clock-hand-hour: var(--system-black);
-  --clock-hand-minute: var(--system-black);
-  --clock-hand-second: var(--system-red);
-
+  /* Widget/Card Defaults */
   --bg-widget: rgba(255, 255, 255, 0.85);
   --shadow-base: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  --border-color: 1px solid rgba(255, 255, 255, 0.6);
+  --border-color-widget: 1px solid rgba(255, 255, 255, 0.6);
 
-  /* Overlay & Container */
+  /* Modal/Overlay */
   --modal-overlay-bg: rgba(0, 0, 0, 0.4);
   --modal-container-bg: rgba(255, 255, 255, 0.95);
   --modal-shadow: rgba(0, 0, 0, 0.3);
-
-  /* Header */
   --modal-header-bg-start: rgba(255, 255, 255, 0.8);
   --modal-header-bg-end: rgba(245, 245, 247, 0.8);
   --modal-header-border: rgba(0, 0, 0, 0.08);
   --modal-title-color: #1d1d1f;
-
-  /* Body */
   --modal-body-color: #1d1d1f;
   --modal-body-secondary: #6e6e73;
-
-  /* Footer */
   --modal-footer-bg: rgba(245, 245, 247, 0.6);
   --modal-footer-border: rgba(0, 0, 0, 0.08);
 
-  /* Primary Button */
+  /* Buttons */
   --btn-primary-bg-start: #007aff;
   --btn-primary-bg-end: #0051d5;
   --btn-primary-color: #ffffff;
   --btn-primary-shadow: rgba(0, 122, 255, 0.4);
-
-  /* Secondary Button */
   --btn-secondary-bg: rgba(0, 0, 0, 0.05);
   --btn-secondary-bg-hover: rgba(0, 0, 0, 0.1);
   --btn-secondary-color: #007aff;
 
-  /* Window Control - Close (Red) */
-  --control-close-start: #ff5f57;
-  --control-close-end: #ff3b30;
-  --control-close-icon: #4d0000;
-
-  /* Window Control - Minimize (Orange) */
-  --control-minimize-start: #ffbd2e;
-  --control-minimize-end: #ff9500;
-  --control-minimize-icon: #995700;
-
-  /* Window Control - Maximize (Green) */
-  --control-maximize-start: #28cd41;
-  --control-maximize-end: #34c759;
-  --control-maximize-icon: #006610;
-
-  /* Control/Button Colors (Light Theme Defaults) */
+  /* Standard Controls (Form fields, etc.) */
   --control-bg: #ffffff;
   --control-border: #e5e5e5; /* Lighter gray border (UITextField look) */
   --control-border-width: 1px;
   --control-border-active: #3b82f6; /* blue-500 for focus */
-  /* Text & Icon Colors */
   --primary-text: #1f2937; /* gray-800 */
   --icon-color: #6b7280; /* gray-500 */
-  /* List Colors */
+
+  /* List/Table Controls */
   --list-bg: #ffffff;
   --list-border: #e5e7eb;
   --list-hover-bg: #eff6ff;
   --list-separator: #f3f4f6;
-  /* Selected Item Colors */
   --selected-bg: #3b82f6;
   --selected-text: #ffffff;
   --selected-hover-bg: #2563eb;
 
+  /* Window Controls (Traffic Lights) */
+  --control-close-start: #ff5f57;
+  --control-close-end: #ff3b30;
+  --control-close-icon: #4d0000;
+  --control-minimize-start: #ffbd2e;
+  --control-minimize-end: #ff9500;
+  --control-minimize-icon: #995700;
+  --control-maximize-start: #28cd41;
+  --control-maximize-end: #34c759;
+  --control-maximize-icon: #006610;
+
+  /* Popover/Tooltip */
   --popover-bg: rgba(255, 255, 255, 0.95);
   --popover-text: #1c1c1e;
   --popover-border: rgba(0, 0, 0, 0.15);
 
+  /* Notification */
   --notify-bg-color: rgba(255, 255, 255, 0.9);
   --notify-text-color-primary: #1c1c1e; // Nearly black
   --notify-text-color-secondary: #3c3c43; // Darker gray
   --notify-border-color: rgba(0, 0, 0, 0.08);
   --notify-close-btn-color: #8e8e93; // Medium gray
 
-  /* Panel Customization Variables */
+  /* Panel */
   --panel-bg: var(--color-system-background-tertiary); /* #ffffff */
   --panel-radius: 8px; /* Example fixed radius */
   --panel-color: var(--color-label); /* #000000 */
 
-  /* Already defined system variable, included for completeness */
-  --color-glass-rgb: 255, 255, 255;
-
+  /* Stepper (Number Input) */
   --stepper-primary: #007aff; /* Apple Blue for action */
   --stepper-bg: rgba(255, 255, 255, 0.75); /* Liquid Glass effect light */
   --stepper-border-color: rgba(0, 0, 0, 0.1);
@@ -183,6 +81,7 @@ $font-family: 'Inter', sans-serif;
   --stepper-icon-color: var(--stepper-primary);
   --stepper-disabled-icon: rgba(0, 0, 0, 0.3);
 
+  /* Map/GIS */
   --map-bg-primary: #ffffff;
   --map-bg-secondary: #f2f2f7;
   --map-bg-tertiary: #e5e5ea;
@@ -198,149 +97,94 @@ $font-family: 'Inter', sans-serif;
   --map-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
   --map-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.3);
 
+  /* Segmented Control */
   --segment-background: rgba(118, 118, 128, 0.12);
   --segment-text: rgba(60, 60, 67, 0.6);
   --segment-selected-background: #ffffff;
   --segment-selected-text: #000000;
   --segment-selected-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  /* Clock */
+  --clock-face-color: var(--system-white);
+  --clock-border-color: rgba(0, 0, 0, 0.15); /* Subtle gray border */
+  --clock-hand-hour: var(--system-black);
+  --clock-hand-minute: var(--system-black);
+  --clock-hand-second: var(--system-red);
 }
 
-// --- 3. Dark Mode Overrides ---
 .dark-mode {
-  --ui-background: #000000;
-  --ui-card-bg: #1c1c1e;
-
-  --ui-text-primary: #ffffff;
-  --ui-text-secondary: #98989d;
-  --ui-text-tertiary: #5a5a5f;
-  --ui-separator: #38383a;
-  --ui-field-bg: #2c2c2e;
-
-  --bg-primary: rgba(28, 28, 30, 0.95);
-  --bg-secondary: #000000;
-
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.6);
-  --text-tertiary: rgba(255, 255, 255, 0.85);
-
-  --border-color: rgba(255, 255, 255, 0.1);
-  --divider-color: rgba(255, 255, 255, 0.1);
-
-  --accent-color: #0a84ff;
-  --accent-hover: #409cff;
-
-  --badge-bg: rgba(10, 132, 255, 0.2);
-  --badge-text: #0a84ff;
-
-  --shadow-default: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.6);
-
-  /* Liquid Glass Tokens (Dark) */
-  --glass-bg: rgba(30, 30, 30, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-highlight: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-
-  /* System Colors Dark Variants */
-  --system-blue: #0a84ff;
-  --system-green: #30d158;
-  --system-red: #ff453a;
-  --system-orange: #ff9f0a;
-  --system-gray: #8e8e93;
-  --system-gray2: #636366;
-  --system-gray3: #48484a;
-  --system-gray4: #3a3a3c;
-  --system-gray5: #2c2c2e;
-  --system-gray6: #1c1c1e;
-
-  --clock-face-color: #2c2c2e; /* Darker gray face */
-  --clock-border-color: rgba(255, 255, 255, 0.1);
-  --clock-hand-hour: var(--system-white);
-  --clock-hand-minute: var(--system-white);
-  --clock-hand-second: var(--system-red);
-
+  /* Widget/Card Defaults */
   --bg-widget: rgba(44, 44, 56, 0.95);
   --shadow-base: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --border-color: 1px solid rgba(255, 255, 255, 0.1);
+  --border-color-widget: 1px solid rgba(255, 255, 255, 0.1);
 
-  /* Overlay & Container */
+  /* Modal/Overlay */
   --modal-overlay-bg: rgba(0, 0, 0, 0.6);
   --modal-container-bg: rgba(30, 30, 30, 0.95);
   --modal-shadow: rgba(0, 0, 0, 0.6);
-
-  /* Header */
   --modal-header-bg-start: rgba(45, 45, 45, 0.8);
   --modal-header-bg-end: rgba(28, 28, 30, 0.8);
   --modal-header-border: rgba(255, 255, 255, 0.1);
   --modal-title-color: #f5f5f7;
-
-  /* Body */
   --modal-body-color: #f5f5f7;
   --modal-body-secondary: #a1a1a6;
-
-  /* Footer */
   --modal-footer-bg: rgba(28, 28, 30, 0.6);
   --modal-footer-border: rgba(255, 255, 255, 0.1);
 
-  /* Primary Button */
+  /* Buttons */
   --btn-primary-bg-start: #0a84ff;
   --btn-primary-bg-end: #0066cc;
   --btn-primary-color: #ffffff;
   --btn-primary-shadow: rgba(10, 132, 255, 0.4);
-
-  /* Secondary Button */
   --btn-secondary-bg: rgba(255, 255, 255, 0.1);
   --btn-secondary-bg-hover: rgba(255, 255, 255, 0.15);
   --btn-secondary-color: #0a84ff;
 
-  /* Window Control Colors - Same as light theme */
-  --control-close-start: #ff5f57;
-  --control-close-end: #ff3b30;
-  --control-close-icon: #4d0000;
-
-  --control-minimize-start: #ffbd2e;
-  --control-minimize-end: #ff9500;
-  --control-minimize-icon: #995700;
-
-  --control-maximize-start: #28cd41;
-  --control-maximize-end: #34c759;
-  --control-maximize-icon: #006610;
-
-  /* Control/Button Colors */
+  /* Standard Controls (Form fields, etc.) */
   --control-bg: #1f2937;
   --control-border: #4b5563; /* gray-600 */
   --control-border-active: #60a5fa; /* blue-400 */
-  /* Text & Icon Colors */
   --primary-text: #f9fafb;
   --icon-color: #9ca3af;
-  /* List Colors */
+
+  /* List/Table Controls */
   --list-bg: #1f2937;
   --list-border: #374151;
   --list-hover-bg: #374151;
   --list-separator: #374151;
-  /* Selected Item Colors */
   --selected-bg: #3b82f6;
   --selected-text: #ffffff;
   --selected-hover-bg: #60a5fa;
 
+  /* Window Controls (Traffic Lights) - (Colors are often static/non-theming) */
+  --control-close-start: #ff5f57;
+  --control-close-end: #ff3b30;
+  --control-close-icon: #4d0000;
+  --control-minimize-start: #ffbd2e;
+  --control-minimize-end: #ff9500;
+  --control-minimize-icon: #995700;
+  --control-maximize-start: #28cd41;
+  --control-maximize-end: #34c759;
+  --control-maximize-icon: #006610;
+
+  /* Popover/Tooltip */
   --popover-bg: rgba(40, 40, 40, 0.95);
   --popover-text: #ffffff;
   --popover-border: rgba(255, 255, 255, 0.15);
 
+  /* Notification */
   --notify-bg-color: rgba(28, 28, 30, 0.9);
   --notify-text-color-primary: #ffffff;
   --notify-text-color-secondary: #e5e5ea;
   --notify-border-color: rgba(255, 255, 255, 0.1);
   --notify-close-btn-color: #98989d; // Lighter
 
-  /* Panel Customization Variables Overrides */
+  /* Panel */
   --panel-bg: #2c2c2e; /* Directly set to dark tertiary background */
   --panel-color: #ffffff; /* Directly set to dark label color */
 
-  /* Already defined system variable, included for completeness */
-  --color-glass-rgb: 0, 0, 0;
-
+  /* Stepper (Number Input) */
   --stepper-primary: #0a84ff; /* Slightly brighter blue for dark mode */
   --stepper-bg: rgba(28, 28, 30, 0.75); /* Liquid Glass effect dark */
   --stepper-border-color: rgba(255, 255, 255, 0.2);
@@ -348,6 +192,7 @@ $font-family: 'Inter', sans-serif;
   --stepper-icon-color: var(--stepper-primary);
   --stepper-disabled-icon: rgba(255, 255, 255, 0.4);
 
+  /* Map/GIS */
   --map-bg-primary: #1c1c1e;
   --map-bg-secondary: #000000;
   --map-bg-tertiary: #2c2c2e;
@@ -363,14 +208,17 @@ $font-family: 'Inter', sans-serif;
   --map-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.6);
   --map-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.7);
 
+  /* Segmented Control */
   --segment-background: rgba(118, 118, 128, 0.24);
   --segment-text: rgba(235, 235, 245, 0.6);
   --segment-selected-background: rgba(99, 99, 102, 0.5);
   --segment-selected-text: #ffffff;
   --segment-selected-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-}
 
-html,
-body {
-  color: var(--ui-text-primary);
+  /* Clock */
+  --clock-face-color: #2c2c2e; /* Darker gray face */
+  --clock-border-color: rgba(255, 255, 255, 0.1);
+  --clock-hand-hour: var(--system-white);
+  --clock-hand-minute: var(--system-white);
+  --clock-hand-second: var(--system-red);
 }
