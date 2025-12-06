@@ -50,7 +50,7 @@ onMounted(() => {
 .theme-chooser {
   border: 1px solid var(--ui-separator);
   background: var(--ui-card-bg);
-  border-radius: 8px;
+  border-radius: var(--radius-small);
   max-width: 300px;
 }
 

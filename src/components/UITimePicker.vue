@@ -94,7 +94,7 @@ const handleMinuteUpdate = (newIndex: number) => {
     display: flex;
     height: 160px;
     background: var(--ui-background);
-    border-radius: 12px;
+    border-radius: var(--radius-medium);
     overflow: hidden;
     position: relative;
     margin: 0 auto;

@@ -248,7 +248,7 @@ onUnmounted(() => {
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
+      border-radius: var(--radius-small);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -339,7 +339,7 @@ onUnmounted(() => {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: var(--radius-small);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       transition: all 0.3s ease;
     }

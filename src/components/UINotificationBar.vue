@@ -59,7 +59,7 @@ const closeNotification = () => {
   color: var(--notify-text-color-primary);
 
   // Apple-like styling: Rounded corners, slight border, shadow
-  border-radius: 12px;
+  border-radius: var(--radius-medium);
   border: 1px solid var(--notify-border-color);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 

@@ -40,7 +40,7 @@ const handleSelect = (index) => {
 .segmented-control {
   display: inline-flex;
   background-color: var(--segment-background);
-  border-radius: 8px;
+  border-radius: var(--radius-small);
   padding: 2px;
   position: relative;
   backdrop-filter: blur(20px);

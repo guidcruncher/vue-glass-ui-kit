@@ -197,7 +197,7 @@ onUnmounted(() => {
   cursor: pointer;
   padding: 10px 16px;
   background: var(--ui-card-bg); /* Use card background for consistency */
-  border-radius: 12px;
+  border-radius: var(--radius-medium);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: background 0.1s;
   border: 1px solid var(--ui-separator); /* Subtle border */
@@ -245,7 +245,7 @@ onUnmounted(() => {
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: var(--radius-medium);
   overflow: hidden;
   max-height: 400px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);

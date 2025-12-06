@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
 .mk-map-view {
   display: block;
   max-width: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius-medium);
   overflow: hidden;
   box-shadow: var(--shadow-md);
 }
@@ -312,7 +312,7 @@ onBeforeUnmount(() => {
 }
 
 :deep(.leaflet-popup-content-wrapper) {
-  border-radius: 12px;
+  border-radius: var(--radius-medium);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }

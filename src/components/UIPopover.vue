@@ -65,7 +65,7 @@ watch(
 
     min-width: 250px;
     padding: 15px;
-    border-radius: 12px;
+    border-radius: var(--radius-medium);
 
     /* Apple Popover Style: Frosted glass effect */
     background-color: var(--popover-bg);
