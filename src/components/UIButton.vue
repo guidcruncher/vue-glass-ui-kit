@@ -39,7 +39,7 @@ const handleClick = (event: MouseEvent) => {
   font-family: inherit;
   font-size: 17px;
   font-weight: 400;
-  border-radius: 12px;
+  border-radius: var(--radius-medium);
   border: none;
   cursor: pointer;
   padding: 12px 20px;
