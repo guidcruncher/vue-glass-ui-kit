@@ -64,7 +64,7 @@
   /* Notification */
   --notify-bg-color: rgba(255, 255, 255, 0.9);
   --notify-text-color-primary: #1c1c1e; // Nearly black
-  --notify-text-color-secondary: #3c3c43; // Darker gray
+  --notify-text-color-secondary: #3c3c43;
   --notify-border-color: rgba(0, 0, 0, 0.08);
   --notify-close-btn-color: #8e8e93; // Medium gray
 
@@ -110,6 +110,11 @@
   --clock-hand-hour: var(--system-black);
   --clock-hand-minute: var(--system-black);
   --clock-hand-second: var(--system-red);
+
+  --color-folder-bg: rgba(255, 255, 255, 0.75);
+  --color-folder-shadow: rgba(31, 38, 135, 0.37);
+  --color-cell-label: var(--color-primary-text);
+  --color-cell-shadow: rgba(0, 0, 0, 0.12);
 }
 
 .dark-mode {
@@ -221,4 +226,9 @@
   --clock-hand-hour: var(--system-white);
   --clock-hand-minute: var(--system-white);
   --clock-hand-second: var(--system-red);
+
+  --color-folder-bg: rgba(40, 40, 40, 0.85);
+  --color-folder-shadow: rgba(0, 0, 0, 0.5);
+  --color-cell-label: var(--color-primary-text);
+  --color-cell-shadow: rgba(0, 0, 0, 0.8);
 }
