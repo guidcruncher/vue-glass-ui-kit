@@ -283,6 +283,18 @@
 
             <UIFlipClock timezone="Europe/Madrid" />
 
+            <UIFolderView>
+              <template #title> Applications </template>
+
+              <UIAppIconItem
+                v-for="app in appleApps"
+                :key="app.name"
+                :icon="app.icon"
+                :label="app.name"
+              >
+              </UIAppIconItem>
+            </UIFolderView>
+
             <UIContentPanel
               background="linear-gradient(135deg, #6e8efb, #a777e3)"
               :border-radius="15"
@@ -357,6 +369,36 @@ import { ref, computed } from 'vue'
 
 // --- App Logic ---
 // State for v-model demonstrations
+
+const appleApps = ref([
+  {
+    name: 'App Store',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/app-store.svg',
+    color: '#EF4444',
+  },
+  { name: 'Cloud', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/icloud.svg' },
+  { name: 'Apple', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-retro.svg' },
+  {
+    name: 'Apple Containers',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/png/apple-containers.png',
+  },
+  {
+    name: 'Apple HomeKit',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-homekit.svg',
+  },
+  {
+    name: 'Apple Kusic',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-music.svg',
+  },
+  { name: 'Apple TV', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-tv.svg' },
+  { name: 'Safari', icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/safari.svg' },
+  {
+    name: 'Apple PodCasts',
+    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons@master/svg/apple-podcasts.svg',
+    color: '#F59E0B',
+  },
+])
+
 const platforms = [
   { key: 'ios', value: 'iOS' },
   { key: 'android', value: 'Android' },

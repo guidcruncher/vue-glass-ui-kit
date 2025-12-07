@@ -1,20 +1,33 @@
 <script setup>
-import { defineProps } from 'vue'
-
 const props = defineProps({
   label: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  key: { type: String, required: false, default: '' },
+  icon: { type: String, required: false, default: undefined },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const emit = defineEmits(['click'])
+
+const handleClick = () => {
+  if (!props.disabled) {
+    emit('click', { key: props.key, label: props.label, icon: props.icon })
+  }
+}
 </script>
 
 <template>
-  <div class="cell">
+  <div class="cell" :class="{ disabled: props.disabled }" @click="handleClick">
     <div class="cell-content">
-      <slot name="icon"></slot>
+      <img v-if="icon" :src="icon" :alt="label" class="app-icon-image" />
+      <slot v-else name="icon"></slot>
     </div>
-    
+
     <div class="cell-label">
       {{ label }}
     </div>
@@ -22,26 +35,26 @@ const props = defineProps({
 </template>
 
 <style scoped>
-/* NOTE: The styles for .collection-view, .cell-content, and .cell-label 
-   are intended to be defined in UICollectionView.vue and your global CSS variables.
-   Only the structural styles necessary for this item are kept here if not
-   duplicated in UICollectionView.vue. Since UICollectionView.vue provided
-   all necessary component styles (cell, cell-content, cell-label), 
-   we will minimize duplication and only keep the necessary container styles for .cell. */
-
 .cell {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  /* Ensure the item is responsive */
+  transition:
+    transform 0.2s ease,
+    opacity 0.3s ease;
   width: 100%;
   max-width: 100px;
 }
 
-/* This is the styling for the icon block itself, 
-   which relies on the theme variables defined in your global scope. */
+/* Disabled State: Visually dims and prevents interaction */
+.cell.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  /* Allows scroll events to pass through the item to the container */
+  pointer-events: none;
+}
+
 .cell-content {
   width: 80px;
   height: 80px;
@@ -56,11 +69,12 @@ const props = defineProps({
     box-shadow 0.2s ease;
 }
 
-.cell-content:hover {
+/* Hover/Active effects only apply when the item is NOT disabled */
+.cell:not(.disabled) .cell-content:hover {
   transform: scale(0.95);
 }
 
-.cell:active .cell-content {
+.cell:not(.disabled):active .cell-content {
   transform: scale(0.9);
 }
 
@@ -69,10 +83,18 @@ const props = defineProps({
   color: var(--color-cell-label);
   text-align: center;
   font-weight: 400;
-  /* Optional: Prevent label wrapping unless necessary, and handle ellipsis */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 90px;
+}
+
+.app-icon-image {
+  /* This ensures the image fills the 80x80px .cell-content container */
+  width: 100%;
+  height: 100%;
+  /* Match the border radius of the .cell-content */
+  border-radius: 18px;
+  object-fit: cover;
 }
 </style>

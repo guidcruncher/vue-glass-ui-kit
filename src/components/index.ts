@@ -5,6 +5,7 @@ import MKMapView from './MKMapView.vue'
 import UIActivityIndicator from './UIActivityIndicator.vue'
 import UIAlert from './UIAlert.vue'
 import UIAnalogClock from './UIAnalogClock.vue'
+import UIAppIconItem from './UIAppIconItem.vue'
 import UIButton from './UIButton.vue'
 import UICollectionItem from './UICollectionItem.vue'
 import UICollectionView from './UICollectionView.vue'
@@ -55,6 +56,7 @@ export const GlassComponents = {
   UIActivityIndicator,
   UIAlert,
   UIAnalogClock,
+  UIAppIconItem,
   UIButton,
   UICollectionItem,
   UICollectionView,
@@ -91,19 +93,18 @@ export const GlassComponents = {
   UIVisualEffectView,
   UIWheelListView,
   UIWidgetView,
-};
+}
 
+export function UseGlassUi(app) {
+  const pinia = createPinia()
+  app.directive('click-outside', ClickOutside)
+  app.directive('visual-effect', VisualEffect)
+  app.directive('background-mesh', BackgroundMesh)
 
-export function  UseGlassUi(app) {
-    const pinia = createPinia()
-    app.directive('click-outside', ClickOutside);
-    app.directive('visual-effect', VisualEffect);
-    app.directive('background-mesh', BackgroundMesh);
-
-    app.use(pinia);
-    Object.keys(GlassComponents).forEach((name) => {
-      app.component(name, GlassComponents[name]);
-    });
-    const themeStore = useThemeStore()
-    themeStore.restoreTheme()
-};
+  app.use(pinia)
+  Object.keys(GlassComponents).forEach((name) => {
+    app.component(name, GlassComponents[name])
+  })
+  const themeStore = useThemeStore()
+  themeStore.restoreTheme()
+}
