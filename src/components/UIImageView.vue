@@ -8,58 +8,9 @@
       <div class="viewer-header">
         <div class="viewer-title">{{ title }}</div>
         <div class="viewer-controls">
-          <template v-if="manipulationEnabled">
-            <button class="control-btn" @click="resetManipulation" title="Reset All (Esc)">
-              <i class="fa-solid fa-redo" />
-            </button>
-
-            <button :class="['control-btn']" @click="zoomOut" title="Zoom Out (-)">
-              <i class="fa-solid fa-magnifying-glass-minus" />
-            </button>
-            <button :class="['control-btn']" @click="zoomIn" title="Zoom In (=)">
-              <i class="fa-solid fa-magnifying-glass-plus" />
-            </button>
-            <button :class="['control-btn']" @click="rotateClockwise" title="Rotate (R)">
-              <i class="fa-solid fa-rotate-right" />
-            </button>
-
-            <button
-              :class="['control-btn', { active: isFlippedH }]"
-              @click="toggleFlipHorizontal"
-              title="Flip Horizontal (H)"
-            >
-              <i class="fa-solid fa-arrows-left-right" />
-            </button>
-            <button
-              :class="['control-btn', { active: isFlippedV }]"
-              @click="toggleFlipVertical"
-              title="Flip Vertical (V)"
-            >
-              <i class="fa-solid fa-arrows-up-down" />
-            </button>
-
-            <button
-              :class="['control-btn', { active: isGrayscale }]"
-              @click="toggleGrayscale"
-              title="Grayscale (G)"
-            >
-              <i class="fa-solid fa-palette" />
-            </button>
-            <button
-              :class="['control-btn', { active: isInverted }]"
-              @click="toggleInvert"
-              title="Invert Colors (I)"
-            >
-              <i class="fa-solid fa-wand-magic-sparkles" />
-            </button>
-            <button
-              :class="['control-btn', { active: isSepia }]"
-              @click="toggleSepia"
-              title="Sepia Tone (P)"
-            >
-              <i class="fa-solid fa-image" />
-            </button>
-          </template>
+          <button :class="['control-btn']" id="downloadBtn" @click="download" title="Download">
+            <i class="fa-solid fa-download" />
+          </button>
 
           <button
             :class="['control-btn', { active: currentIsFitMode }]"
@@ -78,6 +29,75 @@
             <i class="fa-solid fa-maximize" />
           </button>
 
+          <div class="manipulation-dropdown-wrapper" v-if="manipulationEnabled">
+            <button 
+              :class="['control-btn', 'manipulation-trigger', { active: isManipulationMenuOpen }]" 
+              @click.stop="toggleManipulationMenu" 
+              title="Image Tools"
+            >
+              <i class="fa-solid fa-tools" />
+            </button>
+            
+            <div :class="['manipulation-menu', { active: isManipulationMenuOpen }]" @click.stop>
+                
+                <div class="menu-section">
+                    <span class="section-title">Reset & Filters</span>
+                    <button class="control-btn menu-item" @click="resetManipulation" title="Reset All (R)">
+                        <i class="fa-solid fa-redo" /> Reset All
+                    </button>
+                    <button
+                        :class="['control-btn', 'menu-item', { active: isGrayscale }]"
+                        @click="toggleGrayscale"
+                        title="Grayscale (G)"
+                    >
+                        <i class="fa-solid fa-palette" /> Grayscale
+                    </button>
+                    <button
+                        :class="['control-btn', 'menu-item', { active: isInverted }]"
+                        @click="toggleInvert"
+                        title="Invert Colors (I)"
+                    >
+                        <i class="fa-solid fa-wand-magic-sparkles" /> Invert Colors
+                    </button>
+                    <button
+                        :class="['control-btn', 'menu-item', { active: isSepia }]"
+                        @click="toggleSepia"
+                        title="Sepia Tone (P)"
+                    >
+                        <i class="fa-solid fa-image" /> Sepia Tone
+                    </button>
+                </div>
+                
+                <div class="menu-section">
+                    <span class="section-title">Transforms</span>
+                    <button :class="['control-btn', 'menu-item']" @click="zoomOut" title="Zoom Out (-)">
+                        <i class="fa-solid fa-magnifying-glass-minus" /> Zoom Out
+                    </button>
+                    <button :class="['control-btn', 'menu-item']" @click="zoomIn" title="Zoom In (=)">
+                        <i class="fa-solid fa-magnifying-glass-plus" /> Zoom In
+                    </button>
+                    <button :class="['control-btn', 'menu-item']" @click="rotateClockwise" title="Rotate (T)">
+                        <i class="fa-solid fa-rotate-right" /> Rotate 90°
+                    </button>
+
+                    <button
+                        :class="['control-btn', 'menu-item', { active: isFlippedH }]"
+                        @click="toggleFlipHorizontal"
+                        title="Flip Horizontal (H)"
+                    >
+                        <i class="fa-solid fa-arrows-left-right" /> Flip Horizontal
+                    </button>
+                    <button
+                        :class="['control-btn', 'menu-item', { active: isFlippedV }]"
+                        @click="toggleFlipVertical"
+                        title="Flip Vertical (V)"
+                    >
+                        <i class="fa-solid fa-arrows-up-down" /> Flip Vertical
+                    </button>
+                </div>
+                
+            </div>
+          </div>
           <button class="control-btn close-btn" @click="closeViewer" title="Close (Esc)">
             <i class="fa-solid fa-close" />
           </button>
@@ -138,6 +158,11 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // Prop to enable Cross-Domain download support
+  enableCrossDomain: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 // --- Constants ---
@@ -153,6 +178,7 @@ const isFlippedV = ref(false)
 const isGrayscale = ref(false)
 const isInverted = ref(false)
 const isSepia = ref(false)
+const isManipulationMenuOpen = ref(false) // Dropdown state
 
 // --- State for Pan/Drag ---
 const isPanning = ref(false)
@@ -189,6 +215,7 @@ const resetManipulation = () => {
   isGrayscale.value = false
   isInverted.value = false
   isSepia.value = false
+  isManipulationMenuOpen.value = false // Close menu on reset
 }
 
 const zoomIn = () => {
@@ -223,6 +250,89 @@ const toggleInvert = () => {
 }
 const toggleSepia = () => {
   isSepia.value = !isSepia.value
+}
+
+// Dropdown Toggle Method
+const toggleManipulationMenu = () => {
+  isManipulationMenuOpen.value = !isManipulationMenuOpen.value
+}
+
+// --- Download Logic ---
+const download = () => {
+  try {
+    let imageURL = props.src
+    let imageDescription = props.alt
+    let downloadedImg = new Image()
+
+    const imageReceived = () => {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+
+      // 1. Calculate final dimensions and rotation offset
+      let finalWidth = downloadedImg.width
+      let finalHeight = downloadedImg.height
+      let drawX = -downloadedImg.width / 2
+      let drawY = -downloadedImg.height / 2
+
+      // Adjust dimensions for 90/270 degree rotation
+      if (rotation.value % 180 !== 0) {
+        finalWidth = downloadedImg.height
+        finalHeight = downloadedImg.width
+      }
+
+      // Set canvas size based on final manipulated dimensions
+      canvas.width = finalWidth * scale.value
+      canvas.height = finalHeight * scale.value
+
+      // Apply Filters to Canvas Context (Simple Filters only)
+      const filters = []
+      if (isGrayscale.value) filters.push('grayscale(1)')
+      if (isInverted.value) filters.push('invert(1)')
+      if (isSepia.value) filters.push('sepia(1)')
+      
+      if (filters.length > 0) {
+         context.filter = filters.join(' ')
+      }
+
+      // 2. Set up context transformation for scale, rotation, and flip
+      context.translate(canvas.width / 2, canvas.height / 2) // Move to center for rotation/scale
+      context.rotate((rotation.value * Math.PI) / 180)
+
+      // Apply scale and flip together
+      const flipScaleX = (isFlippedH.value ? -1 : 1) * scale.value
+      const flipScaleY = (isFlippedV.value ? -1 : 1) * scale.value
+      context.scale(flipScaleX, flipScaleY)
+
+      // 3. Draw the original image centered
+      context.drawImage(downloadedImg, drawX, drawY)
+
+      // 4. Trigger download
+      try {
+        var link = document.createElement('a')
+        const manipulationSuffix = props.manipulationEnabled
+          ? `_s${scale.value.toFixed(1)}_r${rotation.value}_h${
+              isFlippedH.value ? 1 : 0
+            }_v${isFlippedV.value ? 1 : 0}`
+          : ''
+        link.download = `${imageDescription.replace(/\s/g, '_')}${manipulationSuffix}.png`
+        link.href = canvas.toDataURL('image/png')
+        link.click()
+      } catch (err) {
+        alert(`Error creating download link: ${err}`)
+      }
+    }
+    
+    // CONDITIONAL CROSS-ORIGIN LOGIC
+    if (props.enableCrossDomain) {
+        downloadedImg.crossOrigin = 'anonymous' // Enables loading cross-origin images to canvas
+    }
+
+    downloadedImg.addEventListener('load', imageReceived)
+    downloadedImg.alt = imageDescription
+    downloadedImg.src = imageURL
+  } catch (err) {
+    alert(`Error initiating download: ${err}`)
+  }
 }
 
 // --- Pan/Drag Methods ---
@@ -309,10 +419,13 @@ watch(
   { immediate: true },
 )
 
+// Modified handleOverlayClick to close the menu if the overlay is clicked
 const handleOverlayClick = (event) => {
   if (event.target === event.currentTarget) {
     closeViewer()
   }
+  // Close menu if open and clicking anywhere on the overlay/outside a menu item
+  isManipulationMenuOpen.value = false
 }
 
 // --- Keyboard Event Handling ---
@@ -320,17 +433,24 @@ const handleKeydown = (e) => {
   if (!modelValue.value) return
 
   if (e.key === 'Escape') {
-    closeViewer()
+    if (isManipulationMenuOpen.value) {
+      isManipulationMenuOpen.value = false // Close menu first on Escape
+    } else {
+      closeViewer()
+    }
   } else if (e.key === 'f' || e.key === 'F') {
     setFitMode()
   } else if (e.key === 's' || e.key === 'S') {
     setScrollMode()
   } else if (props.manipulationEnabled) {
-    if (e.key === '=') {
+    // Other shortcuts still work even when the menu is closed
+    if (e.key === 'r' || e.key === 'R') { // Reset Button Shortcut
+      resetManipulation();
+    } else if (e.key === '=') {
       zoomIn()
     } else if (e.key === '-') {
       zoomOut()
-    } else if (e.key === 'r' || e.key === 'R') {
+    } else if (e.key === 't' || e.key === 'T') { // Rotation Shortcut (T for Turn)
       rotateClockwise()
     } else if (e.key === 'h' || e.key === 'H') {
       toggleFlipHorizontal()
@@ -380,6 +500,10 @@ onUnmounted(() => {
     }
 
     .viewer-header {
+      // FIX: Ensure header is stacked above content (z-index only works on positioned elements,
+      // and transform already creates a stacking context, but explicit z-index is required here)
+      z-index: 10; 
+      
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(40px) saturate(180%);
       -webkit-backdrop-filter: blur(40px) saturate(180%);
@@ -407,6 +531,55 @@ onUnmounted(() => {
       display: flex;
       gap: 12px;
       align-items: center;
+    }
+    
+    // Dropdown Styling
+    .manipulation-dropdown-wrapper {
+      position: relative; 
+    }
+    
+    .manipulation-menu {
+      position: absolute;
+      top: 100%; 
+      right: 0;
+      margin-top: 8px;
+      min-width: 200px;
+      background: rgba(40, 40, 40, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-small);
+      padding: 8px;
+      z-index: 8010; // This is high, but relative to its header parent
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease-out;
+
+      &.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+    
+    .menu-section {
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    }
+    
+    .section-title {
+        display: block;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-left: 8px;
+        margin-bottom: 4px;
     }
 
     .control-btn {
@@ -437,6 +610,40 @@ onUnmounted(() => {
       &.active {
         background: rgba(255, 255, 255, 0.25);
         border-color: rgba(255, 255, 255, 0.3);
+      }
+      
+      // Menu item overrides
+      &.menu-item {
+        width: 100%;
+        height: auto;
+        justify-content: flex-start;
+        padding: 8px 10px;
+        margin-bottom: 4px;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 14px;
+        font-weight: 400;
+        transition: background 0.2s ease;
+        
+        i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: none; // Disable scale on hover for menu items
+        }
+        
+        &:active {
+            transform: none; // Disable scale on active for menu items
+        }
+        
+        &.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: transparent;
+        }
       }
 
       &.close-btn {
@@ -571,6 +778,10 @@ onUnmounted(() => {
         width: 32px;
         height: 32px;
         font-size: 16px;
+      }
+      
+      .manipulation-menu {
+          min-width: 180px;
       }
     }
   }
