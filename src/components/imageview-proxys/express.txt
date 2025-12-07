@@ -1,0 +1,45 @@
+const express = require('express');
+const fetch = require('node-fetch');
+const app = express();
+const PORT = 3000; // Change this port if needed
+
+// Proxy endpoint
+app.get('/api/proxy-image', async (req, res) => {
+    const imageUrl = req.query.url;
+
+    if (!imageUrl) {
+        return res.status(400).send('Missing image URL parameter.');
+    }
+    
+    // Optional: Add a security check here to ensure only authorized domains can be proxied
+
+    try {
+        // Fetch the external image
+        const response = await fetch(imageUrl);
+
+        if (!response.ok) {
+            console.error(`Failed to fetch external image: ${response.statusText}`);
+            return res.status(response.status).send('Failed to fetch image.');
+        }
+
+        // 1. Set the correct Content-Type (critical)
+        res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+        
+        // 2. Set necessary CORS headers (optional for same-origin proxy but good practice)
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
+        
+        // 3. Set cache control headers
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+
+        // Stream the image data to the client
+        response.body.pipe(res);
+
+    } catch (error) {
+        console.error('Proxy error:', error.message);
+        res.status(500).send('Internal server error during proxy operation.');
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Image proxy running on http://localhost:${PORT}`);
+});

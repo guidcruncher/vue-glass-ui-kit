@@ -310,11 +310,7 @@
               </template>
             </UIContentPanel>
 
-            <UIContentPanel
-              background="url(/image.jpg)"
-              :border-radius="5"
-              color="#ffffff"
-            >
+            <UIContentPanel background="url(/image.jpg)" :border-radius="5" color="#ffffff">
               <template #header>Panel Header (Image)</template>
               <p>
                 This panel uses an image URL for its background. The glassmorphic effect in the

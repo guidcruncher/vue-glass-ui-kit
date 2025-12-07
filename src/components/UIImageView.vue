@@ -30,72 +30,78 @@
           </button>
 
           <div class="manipulation-dropdown-wrapper" v-if="manipulationEnabled">
-            <button 
-              :class="['control-btn', 'manipulation-trigger', { active: isManipulationMenuOpen }]" 
-              @click.stop="toggleManipulationMenu" 
+            <button
+              :class="['control-btn', 'manipulation-trigger', { active: isManipulationMenuOpen }]"
+              @click.stop="toggleManipulationMenu"
               title="Image Tools"
             >
               <i class="fa-solid fa-tools" />
             </button>
-            
-            <div :class="['manipulation-menu', { active: isManipulationMenuOpen }]" @click.stop>
-                
-                <div class="menu-section">
-                    <span class="section-title">Reset & Filters</span>
-                    <button class="control-btn menu-item" @click="resetManipulation" title="Reset All (R)">
-                        <i class="fa-solid fa-redo" /> Reset All
-                    </button>
-                    <button
-                        :class="['control-btn', 'menu-item', { active: isGrayscale }]"
-                        @click="toggleGrayscale"
-                        title="Grayscale (G)"
-                    >
-                        <i class="fa-solid fa-palette" /> Grayscale
-                    </button>
-                    <button
-                        :class="['control-btn', 'menu-item', { active: isInverted }]"
-                        @click="toggleInvert"
-                        title="Invert Colors (I)"
-                    >
-                        <i class="fa-solid fa-wand-magic-sparkles" /> Invert Colors
-                    </button>
-                    <button
-                        :class="['control-btn', 'menu-item', { active: isSepia }]"
-                        @click="toggleSepia"
-                        title="Sepia Tone (P)"
-                    >
-                        <i class="fa-solid fa-image" /> Sepia Tone
-                    </button>
-                </div>
-                
-                <div class="menu-section">
-                    <span class="section-title">Transforms</span>
-                    <button :class="['control-btn', 'menu-item']" @click="zoomOut" title="Zoom Out (-)">
-                        <i class="fa-solid fa-magnifying-glass-minus" /> Zoom Out
-                    </button>
-                    <button :class="['control-btn', 'menu-item']" @click="zoomIn" title="Zoom In (=)">
-                        <i class="fa-solid fa-magnifying-glass-plus" /> Zoom In
-                    </button>
-                    <button :class="['control-btn', 'menu-item']" @click="rotateClockwise" title="Rotate (T)">
-                        <i class="fa-solid fa-rotate-right" /> Rotate 90°
-                    </button>
 
-                    <button
-                        :class="['control-btn', 'menu-item', { active: isFlippedH }]"
-                        @click="toggleFlipHorizontal"
-                        title="Flip Horizontal (H)"
-                    >
-                        <i class="fa-solid fa-arrows-left-right" /> Flip Horizontal
-                    </button>
-                    <button
-                        :class="['control-btn', 'menu-item', { active: isFlippedV }]"
-                        @click="toggleFlipVertical"
-                        title="Flip Vertical (V)"
-                    >
-                        <i class="fa-solid fa-arrows-up-down" /> Flip Vertical
-                    </button>
-                </div>
-                
+            <div :class="['manipulation-menu', { active: isManipulationMenuOpen }]" @click.stop>
+              <div class="menu-section">
+                <span class="section-title">Reset & Filters</span>
+                <button
+                  class="control-btn menu-item"
+                  @click="resetManipulation"
+                  title="Reset All (R)"
+                >
+                  <i class="fa-solid fa-redo" /> Reset All
+                </button>
+                <button
+                  :class="['control-btn', 'menu-item', { active: isGrayscale }]"
+                  @click="toggleGrayscale"
+                  title="Grayscale (G)"
+                >
+                  <i class="fa-solid fa-palette" /> Grayscale
+                </button>
+                <button
+                  :class="['control-btn', 'menu-item', { active: isInverted }]"
+                  @click="toggleInvert"
+                  title="Invert Colors (I)"
+                >
+                  <i class="fa-solid fa-wand-magic-sparkles" /> Invert Colors
+                </button>
+                <button
+                  :class="['control-btn', 'menu-item', { active: isSepia }]"
+                  @click="toggleSepia"
+                  title="Sepia Tone (P)"
+                >
+                  <i class="fa-solid fa-image" /> Sepia Tone
+                </button>
+              </div>
+
+              <div class="menu-section">
+                <span class="section-title">Transforms</span>
+                <button :class="['control-btn', 'menu-item']" @click="zoomOut" title="Zoom Out (-)">
+                  <i class="fa-solid fa-magnifying-glass-minus" /> Zoom Out
+                </button>
+                <button :class="['control-btn', 'menu-item']" @click="zoomIn" title="Zoom In (=)">
+                  <i class="fa-solid fa-magnifying-glass-plus" /> Zoom In
+                </button>
+                <button
+                  :class="['control-btn', 'menu-item']"
+                  @click="rotateClockwise"
+                  title="Rotate (T)"
+                >
+                  <i class="fa-solid fa-rotate-right" /> Rotate 90°
+                </button>
+
+                <button
+                  :class="['control-btn', 'menu-item', { active: isFlippedH }]"
+                  @click="toggleFlipHorizontal"
+                  title="Flip Horizontal (H)"
+                >
+                  <i class="fa-solid fa-arrows-left-right" /> Flip Horizontal
+                </button>
+                <button
+                  :class="['control-btn', 'menu-item', { active: isFlippedV }]"
+                  @click="toggleFlipVertical"
+                  title="Flip Vertical (V)"
+                >
+                  <i class="fa-solid fa-arrows-up-down" /> Flip Vertical
+                </button>
+              </div>
             </div>
           </div>
           <button class="control-btn close-btn" @click="closeViewer" title="Close (Esc)">
@@ -114,7 +120,7 @@
         <div :class="['image-container', containerModeClass]" ref="imageContainerRef">
           <img
             class="viewer-image"
-            :src="src"
+            :src="displaySrc"
             :alt="title"
             @dragstart.prevent
             :style="[imageTransformStyle, imageFilterStyle]"
@@ -158,11 +164,60 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  // Prop to enable Cross-Domain download support
-  enableCrossDomain: {
+
+  // PROPS FOR PROXY
+  // Prop to explicitly enable/disable the image proxy functionality
+  useProxy: {
     type: Boolean,
     default: false,
   },
+  // Prop describing the URL template to use for the proxy (e.g., 'http://server/api/proxy-image?url=')
+  proxyUrl: {
+    type: String,
+    default: '/proxy-image?url=',
+  },
+})
+
+// --- Utility function to determine if a URL is same-origin ---
+const isSameOrigin = (url) => {
+  // Check if we are in a browser environment
+  if (typeof window === 'undefined') return false
+  if (!url) return false
+
+  // Relative URLs (e.g., /img/foo.jpg or img/foo.jpg) are always same-origin
+  if (url.startsWith('/') || !url.includes('://')) return true
+
+  try {
+    const pageOrigin = window.location.origin
+    // The URL constructor correctly parses scheme, host, and port
+    const imageUrlObject = new URL(url)
+
+    // Compare parsed origin with current page origin
+    return imageUrlObject.origin === pageOrigin
+  } catch (e) {
+    // Treat invalid or malformed URLs as not same-origin to be safe,
+    // letting them pass to the proxy if enabled.
+    return false
+  }
+}
+
+// --- Computed property for the image source to handle the proxy ---
+const displaySrc = computed(() => {
+  // 1. If the image is same-origin, use the original source directly,
+  //    regardless of proxy settings. This is the desired automatic bypass.
+  if (isSameOrigin(props.src)) {
+    return props.src
+  }
+
+  // 2. If the image is external AND proxy is explicitly enabled and configured, use the proxy.
+  if (props.useProxy && props.proxyUrl) {
+    const encodedUrl = encodeURIComponent(props.src)
+    return `${props.proxyUrl}${encodedUrl}`
+  }
+
+  // 3. Otherwise (external image, proxy disabled), use the original source.
+  //    (This might cause canvas manipulation issues if the external server lacks CORS headers.)
+  return props.src
 })
 
 // --- Constants ---
@@ -260,7 +315,8 @@ const toggleManipulationMenu = () => {
 // --- Download Logic ---
 const download = () => {
   try {
-    let imageURL = props.src
+    // USE THE PROXIED URL (displaySrc) for download image source
+    let imageURL = displaySrc.value
     let imageDescription = props.alt
     let downloadedImg = new Image()
 
@@ -289,9 +345,9 @@ const download = () => {
       if (isGrayscale.value) filters.push('grayscale(1)')
       if (isInverted.value) filters.push('invert(1)')
       if (isSepia.value) filters.push('sepia(1)')
-      
+
       if (filters.length > 0) {
-         context.filter = filters.join(' ')
+        context.filter = filters.join(' ')
       }
 
       // 2. Set up context transformation for scale, rotation, and flip
@@ -321,12 +377,8 @@ const download = () => {
         alert(`Error creating download link: ${err}`)
       }
     }
-    
-    // CONDITIONAL CROSS-ORIGIN LOGIC
-    if (props.enableCrossDomain) {
-        downloadedImg.crossOrigin = 'anonymous' // Enables loading cross-origin images to canvas
-    }
 
+    // Load the image from the proxied or original URL (displaySrc)
     downloadedImg.addEventListener('load', imageReceived)
     downloadedImg.alt = imageDescription
     downloadedImg.src = imageURL
@@ -341,7 +393,11 @@ const handlePanStart = (event) => {
   const container = imageContainerRef.value
   if (!container) return
 
-  if (container.scrollWidth <= container.clientWidth && container.scrollHeight <= container.clientHeight) return
+  if (
+    container.scrollWidth <= container.clientWidth &&
+    container.scrollHeight <= container.clientHeight
+  )
+    return
 
   isPanning.value = true
   panStartX.value = event.pageX + container.scrollLeft
@@ -444,13 +500,15 @@ const handleKeydown = (e) => {
     setScrollMode()
   } else if (props.manipulationEnabled) {
     // Other shortcuts still work even when the menu is closed
-    if (e.key === 'r' || e.key === 'R') { // Reset Button Shortcut
-      resetManipulation();
+    if (e.key === 'r' || e.key === 'R') {
+      // Reset Button Shortcut
+      resetManipulation()
     } else if (e.key === '=') {
       zoomIn()
     } else if (e.key === '-') {
       zoomOut()
-    } else if (e.key === 't' || e.key === 'T') { // Rotation Shortcut (T for Turn)
+    } else if (e.key === 't' || e.key === 'T') {
+      // Rotation Shortcut (T for Turn)
       rotateClockwise()
     } else if (e.key === 'h' || e.key === 'H') {
       toggleFlipHorizontal()
@@ -500,10 +558,8 @@ onUnmounted(() => {
     }
 
     .viewer-header {
-      // FIX: Ensure header is stacked above content (z-index only works on positioned elements,
-      // and transform already creates a stacking context, but explicit z-index is required here)
-      z-index: 10; 
-      
+      z-index: 10;
+
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(40px) saturate(180%);
       -webkit-backdrop-filter: blur(40px) saturate(180%);
@@ -532,15 +588,15 @@ onUnmounted(() => {
       gap: 12px;
       align-items: center;
     }
-    
+
     // Dropdown Styling
     .manipulation-dropdown-wrapper {
-      position: relative; 
+      position: relative;
     }
-    
+
     .manipulation-menu {
       position: absolute;
-      top: 100%; 
+      top: 100%;
       right: 0;
       margin-top: 8px;
       min-width: 200px;
@@ -550,7 +606,7 @@ onUnmounted(() => {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: var(--radius-small);
       padding: 8px;
-      z-index: 8010; // This is high, but relative to its header parent
+      z-index: 8010;
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
@@ -562,24 +618,24 @@ onUnmounted(() => {
         transform: translateY(0);
       }
     }
-    
+
     .menu-section {
-        margin-bottom: 10px;
-        padding-bottom: 8px;
-        &:not(:last-child) {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
     }
-    
+
     .section-title {
-        display: block;
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 10px;
-        text-transform: uppercase;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        margin-left: 8px;
-        margin-bottom: 4px;
+      display: block;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-left: 8px;
+      margin-bottom: 4px;
     }
 
     .control-btn {
@@ -611,7 +667,7 @@ onUnmounted(() => {
         background: rgba(255, 255, 255, 0.25);
         border-color: rgba(255, 255, 255, 0.3);
       }
-      
+
       // Menu item overrides
       &.menu-item {
         width: 100%;
@@ -625,24 +681,24 @@ onUnmounted(() => {
         font-size: 14px;
         font-weight: 400;
         transition: background 0.2s ease;
-        
+
         i {
-            margin-right: 8px;
-            font-size: 16px;
+          margin-right: 8px;
+          font-size: 16px;
         }
 
         &:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: none; // Disable scale on hover for menu items
+          background: rgba(255, 255, 255, 0.1);
+          transform: none; // Disable scale on hover for menu items
         }
-        
+
         &:active {
-            transform: none; // Disable scale on active for menu items
+          transform: none; // Disable scale on active for menu items
         }
-        
+
         &.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: transparent;
+          background: rgba(255, 255, 255, 0.2);
+          border-color: transparent;
         }
       }
 
@@ -717,7 +773,10 @@ onUnmounted(() => {
       object-fit: contain;
       border-radius: var(--radius-small);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease, transform 0.3s ease-out, filter 0.3s ease;
+      transition:
+        all 0.3s ease,
+        transform 0.3s ease-out,
+        filter 0.3s ease;
       transform-origin: center center;
     }
 
@@ -779,9 +838,9 @@ onUnmounted(() => {
         height: 32px;
         font-size: 16px;
       }
-      
+
       .manipulation-menu {
-          min-width: 180px;
+        min-width: 180px;
       }
     }
   }
