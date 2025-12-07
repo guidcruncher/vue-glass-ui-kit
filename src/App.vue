@@ -50,7 +50,7 @@
             <div class="section-title" style="margin-top: 0">Main Content Area</div>
 
             <UIImage
-              src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
+              src="/image.jpg"
               alt="Durdle Door in Dorset, UK"
               width="500px"
               height="200px"
@@ -59,7 +59,7 @@
             />
             <UIImageView
               v-model="viewImage"
-              src="https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg"
+              src="/image.jpg"
               alt="Durdle Door in Dorset, UK"
               width="500px"
               height="200px"
@@ -311,7 +311,7 @@
             </UIContentPanel>
 
             <UIContentPanel
-              background="url(https://www.wanderlustchloe.com/wp-content/uploads/2020/01/Durdle-Door-12-683x1024.jpg)"
+              background="url(/image.jpg)"
               :border-radius="5"
               color="#ffffff"
             >
