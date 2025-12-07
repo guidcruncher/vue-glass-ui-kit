@@ -8,15 +8,64 @@
       <div class="viewer-header">
         <div class="viewer-title">{{ title }}</div>
         <div class="viewer-controls">
-          <button :class="['control-btn']" id="downloadBtn" @click="download" title="Download">
-            <i class="fa-solid fa-download" />
-          </button>
+          <template v-if="manipulationEnabled">
+            <button class="control-btn" @click="resetManipulation" title="Reset All (Esc)">
+              <i class="fa-solid fa-redo" />
+            </button>
+
+            <button :class="['control-btn']" @click="zoomOut" title="Zoom Out (-)">
+              <i class="fa-solid fa-magnifying-glass-minus" />
+            </button>
+            <button :class="['control-btn']" @click="zoomIn" title="Zoom In (=)">
+              <i class="fa-solid fa-magnifying-glass-plus" />
+            </button>
+            <button :class="['control-btn']" @click="rotateClockwise" title="Rotate (R)">
+              <i class="fa-solid fa-rotate-right" />
+            </button>
+
+            <button
+              :class="['control-btn', { active: isFlippedH }]"
+              @click="toggleFlipHorizontal"
+              title="Flip Horizontal (H)"
+            >
+              <i class="fa-solid fa-arrows-left-right" />
+            </button>
+            <button
+              :class="['control-btn', { active: isFlippedV }]"
+              @click="toggleFlipVertical"
+              title="Flip Vertical (V)"
+            >
+              <i class="fa-solid fa-arrows-up-down" />
+            </button>
+
+            <button
+              :class="['control-btn', { active: isGrayscale }]"
+              @click="toggleGrayscale"
+              title="Grayscale (G)"
+            >
+              <i class="fa-solid fa-palette" />
+            </button>
+            <button
+              :class="['control-btn', { active: isInverted }]"
+              @click="toggleInvert"
+              title="Invert Colors (I)"
+            >
+              <i class="fa-solid fa-wand-magic-sparkles" />
+            </button>
+            <button
+              :class="['control-btn', { active: isSepia }]"
+              @click="toggleSepia"
+              title="Sepia Tone (P)"
+            >
+              <i class="fa-solid fa-image" />
+            </button>
+          </template>
 
           <button
             :class="['control-btn', { active: currentIsFitMode }]"
             id="fitBtn"
             @click="setFitMode"
-            title="Fit to screen"
+            title="Fit to screen (F)"
           >
             <i class="fa-solid fa-expand" />
           </button>
@@ -24,19 +73,32 @@
             :class="['control-btn', { active: !currentIsFitMode }]"
             id="scrollBtn"
             @click="setScrollMode"
-            title="Full size (scrollable)"
+            title="Full size (scrollable) (S)"
           >
             <i class="fa-solid fa-maximize" />
           </button>
-          <button class="control-btn close-btn" @click="closeViewer" title="Close">
+
+          <button class="control-btn close-btn" @click="closeViewer" title="Close (Esc)">
             <i class="fa-solid fa-close" />
           </button>
         </div>
       </div>
 
-      <div class="viewer-content">
+      <div
+        class="viewer-content"
+        @mousedown="handlePanStart"
+        @mousemove="handlePanMove"
+        @mouseup="handlePanEnd"
+        @mouseleave="handlePanEnd"
+      >
         <div :class="['image-container', containerModeClass]" ref="imageContainerRef">
-          <img class="viewer-image" :src="src" :alt="title" @dragstart.prevent />
+          <img
+            class="viewer-image"
+            :src="src"
+            :alt="title"
+            @dragstart.prevent
+            :style="[imageTransformStyle, imageFilterStyle]"
+          />
         </div>
       </div>
 
@@ -50,6 +112,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+
 const modelValue = defineModel({ default: false })
 // --- Define Props ---
 const props = defineProps({
@@ -70,75 +133,143 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // Prop to enable/disable image manipulation features
+  manipulationEnabled: {
+    type: Boolean,
+    default: true,
+  },
 })
 
-const download = () => {
-  try {
-    let imageURL = props.src
-    let imageDescription = props.alt
-    let downloadedImg = new Image()
+// --- Constants ---
+const ZOOM_STEP = 0.1
+const MIN_SCALE = 0.1
+const ROTATION_STEP = 90
 
-    const imageReceived = () => {
-      const canvas = document.createElement('canvas')
-      const context = canvas.getContext('2d')
+// --- Internal State for Manipulation ---
+const scale = ref(1.0)
+const rotation = ref(0) // in degrees
+const isFlippedH = ref(false)
+const isFlippedV = ref(false)
+const isGrayscale = ref(false)
+const isInverted = ref(false)
+const isSepia = ref(false)
 
-      canvas.width = downloadedImg.width
-      canvas.height = downloadedImg.height
-      canvas.innerText = downloadedImg.alt
+// --- State for Pan/Drag ---
+const isPanning = ref(false)
+const panStartX = ref(0)
+const panStartY = ref(0)
 
-      context.drawImage(downloadedImg, 0, 0)
+// --- Computed Style for Image Transform ---
+const imageTransformStyle = computed(() => {
+  const scaleX = isFlippedH.value ? -1 * scale.value : scale.value
+  const scaleY = isFlippedV.value ? -1 * scale.value : scale.value
+  return {
+    transform: `scale(${scaleX}, ${scaleY}) rotate(${rotation.value}deg)`,
+  }
+})
 
-      try {
-        var link = document.createElement('a')
-        link.download = 'filename.png'
-        link.href = canvas.toDataURL('image/png')
-        link.click()
-      } catch (err) {
-        alert(`Error: ${err}`)
-      }
-    }
+// --- Computed Style for Image Filters ---
+const imageFilterStyle = computed(() => {
+  let filters = []
+  if (isGrayscale.value) filters.push('grayscale(100%)')
+  if (isInverted.value) filters.push('invert(100%)')
+  if (isSepia.value) filters.push('sepia(100%)')
 
-    //   downloadedImg.crossOrigin = 'anonymous'
-    downloadedImg.addEventListener('load', imageReceived)
-    downloadedImg.alt = imageDescription
-    downloadedImg.src = imageURL
-  } catch (err) {
-    alert(`Error: ${err}`)
+  return {
+    filter: filters.join(' '),
+  }
+})
+
+// --- Methods for Manipulation ---
+const resetManipulation = () => {
+  scale.value = 1.0
+  rotation.value = 0
+  isFlippedH.value = false
+  isFlippedV.value = false
+  isGrayscale.value = false
+  isInverted.value = false
+  isSepia.value = false
+}
+
+const zoomIn = () => {
+  if (currentIsFitMode.value) setScrollMode()
+  scale.value += ZOOM_STEP
+}
+
+const zoomOut = () => {
+  if (currentIsFitMode.value) setScrollMode()
+  scale.value = Math.max(MIN_SCALE, scale.value - ZOOM_STEP)
+}
+
+const rotateClockwise = () => {
+  rotation.value = (rotation.value + ROTATION_STEP) % 360
+}
+
+const toggleFlipHorizontal = () => {
+  isFlippedH.value = !isFlippedH.value
+  if (currentIsFitMode.value) setScrollMode()
+}
+
+const toggleFlipVertical = () => {
+  isFlippedV.value = !isFlippedV.value
+  if (currentIsFitMode.value) setScrollMode()
+}
+
+const toggleGrayscale = () => {
+  isGrayscale.value = !isGrayscale.value
+}
+const toggleInvert = () => {
+  isInverted.value = !isInverted.value
+}
+const toggleSepia = () => {
+  isSepia.value = !isSepia.value
+}
+
+// --- Pan/Drag Methods ---
+const handlePanStart = (event) => {
+  if (!props.manipulationEnabled || currentIsFitMode.value || event.button !== 0) return
+  const container = imageContainerRef.value
+  if (!container) return
+
+  if (container.scrollWidth <= container.clientWidth && container.scrollHeight <= container.clientHeight) return
+
+  isPanning.value = true
+  panStartX.value = event.pageX + container.scrollLeft
+  panStartY.value = event.pageY + container.scrollTop
+  container.style.cursor = 'grabbing'
+}
+
+const handlePanMove = (event) => {
+  if (!isPanning.value || !props.manipulationEnabled) return
+  const container = imageContainerRef.value
+  if (!container) return
+
+  const dx = panStartX.value - event.pageX
+  const dy = panStartY.value - event.pageY
+
+  container.scrollLeft = dx
+  container.scrollTop = dy
+}
+
+const handlePanEnd = () => {
+  if (!isPanning.value) return
+  isPanning.value = false
+  if (imageContainerRef.value) {
+    imageContainerRef.value.style.cursor = 'grab'
   }
 }
 
-// --- Define Emits (for v-model updates and events) ---
+// --- Define Emits, Internal State (for mode control) ---
 const emit = defineEmits(['update:modelValue', 'mode-change'])
-
-// --- Internal State (for mode control) ---
 const currentIsFitMode = ref(props.initialFitMode)
 const imageContainerRef = ref(null)
 
-// --- Computed Properties ---
 const containerModeClass = computed(() => (currentIsFitMode.value ? 'fit-mode' : 'scroll-mode'))
-
 const modeIndicatorText = computed(() => (currentIsFitMode.value ? 'Fit to Screen' : 'Full Size'))
 
-// --- Watcher for Visibility Prop ---
-watch(
-  () => modelValue,
-  (newVisible) => {
-    if (newVisible.value) {
-      document.body.style.overflow = 'hidden'
-      currentIsFitMode.value = props.initialFitMode
-      if (currentIsFitMode.value) {
-        setFitModeScrollReset()
-      }
-    } else {
-      document.body.style.overflow = ''
-    }
-  },
-  { immediate: true },
-)
-
-// --- Methods ---
+// --- Mode Methods ---
 const closeViewer = () => {
-  emit('update:modelValue', false)
+  modelValue.value = false
 }
 
 const setFitModeScrollReset = () => {
@@ -150,6 +281,7 @@ const setFitModeScrollReset = () => {
 
 const setFitMode = () => {
   currentIsFitMode.value = true
+  resetManipulation()
   setFitModeScrollReset()
   emit('mode-change', 'fit')
 }
@@ -159,6 +291,24 @@ const setScrollMode = () => {
   emit('mode-change', 'scroll')
 }
 
+// --- Watcher for Visibility Prop ---
+watch(
+  () => modelValue.value,
+  (newVisible) => {
+    if (newVisible) {
+      document.body.style.overflow = 'hidden'
+      resetManipulation()
+      currentIsFitMode.value = props.initialFitMode
+      if (currentIsFitMode.value) {
+        setFitModeScrollReset()
+      }
+    } else {
+      document.body.style.overflow = ''
+    }
+  },
+  { immediate: true },
+)
+
 const handleOverlayClick = (event) => {
   if (event.target === event.currentTarget) {
     closeViewer()
@@ -167,7 +317,7 @@ const handleOverlayClick = (event) => {
 
 // --- Keyboard Event Handling ---
 const handleKeydown = (e) => {
-  if (!modelValue) return
+  if (!modelValue.value) return
 
   if (e.key === 'Escape') {
     closeViewer()
@@ -175,6 +325,24 @@ const handleKeydown = (e) => {
     setFitMode()
   } else if (e.key === 's' || e.key === 'S') {
     setScrollMode()
+  } else if (props.manipulationEnabled) {
+    if (e.key === '=') {
+      zoomIn()
+    } else if (e.key === '-') {
+      zoomOut()
+    } else if (e.key === 'r' || e.key === 'R') {
+      rotateClockwise()
+    } else if (e.key === 'h' || e.key === 'H') {
+      toggleFlipHorizontal()
+    } else if (e.key === 'v' || e.key === 'V') {
+      toggleFlipVertical()
+    } else if (e.key === 'g' || e.key === 'G') {
+      toggleGrayscale()
+    } else if (e.key === 'i' || e.key === 'I') {
+      toggleInvert()
+    } else if (e.key === 'p' || e.key === 'P') {
+      toggleSepia()
+    }
   }
 }
 
@@ -288,6 +456,7 @@ onUnmounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: grab;
     }
 
     .image-container {
@@ -341,7 +510,8 @@ onUnmounted(() => {
       object-fit: contain;
       border-radius: var(--radius-small);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
+      transition: all 0.3s ease, transform 0.3s ease-out, filter 0.3s ease;
+      transform-origin: center center;
     }
 
     .image-container.scroll-mode .viewer-image {
