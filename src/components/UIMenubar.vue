@@ -1,8 +1,7 @@
 <template>
   <div class="ui-menu-bar">
-    <template v-for="(menu, index) in (menus || [])" :key="index">
-      
-      <UIDropdownMenu 
+    <template v-for="(menu, index) in menus || []" :key="index">
+      <UIDropdownMenu
         :model-value="activeMenuIndex === index"
         @update:model-value="(val) => handleMenuToggle(index, val)"
       >
@@ -16,10 +15,10 @@
           </div>
         </template>
 
-        <template v-for="(item, itemIndex) in (menu.items || [])" :key="itemIndex">
+        <template v-for="(item, itemIndex) in menu.items || []" :key="itemIndex">
           <template v-if="item">
             <hr v-if="item.type === 'divider'" class="menu-divider" />
-            
+
             <UIDropdownMenuItem
               v-else
               :label="item.label || ''"
@@ -36,7 +35,6 @@
           </template>
         </template>
       </UIDropdownMenu>
-
     </template>
   </div>
 </template>
@@ -48,7 +46,7 @@ import UIDropdownMenuTrigger from './UIDropdownMenuTrigger.vue'
 import UIDropdownMenuItem from './UIDropdownMenuItem.vue'
 
 const props = defineProps({
-  menus: { type: Array, default: () => [] }
+  menus: { type: Array, default: () => [] },
 })
 
 const emit = defineEmits(['action'])
@@ -89,17 +87,17 @@ const handleItemClick = (item, event) => {
   backdrop-filter: blur(40px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   width: 100%;
-  
+
   :deep(.menubar-trigger) {
     padding: 6px 12px;
     font-size: 14px;
     font-weight: 500;
     border-radius: 4px;
-    
+
     &:hover {
       background: rgba(255, 255, 255, 0.1);
     }
-    
+
     &.active {
       background: rgba(255, 255, 255, 0.2);
     }
@@ -117,7 +115,7 @@ const handleItemClick = (item, event) => {
   justify-content: space-between;
   width: 100%;
   min-width: 120px;
-  
+
   .shortcut-text {
     margin-left: 16px;
     opacity: 0.5;

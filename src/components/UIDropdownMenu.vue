@@ -6,12 +6,7 @@
 
     <Teleport to="body">
       <transition name="dropdown-fade">
-        <div
-          v-if="modelValue"
-          class="dropdown-menu"
-          :style="menuStyles"
-          @click.stop
-        >
+        <div v-if="modelValue" class="dropdown-menu" :style="menuStyles" @click.stop>
           <slot></slot>
         </div>
       </transition>
@@ -24,7 +19,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
-  align: { type: String, default: 'left' }
+  align: { type: String, default: 'left' },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -49,11 +44,11 @@ const updatePosition = () => {
   // 1. Estimate if left-alignment would cause overflow
   //    (We assume a safe min-width for the menu, e.g., 200px)
   const spaceOnRight = window.innerWidth - rect.left
-  const wouldOverflow = spaceOnRight < 220 
-  
+  const wouldOverflow = spaceOnRight < 220
+
   // 2. Determine effective alignment
   //    Force 'right' if it would overflow, otherwise use prop
-  const effectiveAlign = (props.align === 'right' || wouldOverflow) ? 'right' : 'left'
+  const effectiveAlign = props.align === 'right' || wouldOverflow ? 'right' : 'left'
 
   if (effectiveAlign === 'right') {
     // RIGHT ALIGN: Menu Right == Trigger Right
@@ -61,14 +56,14 @@ const updatePosition = () => {
     position.value = {
       top: rect.bottom + gap,
       left: null,
-      right: window.innerWidth - rect.right
+      right: window.innerWidth - rect.right,
     }
   } else {
     // LEFT ALIGN: Menu Left == Trigger Left
     position.value = {
       top: rect.bottom + gap,
       left: rect.left,
-      right: null
+      right: null,
     }
   }
 }
@@ -98,12 +93,15 @@ const handleResize = () => {
   if (props.modelValue) closeMenu()
 }
 
-watch(() => props.modelValue, (isOpen) => {
-  if (isOpen) {
-    updatePosition()
-    lastOpenedTime.value = Date.now()
-  }
-})
+watch(
+  () => props.modelValue,
+  (isOpen) => {
+    if (isOpen) {
+      updatePosition()
+      lastOpenedTime.value = Date.now()
+    }
+  },
+)
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
@@ -134,7 +132,7 @@ onUnmounted(() => {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 6px;
-  z-index: 2147483647; 
+  z-index: 2147483647;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
