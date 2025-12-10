@@ -1,5 +1,4 @@
 <template>
-  <div class="main-body" v-background-mesh>
     <UINavigationBar title="UI Components">
       <template #left>
         <UIButton
@@ -358,7 +357,6 @@
       ]"
       v-model="showAlert"
     />
-  </div>
 </template>
 
 <script setup>
