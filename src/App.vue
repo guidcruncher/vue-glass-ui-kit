@@ -21,6 +21,7 @@
     </UINavigationBar>
 
     <div class="container-wrapper">
+      <UIMenubar :menus="appleMenuDefinition" />
       <div class="section-title" style="margin-top: 0; margin-bottom: 0">
         UISplitView (Responsive Layout)
       </div>
@@ -288,7 +289,7 @@
 
               <UIAppIconItem
                 v-for="app in appleApps"
-                :key="app.name"
+                :name="app.name"
                 :icon="app.icon"
                 :label="app.name"
               >
@@ -448,6 +449,134 @@ const isDarkMode = ref(false)
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
 }
+
+// Define the Menu Structure Data
+const appleMenuDefinition = computed(() => [
+  {
+    // The Apple Menu (Using the character glyph)
+    label: '',
+    items: [
+      { label: 'About This Mac', action: 'about' },
+      { type: 'divider' },
+      { label: 'System Settings...', action: 'settings' },
+      { label: 'App Store...', action: 'store' },
+      { type: 'divider' },
+      { label: 'Recent Items', action: 'recent', shortcut: '>' }, // submenu indicator
+      { type: 'divider' },
+      { label: 'Force Quit...', action: 'force-quit', shortcut: '⌥⌘Esc' },
+      { type: 'divider' },
+      { label: 'Sleep', action: 'sleep' },
+      { label: 'Restart...', action: 'restart' },
+      { label: 'Shut Down...', action: 'shutdown' },
+      { type: 'divider' },
+      { label: 'Lock Screen', action: 'lock', shortcut: '^⌘Q' },
+      { label: 'Log Out User...', action: 'logout', shortcut: '⇧⌘Q' },
+    ],
+  },
+  {
+    label: 'Finder', // App Name
+    items: [
+      { label: 'About Finder', action: 'about-app' },
+      { type: 'divider' },
+      { label: 'Settings...', action: 'pref', shortcut: '⌘,' },
+      { type: 'divider' },
+      { label: 'Empty Bin...', action: 'empty-bin', shortcut: '⇧⌘⌫' },
+      { type: 'divider' },
+      { label: 'Hide Finder', action: 'hide', shortcut: '⌘H' },
+      { label: 'Hide Others', action: 'hide-others', shortcut: '⌥⌘H' },
+      { label: 'Show All', action: 'show-all' },
+    ],
+  },
+  {
+    label: 'File',
+    items: [
+      { label: 'New Finder Window', action: 'new-win', shortcut: '⌘N' },
+      { label: 'New Folder', action: 'new-folder', shortcut: '⇧⌘N' },
+      { label: 'New Smart Folder', action: 'new-smart', icon: 'fa-solid fa-gear' },
+      { type: 'divider' },
+      { label: 'Get Info', action: 'get-info', shortcut: '⌘I' },
+      { label: 'Rename', action: 'rename' },
+      { type: 'divider' },
+      { label: 'Compress', action: 'compress' },
+      { type: 'divider' },
+      { label: 'Quick Look', action: 'quick-look', shortcut: 'Space' },
+      { label: 'Print', action: 'print', shortcut: '⌘P' },
+    ],
+  },
+  {
+    label: 'Edit',
+    items: [
+      { label: 'Undo', action: 'undo', shortcut: '⌘Z' },
+      { label: 'Redo', action: 'redo', shortcut: '⇧⌘Z' },
+      { type: 'divider' },
+      { label: 'Cut', action: 'cut', shortcut: '⌘X' },
+      { label: 'Copy', action: 'copy', shortcut: '⌘C' },
+      { label: 'Paste', action: 'paste', shortcut: '⌘V' },
+      { label: 'Select All', action: 'select-all', shortcut: '⌘A' },
+      { type: 'divider' },
+      { label: 'Show Clipboard', action: 'clipboard' },
+      { label: 'Start Dictation...', action: 'dictation', icon: 'fa-solid fa-microphone' },
+    ],
+  },
+  {
+    label: 'View',
+    items: [
+      { label: 'As Icons', action: 'view-grid', shortcut: '⌘1', active: true },
+      { label: 'As List', action: 'view-list', shortcut: '⌘2', active: true },
+      { label: 'As Columns', action: 'view-cols', shortcut: '⌘3' },
+      { label: 'As Gallery', action: 'view-gallery', shortcut: '⌘4' },
+      { type: 'divider' },
+      { label: 'Use Stacks', action: 'stacks', shortcut: '^⌘0', active: true },
+      { label: 'Sort By', action: 'sort' },
+      { label: 'Clean Up', action: 'clean-up' },
+      { type: 'divider' },
+      {
+        label: 'Hide Sidebar',
+        action: 'toggle-sidebar',
+        shortcut: '⌥⌘S'
+      },
+      { label: 'Show Preview', action: 'preview', shortcut: '⇧⌘P' },
+      { type: 'divider' },
+      { label: 'Enter Full Screen', action: 'fullscreen', shortcut: 'Fn F' },
+    ],
+  },
+  {
+    label: 'Go',
+    items: [
+      { label: 'Back', action: 'go-back', shortcut: '⌘[' },
+      { label: 'Forward', action: 'go-fwd', shortcut: '⌘]' },
+      { label: 'Enclosing Folder', action: 'go-up', shortcut: '⌘↑' },
+      { type: 'divider' },
+      { label: 'Recents', action: 'go-recents', shortcut: '⇧⌘F' },
+      { label: 'Documents', action: 'go-docs', shortcut: '⇧⌘O' },
+      { label: 'Desktop', action: 'go-desktop', shortcut: '⇧⌘D' },
+      { label: 'Downloads', action: 'go-dl', shortcut: '⌥⌘L' },
+      { label: 'Home', action: 'go-home', shortcut: '⇧⌘H' },
+      { type: 'divider' },
+      { label: 'Connect to Server...', action: 'server', shortcut: '⌘K' },
+    ],
+  },
+  {
+    label: 'Window',
+    items: [
+      { label: 'Minimize', action: 'min', shortcut: '⌘M' },
+      { label: 'Zoom', action: 'zoom' },
+      { label: 'Move Window to Left Side of Screen', action: 'move-left' },
+      { label: 'Move Window to Right Side of Screen', action: 'move-right' },
+      { type: 'divider' },
+      { label: 'Bring All to Front', action: 'front' },
+    ],
+  },
+  {
+    label: 'Help',
+    items: [
+      { label: 'Search', action: 'help-search', icon: 'fa-solid fa-magnifying-glass' },
+      { label: 'macOS Help', action: 'help-docs', shortcut: '?' },
+      { type: 'divider' },
+      { label: "See What's New", action: 'whats-new' },
+    ],
+  },
+])
 </script>
 
 <style>

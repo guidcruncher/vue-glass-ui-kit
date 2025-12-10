@@ -11,9 +11,10 @@ import { computed } from 'vue'
 const props = defineProps({
   variant: {
     type: String,
-    required: true,
+    required: false,
     default: 'secondary',
-    validator: (value) => ['icon', 'primary', 'secondary', 'destructive'].includes(value),
+    validator: (value) =>
+      ['prominentGlass', 'icon', 'primary', 'secondary', 'destructive'].includes(value),
   },
   icon: { type: String, required: false, default: undefined },
   /**

@@ -4,7 +4,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  key: { type: String, required: false, default: '' },
+  name: { type: String, required: false, default: '' },
   icon: { type: String, required: false, default: undefined },
   disabled: {
     type: Boolean,
@@ -16,7 +16,7 @@ const emit = defineEmits(['click'])
 
 const handleClick = () => {
   if (!props.disabled) {
-    emit('click', { key: props.key, label: props.label, icon: props.icon })
+    emit('click', { name: props.name, label: props.label, icon: props.icon })
   }
 }
 </script>

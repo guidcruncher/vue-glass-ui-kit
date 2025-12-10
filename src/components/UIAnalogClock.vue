@@ -108,7 +108,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 interface Props {
-  size?: number
+  size?: string
   timezone?: string
   glide?: boolean
   // New Optional Color Props
@@ -120,7 +120,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: 150,
+  size: '150',
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   glide: false,
   // No defaults needed for color props, they will be undefined
@@ -198,7 +198,6 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .analog-clock-wrapper {
-  /* Correctly bind the size prop to a CSS variable with units */
   --size: v-bind('props.size + "px"');
   display: flex;
   justify-content: center;

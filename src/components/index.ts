@@ -7,8 +7,8 @@ import UIAlert from './UIAlert.vue'
 import UIAnalogClock from './UIAnalogClock.vue'
 import UIAppIconItem from './UIAppIconItem.vue'
 import UIButton from './UIButton.vue'
-import UICollectionItem from './UICollectionItem.vue'
 import UICollectionView from './UICollectionView.vue'
+import UICollectionViewItem from './UICollectionViewItem.vue'
 import UIContentPanel from './UIContentPanel.vue'
 import UIDatePicker from './UIDatePicker.vue'
 import UIDropdownList from './UIDropdownList.vue'
@@ -20,6 +20,7 @@ import UIFolderView from './UIFolderView.vue'
 import UIImage from './UIImage.vue'
 import UIImageView from './UIImageView.vue'
 import UIListPicker from './UIListPicker.vue'
+import UIMenubar from './UIMenubar.vue'
 import UIModalDialog from './UIModalDialog.vue'
 import UINavigationBar from './UINavigationBar.vue'
 import UINotificationBar from './UINotificationBar.vue'
@@ -61,8 +62,8 @@ export const GlassComponents = {
   UIAnalogClock,
   UIAppIconItem,
   UIButton,
-  UICollectionItem,
   UICollectionView,
+  UICollectionViewItem,
   UIContentPanel,
   UIDatePicker,
   UIDropdownList,
@@ -74,6 +75,7 @@ export const GlassComponents = {
   UIImage,
   UIImageView,
   UIListPicker,
+  UIMenubar,
   UIModalDialog,
   UINavigationBar,
   UINotificationBar,
