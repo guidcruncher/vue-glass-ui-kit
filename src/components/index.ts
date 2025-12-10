@@ -12,6 +12,9 @@ import UICollectionView from './UICollectionView.vue'
 import UIContentPanel from './UIContentPanel.vue'
 import UIDatePicker from './UIDatePicker.vue'
 import UIDropdownList from './UIDropdownList.vue'
+import UIDropdownMenu from './UIDropdownMenu.vue'
+import UIDropdownMenuItem from './UIDropdownMenuItem.vue'
+import UIDropdownMenuTrigger from './UIDropdownMenuTrigger.vue'
 import UIFlipClock from './UIFlipClock.vue'
 import UIFolderView from './UIFolderView.vue'
 import UIImage from './UIImage.vue'
@@ -63,6 +66,9 @@ export const GlassComponents = {
   UIContentPanel,
   UIDatePicker,
   UIDropdownList,
+  UIDropdownMenu,
+  UIDropdownMenuItem,
+  UIDropdownMenuTrigger,
   UIFlipClock,
   UIFolderView,
   UIImage,
