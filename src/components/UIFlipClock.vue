@@ -77,11 +77,6 @@
           :margin="margin"
         />
       </div>
-
-      <div class="date-display">
-        <span v-if="showDate">{{ formattedDate }}</span
-        >&nbsp;<span v-if="showTimezone">{{ timezoneLabel }}</span>
-      </div>
     </div>
   </div>
 </template>
@@ -92,8 +87,6 @@ import FlipCard from './FlipCard.vue'
 
 interface Props {
   timezone?: string
-  showDate?: boolean
-  showTimezone?: boolean
   showSeconds?: boolean
 
   // New Configurable Props for FlipCard
@@ -107,8 +100,6 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  showDate: true,
-  showTimezone: true,
   showSeconds: false,
 
   // FlipCard Defaults
@@ -201,7 +192,7 @@ const formattedDate = computed(() => {
 
   .clock-card {
     background: rgba(0, 0, 0, 0.3);
-    padding: 20px;
+    padding: 10px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   }
@@ -210,14 +201,14 @@ const formattedDate = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
 
   .colon {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin: 0 20px;
+    margin: 0 10px;
   }
 
   .dot {
@@ -226,15 +217,6 @@ const formattedDate = computed(() => {
     border-radius: 50%;
     background: #fff;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
-  .date-display {
-    text-align: center;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 300;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    letter-spacing: 1px;
   }
 }
 </style>

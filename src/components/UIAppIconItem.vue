@@ -91,8 +91,8 @@ const handleClick = () => {
 
 .app-icon-image {
   /* This ensures the image fills the 80x80px .cell-content container */
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   /* Match the border radius of the .cell-content */
   border-radius: 18px;
   object-fit: cover;

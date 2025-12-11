@@ -17,9 +17,9 @@ desktop_layout:
 
   widgets:
     - name: "system_monitor"
-      type: "analog-clock"
+      type: "digital-clock"
       data_source: "local_system_api"
-      size: 150
+      size: 40
       timezone: "Europe/London"
       grid_position: {row: 1, col: 5}
       grid_span: { rows: 2, cols: 3 }

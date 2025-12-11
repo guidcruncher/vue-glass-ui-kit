@@ -1,5 +1,11 @@
 <template>
-  <div class="desktop-page">
+  <div>
+    <UINavigationBar title="Desktop">
+      <template #left> </template>
+      <template #right>
+        <UIThemeChooser />
+      </template>
+    </UINavigationBar>
     <UIDesktopRenderer :yamlSource="desktopYaml" />
   </div>
 </template>

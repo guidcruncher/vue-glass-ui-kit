@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop-renderer" :class="backgroundClass" :style="backgroundStyle" ref="desktop">
+  <div class="desktop-renderer" :class="backgroundClass" ref="desktop" :style="backgroundStyle">
     <template v-if="desktopConfig && desktopConfig.widgets">
       <div
         v-for="widget in desktopConfig.widgets"
@@ -8,8 +8,16 @@
         :style="getGridPlacementStyle(widget)"
       >
         <UIWidgetView>
-          <UIAnalogClock v-if="widget.type == 'analog-clock'" :size="widget.size" :timezone="widget.timezone" />
-          <UIFlipClock v-else-if="widget.type == 'digital-clock'" :size="widget.size" :timezone="widget.timezone" />
+          <UIAnalogClock
+            v-if="widget.type == 'analog-clock'"
+            :size="widget.size"
+            :timezone="widget.timezone"
+          />
+          <UIFlipClock
+            v-else-if="widget.type == 'digital-clock'"
+            :card-height="widget.size"
+            :timezone="widget.timezone"
+          />
           <div class="widget-content" v-else>
             <h3>{{ widget.name }}</h3>
             <p v-if="widget.source_url" class="widget-source">Source: {{ widget.source_url }}</p>
@@ -92,7 +100,7 @@ const backgroundClass = computed(() => {
   }
 
   const bg = desktopConfig.value.background
-  const config = bg.config
+  const style = document.body.style
 
   switch (bg.type) {
     case 'mesh_gradient':
@@ -175,7 +183,8 @@ const getGridPlacementStyle = (item) => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '10px',
+    padding: '20px',
+    marginTop: '30px',
   }
 }
 
