@@ -19,6 +19,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "js-yaml": "^4.1.1",
     "leaflet": "^1.9.4",
     "pinia": "^3.0.3",
     "vue": "^3.5.25",

@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop-renderer" :style="backgroundStyle">
+  <div class="desktop-renderer" :class="backgroundClass" :style="backgroundStyle" ref="desktop">
     <template v-if="desktopConfig && desktopConfig.widgets">
       <div
         v-for="widget in desktopConfig.widgets"
@@ -60,17 +60,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-// NOTE: Ensure these components are available in your project structure
-import UIAppIconItem from './UIAppIconItem.vue'
-import UIFolderView from './UIFolderView.vue'
-import UIWidgetView from './UIWidgetView.vue'
-import UICollectionViewItem from './UICollectionViewItem.vue'
-import UICollectionView from './UICollectionView.vue'
-
-// NOTE: This requires 'js-yaml' to be installed: npm install js-yaml
+import { useTemplateRef, ref, computed, onMounted } from 'vue'
+import { BackgroundMesh } from '../utils/BackgroundMesh'
 import YAML from 'js-yaml'
 
+const desktop = useTemplateRef('desktop')
 const props = defineProps({
   yamlSource: {
     type: String,
@@ -89,6 +83,21 @@ const activeGroup = ref(null)
  */
 const gridRows = computed(() => desktopConfig.value?.grid_definition?.rows || 10)
 const gridCols = computed(() => desktopConfig.value?.grid_definition?.cols || 10)
+
+const backgroundClass = computed(() => {
+  if (!desktopConfig.value || !desktopConfig.value.background) {
+    return []
+  }
+
+  const bg = desktopConfig.value.background
+  const config = bg.config
+
+  switch (bg.type) {
+    case 'mesh_gradient':
+      return ['mesh-gradient']
+      defaultz: return []
+  }
+})
 
 /**
  * COMPUTED PROPERTY: Generates the CSS for the background based on the YAML config.
@@ -112,10 +121,8 @@ const backgroundStyle = computed(() => {
       return {
         backgroundColor: config.color_hex,
       }
-    case 'glassmorphic_mesh':
-      return {
-        backgroundColor: config.mesh_settings?.color_tint_hex || '#333',
-      }
+    case 'mesh_gradient':
+      return BackgroundMesh(config, desktop)
     default:
       return {}
   }

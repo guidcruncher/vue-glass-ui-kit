@@ -7,13 +7,13 @@ desktop_layout:
     cell_size: 96
   
   background:
-    type: "glassmorphic_mesh"
+    type: "mesh_gradient"
     config:
-      mesh_settings:
-        blur_strength: 20
-        opacity: 0.9
-        color_tint_hex: "#3A506B"
-        light_source_position: "top_right"
+      colors:
+        - "hsla(280, 80%, 70%, 1)"
+        - "hsla(200, 90%, 65%, 1)"
+        - "hsla(330, 80%, 75%, 1)"
+        - "hsla(40, 90%, 70%, 1)"
   
   widgets:
     - name: "system_monitor"
@@ -25,25 +25,25 @@ desktop_layout:
   items:
     - type: "icon"
       name: "Docs"
-      icon_image_path: "https://example.com/icons/doc.png"
+      icon_image_path: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/google-docs.png"
       launch_url: "https://docs.google.com"
       grid_position: { row: 1, col: 1 }
 
     - type: "icon"
       name: "Mail"
-      icon_image_path: "https://example.com/icons/mail.png"
+      icon_image_path: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/gmail.png"
       launch_url: "https://mail.google.com"
       grid_position: { row: 2, col: 1 }
 
     - type: "group"
       name: "Dev Tools"
-      group_icon_path: "https://example.com/icons/dev.png"
+      group_icon_path: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/dev-push.png"
       grid_position: { row: 3, col: 1 }
       icons:
         - name: "GitHub"
-          icon_image_path: "https://example.com/icons/github.png"
+          icon_image_path: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/github.png"
           launch_url: "https://github.com"
         - name: "GitLab"
-          icon_image_path: "https://example.com/icons/gitlab.png"
+          icon_image_path: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/gitlab.png"
           launch_url: "https://gitlab.com"
 `

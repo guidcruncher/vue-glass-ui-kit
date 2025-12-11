@@ -1,362 +1,362 @@
 <template>
-    <UINavigationBar title="UI Components">
-      <template #left>
-        <UIButton
-          v-if="expanded"
-          variant="icon"
-          icon="chevron-left"
-          @click="expanded = !expanded"
-        ></UIButton>
-        <UIButton
-          v-if="!expanded"
-          variant="icon"
-          icon="chevron-right"
-          @click="expanded = !expanded"
-        ></UIButton>
-      </template>
-      <template #right>
-        <UIThemeChooser />
-      </template>
-    </UINavigationBar>
+  <UINavigationBar title="UI Components">
+    <template #left>
+      <UIButton
+        v-if="expanded"
+        variant="icon"
+        icon="chevron-left"
+        @click="expanded = !expanded"
+      ></UIButton>
+      <UIButton
+        v-if="!expanded"
+        variant="icon"
+        icon="chevron-right"
+        @click="expanded = !expanded"
+      ></UIButton>
+    </template>
+    <template #right>
+      <UIThemeChooser />
+    </template>
+  </UINavigationBar>
 
-    <div class="container-wrapper">
-      <UIMenubar :menus="appleMenuDefinition" />
-      <div class="section-title" style="margin-top: 0; margin-bottom: 0">
-        UISplitView (Responsive Layout)
-      </div>
-      <UISplitView v-model="expanded" v-background-mesh>
-        <template #master>
+  <div class="container-wrapper">
+    <UIMenubar :menus="appleMenuDefinition" />
+    <div class="section-title" style="margin-top: 0; margin-bottom: 0">
+      UISplitView (Responsive Layout)
+    </div>
+    <UISplitView v-model="expanded" v-background-mesh>
+      <template #master>
+        <div
+          style="
+            background: var(--ios-background);
+            padding: 20px;
+            border-right: 1px solid var(--ios-separator);
+            height: 100%;
+          "
+        >
+          <UITableView style="margin: 0">
+            <UITableCell label="Inbox (12)" accessory="chevron" />
+            <UITableCell label="Sent Items" accessory="chevron" />
+            <UITableCell label="Spam" accessory="chevron" />
+            <UITableCell label="Disabled"
+              ><template #custom-content><UISwitch v-model="disabled" /></template
+            ></UITableCell>
+          </UITableView>
+        </div>
+      </template>
+
+      <template #detail>
+        <div class="container">
+          <div class="section-title" style="margin-top: 0">Main Content Area</div>
+
+          <UIImage
+            src="/image.jpg"
+            alt="Durdle Door in Dorset, UK"
+            width="500px"
+            height="200px"
+            scale="cover"
+            @click="viewImage = true"
+          />
+          <UIImageView
+            v-model="viewImage"
+            src="/image.jpg"
+            alt="Durdle Door in Dorset, UK"
+            width="500px"
+            height="200px"
+            scale="cover"
+          />
+          <UISearchBar v-model="query" placeholder="Search components" />
+
+          <div class="section-title">Inputs & Text (v-model Demo)</div>
+          <UITableView>
+            <UITableCell label="Username">
+              <template #custom-content>
+                <UITextField
+                  v-model="username"
+                  placeholder="Required"
+                  clear-button="true"
+                  :disabled="disabled"
+                />
+              </template>
+            </UITableCell>
+            <UITableCell>
+              <template #custom-content>
+                <UITextView
+                  v-model="bio"
+                  placeholder="Bio description..."
+                  :rows="3"
+                  :disabled="disabled"
+                />
+              </template>
+            </UITableCell>
+            <UITableCell label="Username Value">
+              <template #custom-content>
+                <div style="color: var(--system-orange); font-size: 14px">{{ username }}</div>
+              </template>
+            </UITableCell>
+            <UITableCell label="Stepper">
+              <template #custom-content>
+                <UIStepper :disabled="disabled" v-model="stepperValue" :min="0" :max="10" />
+                {{ stepperValue }}
+              </template>
+            </UITableCell>
+            <UITableCell label="Username Value">
+              <template #custom-content>
+                <UIDropdownList
+                  v-model="selectedFruit"
+                  :items="fruitList"
+                  width="320px"
+                  dropdown-height="250px"
+                  :disabled="disabled"
+                  placeholder="Select Your Favorite Fruit"
+                />
+              </template>
+            </UITableCell>
+          </UITableView>
+
+          <div class="section-title">Pickers & Progress</div>
+          <UITableView>
+            <UITableCell label="Date">
+              <template #custom-content>
+                <UIDatePicker v-model="dateValue" :disabled="disabled" />
+              </template>
+            </UITableCell>
+            <UITableCell label="Time">
+              <template #custom-content>
+                <UITimePicker v-model="timeValue" :disabled="disabled" />
+              </template>
+            </UITableCell>
+            <UITableCell label="List">
+              <template #custom-content>
+                <div>
+                  <UIListPicker
+                    v-model="selectedPlatform"
+                    :items="platforms"
+                    :disabled="disabled"
+                  />
+                </div>
+              </template>
+            </UITableCell>
+
+            <UITableCell label="Download">
+              <template #custom-content>
+                <UIProgressView :value="65" style="flex: 1; margin-left: 10px" />
+              </template>
+            </UITableCell>
+            <UITableCell label="Loading">
+              <template #custom-content>
+                <UIActivityIndicator :animating="true" />
+              </template>
+            </UITableCell>
+          </UITableView>
+
+          <div class="section-title">Collection View (Grid)</div>
+          <UICollectionView>
+            <UICollectionViewItem>
+              <UIVisualEffectView
+                style="
+                  height: 100px;
+                  border-radius: 12px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <span style="font-size: 30px">🍎</span>
+              </UIVisualEffectView>
+            </UICollectionViewItem>
+            <UICollectionViewItem>
+              <UIVisualEffectView
+                style="
+                  height: 100px;
+                  border-radius: 12px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <span style="font-size: 30px">🎨</span>
+              </UIVisualEffectView>
+            </UICollectionViewItem>
+            <UICollectionViewItem>
+              <UIVisualEffectView
+                style="
+                  height: 100px;
+                  border-radius: 12px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <span style="font-size: 30px">🛠️</span>
+              </UIVisualEffectView>
+            </UICollectionViewItem>
+            <UICollectionViewItem>
+              <UIVisualEffectView
+                style="
+                  height: 100px;
+                  border-radius: 12px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <span style="font-size: 30px">📱</span>
+              </UIVisualEffectView>
+            </UICollectionViewItem>
+          </UICollectionView>
+
+          <div class="section-title">Page Control</div>
           <div
             style="
-              background: var(--ios-background);
+              background: var(--ios-card-bg);
               padding: 20px;
-              border-right: 1px solid var(--ios-separator);
-              height: 100%;
+              border-radius: 12px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
             "
           >
-            <UITableView style="margin: 0">
-              <UITableCell label="Inbox (12)" accessory="chevron" />
-              <UITableCell label="Sent Items" accessory="chevron" />
-              <UITableCell label="Spam" accessory="chevron" />
-              <UITableCell label="Disabled"
-                ><template #custom-content><UISwitch v-model="disabled" /></template
-              ></UITableCell>
-            </UITableView>
-          </div>
-        </template>
-
-        <template #detail>
-          <div class="container">
-            <div class="section-title" style="margin-top: 0">Main Content Area</div>
-
-            <UIImage
-              src="/image.jpg"
-              alt="Durdle Door in Dorset, UK"
-              width="500px"
-              height="200px"
-              scale="cover"
-              @click="viewImage = true"
-            />
-            <UIImageView
-              v-model="viewImage"
-              src="/image.jpg"
-              alt="Durdle Door in Dorset, UK"
-              width="500px"
-              height="200px"
-              scale="cover"
-            />
-            <UISearchBar v-model="query" placeholder="Search components" />
-
-            <div class="section-title">Inputs & Text (v-model Demo)</div>
-            <UITableView>
-              <UITableCell label="Username">
-                <template #custom-content>
-                  <UITextField
-                    v-model="username"
-                    placeholder="Required"
-                    clear-button="true"
-                    :disabled="disabled"
-                  />
-                </template>
-              </UITableCell>
-              <UITableCell>
-                <template #custom-content>
-                  <UITextView
-                    v-model="bio"
-                    placeholder="Bio description..."
-                    :rows="3"
-                    :disabled="disabled"
-                  />
-                </template>
-              </UITableCell>
-              <UITableCell label="Username Value">
-                <template #custom-content>
-                  <div style="color: var(--system-orange); font-size: 14px">{{ username }}</div>
-                </template>
-              </UITableCell>
-              <UITableCell label="Stepper">
-                <template #custom-content>
-                  <UIStepper :disabled="disabled" v-model="stepperValue" :min="0" :max="10" />
-                  {{ stepperValue }}
-                </template>
-              </UITableCell>
-              <UITableCell label="Username Value">
-                <template #custom-content>
-                  <UIDropdownList
-                    v-model="selectedFruit"
-                    :items="fruitList"
-                    width="320px"
-                    dropdown-height="250px"
-                    :disabled="disabled"
-                    placeholder="Select Your Favorite Fruit"
-                  />
-                </template>
-              </UITableCell>
-            </UITableView>
-
-            <div class="section-title">Pickers & Progress</div>
-            <UITableView>
-              <UITableCell label="Date">
-                <template #custom-content>
-                  <UIDatePicker v-model="dateValue" :disabled="disabled" />
-                </template>
-              </UITableCell>
-              <UITableCell label="Time">
-                <template #custom-content>
-                  <UITimePicker v-model="timeValue" :disabled="disabled" />
-                </template>
-              </UITableCell>
-              <UITableCell label="List">
-                <template #custom-content>
-                  <div>
-                    <UIListPicker
-                      v-model="selectedPlatform"
-                      :items="platforms"
-                      :disabled="disabled"
-                    />
-                  </div>
-                </template>
-              </UITableCell>
-
-              <UITableCell label="Download">
-                <template #custom-content>
-                  <UIProgressView :value="65" style="flex: 1; margin-left: 10px" />
-                </template>
-              </UITableCell>
-              <UITableCell label="Loading">
-                <template #custom-content>
-                  <UIActivityIndicator :animating="true" />
-                </template>
-              </UITableCell>
-            </UITableView>
-
-            <div class="section-title">Collection View (Grid)</div>
-            <UICollectionView>
-              <UICollectionViewItem>
-                <UIVisualEffectView
-                  style="
-                    height: 100px;
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  "
-                >
-                  <span style="font-size: 30px">🍎</span>
-                </UIVisualEffectView>
-              </UICollectionViewItem>
-              <UICollectionViewItem>
-                <UIVisualEffectView
-                  style="
-                    height: 100px;
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  "
-                >
-                  <span style="font-size: 30px">🎨</span>
-                </UIVisualEffectView>
-              </UICollectionViewItem>
-              <UICollectionViewItem>
-                <UIVisualEffectView
-                  style="
-                    height: 100px;
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  "
-                >
-                  <span style="font-size: 30px">🛠️</span>
-                </UIVisualEffectView>
-              </UICollectionViewItem>
-              <UICollectionViewItem>
-                <UIVisualEffectView
-                  style="
-                    height: 100px;
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  "
-                >
-                  <span style="font-size: 30px">📱</span>
-                </UIVisualEffectView>
-              </UICollectionViewItem>
-            </UICollectionView>
-
-            <div class="section-title">Page Control</div>
             <div
               style="
-                background: var(--ios-card-bg);
-                padding: 20px;
+                width: 100px;
+                height: 100px;
+                background: var(--system-gray5);
                 border-radius: 12px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
               "
-            >
-              <div
-                style="
-                  width: 100px;
-                  height: 100px;
-                  background: var(--system-gray5);
-                  border-radius: 12px;
-                "
-              ></div>
-              <UIPageControl :pages="5" :current-page="2" />
-            </div>
-
-            <div class="section-title">Controls (v-model Demo)</div>
-            <UITableView>
-              <UITableCell label="Airplane Mode" icon="plane" accessory="switch">
-                <template #custom-content>
-                  <UISwitch v-model="airplaneMode" :disabled="disabled" /> {{ airplaneMode }}
-                </template>
-              </UITableCell>
-              <UITableCell label="Wi-Fi" icon="wifi" value="LiquidGlass_5G" accessory="chevron" />
-              <UITableCell :label="`Brightness (${brightness}%)`">
-                <template #custom-content>
-                  <div style="width: 100%; padding: 10px 0">
-                    <UISlider v-model="brightness" :disabled="disabled" />
-                  </div>
-                </template>
-              </UITableCell>
-            </UITableView>
-
-            <UIButton @click="popover = true" :disabled="disabled"> Show Popover </UIButton>
-            <UIPopover v-model="popover" />
-
-            <UINotificationBar
-              v-if="popover"
-              v-model="popover"
-              title="Mail Alert"
-              message="You received 3 new emails."
-              @close="popover = false"
-            />
-
-            <UIButton @click="showBasicModal = true" :disabled="disabled">
-              Open Basic Modal
-            </UIButton>
-            <UIModalDialog v-model="showBasicModal">
-              <template #header>Welcome</template>
-              <template #body>
-                <h2>Hello World!</h2>
-                <p>This is a basic modal with default content.</p>
-              </template>
-            </UIModalDialog>
-
-            <UIButton
-              variant="prominentGlass"
-              :disabled="disabled"
-              style="width: 100%; margin-top: 20px"
-              @click="showAlert = true"
-              >Show Glass Alert</UIButton
-            >
-
-            <UIWidgetView>
-              <UIAnalogClock size="200" timezone="Europe/London" />
-            </UIWidgetView>
-
-            <UIFlipClock timezone="Europe/Madrid" />
-
-            <UIFolderView>
-              <template #title> Applications </template>
-
-              <UIAppIconItem
-                v-for="app in appleApps"
-                :name="app.name"
-                :icon="app.icon"
-                :label="app.name"
-              >
-              </UIAppIconItem>
-            </UIFolderView>
-
-            <UIContentPanel
-              background="linear-gradient(135deg, #6e8efb, #a777e3)"
-              :border-radius="15"
-            >
-              <template #header> Panel Header (Gradient) </template>
-
-              <p>
-                This is the main body content. The overall panel has a purple-to-blue gradient
-                background.
-              </p>
-              <template #footer>
-                <button class="footer-button">Action</button>
-              </template>
-            </UIContentPanel>
-
-            <UIContentPanel background="url(/image.jpg)" :border-radius="5" color="#ffffff">
-              <template #header>Panel Header (Image)</template>
-              <p>
-                This panel uses an image URL for its background. The glassmorphic effect in the
-                footer is even more noticeable with an image background!
-              </p>
-              <template #footer>
-                <small>Powered by Vue 3</small>
-              </template>
-            </UIContentPanel>
-
-            <MKMapView
-              width="600px"
-              height="300px"
-              :lat="40.7128"
-              :lng="-74.006"
-              :zoom="12"
-              marker-title="New York City"
-            />
+            ></div>
+            <UIPageControl :pages="5" :current-page="2" />
           </div>
-        </template>
-      </UISplitView>
-    </div>
 
-    <UIToolbar>
-      <UIButton variant="icon" icon="share-from-square" />
-      <div style="flex: 1"></div>
-      <UIButton variant="icon" icon="book" />
-      <UIButton variant="icon" icon="copy" />
-    </UIToolbar>
+          <div class="section-title">Controls (v-model Demo)</div>
+          <UITableView>
+            <UITableCell label="Airplane Mode" icon="plane" accessory="switch">
+              <template #custom-content>
+                <UISwitch v-model="airplaneMode" :disabled="disabled" /> {{ airplaneMode }}
+              </template>
+            </UITableCell>
+            <UITableCell label="Wi-Fi" icon="wifi" value="LiquidGlass_5G" accessory="chevron" />
+            <UITableCell :label="`Brightness (${brightness}%)`">
+              <template #custom-content>
+                <div style="width: 100%; padding: 10px 0">
+                  <UISlider v-model="brightness" :disabled="disabled" />
+                </div>
+              </template>
+            </UITableCell>
+          </UITableView>
 
-    <UITabBar :active-index="0">
-      <UITabItem icon="star" label="Favorites" />
-      <UITabItem icon="clock" label="Recent" />
-      <UITabItem icon="user-group" label="Contacts" />
-      <UITabItem icon="table-cells" label="Keypad" />
-    </UITabBar>
+          <UIButton @click="popover = true" :disabled="disabled"> Show Popover </UIButton>
+          <UIPopover v-model="popover" />
 
-    <UIAlert
-      title="Liquid Glass"
-      message="This is a fully replicated UIAlertController with backdrop blur."
-      :actions="[
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Confirm', style: 'default' },
-      ]"
-      v-model="showAlert"
-    />
+          <UINotificationBar
+            v-if="popover"
+            v-model="popover"
+            title="Mail Alert"
+            message="You received 3 new emails."
+            @close="popover = false"
+          />
+
+          <UIButton @click="showBasicModal = true" :disabled="disabled">
+            Open Basic Modal
+          </UIButton>
+          <UIModalDialog v-model="showBasicModal">
+            <template #header>Welcome</template>
+            <template #body>
+              <h2>Hello World!</h2>
+              <p>This is a basic modal with default content.</p>
+            </template>
+          </UIModalDialog>
+
+          <UIButton
+            variant="prominentGlass"
+            :disabled="disabled"
+            style="width: 100%; margin-top: 20px"
+            @click="showAlert = true"
+            >Show Glass Alert</UIButton
+          >
+
+          <UIWidgetView>
+            <UIAnalogClock size="200" timezone="Europe/London" />
+          </UIWidgetView>
+
+          <UIFlipClock timezone="Europe/Madrid" />
+
+          <UIFolderView>
+            <template #title> Applications </template>
+
+            <UIAppIconItem
+              v-for="app in appleApps"
+              :name="app.name"
+              :icon="app.icon"
+              :label="app.name"
+            >
+            </UIAppIconItem>
+          </UIFolderView>
+
+          <UIContentPanel
+            background="linear-gradient(135deg, #6e8efb, #a777e3)"
+            :border-radius="15"
+          >
+            <template #header> Panel Header (Gradient) </template>
+
+            <p>
+              This is the main body content. The overall panel has a purple-to-blue gradient
+              background.
+            </p>
+            <template #footer>
+              <button class="footer-button">Action</button>
+            </template>
+          </UIContentPanel>
+
+          <UIContentPanel background="url(/image.jpg)" :border-radius="5" color="#ffffff">
+            <template #header>Panel Header (Image)</template>
+            <p>
+              This panel uses an image URL for its background. The glassmorphic effect in the footer
+              is even more noticeable with an image background!
+            </p>
+            <template #footer>
+              <small>Powered by Vue 3</small>
+            </template>
+          </UIContentPanel>
+
+          <MKMapView
+            width="600px"
+            height="300px"
+            :lat="40.7128"
+            :lng="-74.006"
+            :zoom="12"
+            marker-title="New York City"
+          />
+        </div>
+      </template>
+    </UISplitView>
+  </div>
+
+  <UIToolbar>
+    <UIButton variant="icon" icon="share-from-square" />
+    <div style="flex: 1"></div>
+    <UIButton variant="icon" icon="book" />
+    <UIButton variant="icon" icon="copy" />
+  </UIToolbar>
+
+  <UITabBar :active-index="0">
+    <UITabItem icon="star" label="Favorites" />
+    <UITabItem icon="clock" label="Recent" />
+    <UITabItem icon="user-group" label="Contacts" />
+    <UITabItem icon="table-cells" label="Keypad" />
+  </UITabBar>
+
+  <UIAlert
+    title="Liquid Glass"
+    message="This is a fully replicated UIAlertController with backdrop blur."
+    :actions="[
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Confirm', style: 'default' },
+    ]"
+    v-model="showAlert"
+  />
 </template>
 
 <script setup>
