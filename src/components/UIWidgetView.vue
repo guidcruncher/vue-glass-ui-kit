@@ -15,7 +15,7 @@ import { ref } from 'vue'
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
   transition: background-color 0.3s ease;
 }
 

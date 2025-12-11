@@ -8,7 +8,9 @@
         :style="getGridPlacementStyle(widget)"
       >
         <UIWidgetView>
-          <div class="widget-content">
+          <UIAnalogClock v-if="widget.type == 'analog-clock'" :size="widget.size" :timezone="widget.timezone" />
+          <UIFlipClock v-else-if="widget.type == 'digital-clock'" :size="widget.size" :timezone="widget.timezone" />
+          <div class="widget-content" v-else>
             <h3>{{ widget.name }}</h3>
             <p v-if="widget.source_url" class="widget-source">Source: {{ widget.source_url }}</p>
           </div>
