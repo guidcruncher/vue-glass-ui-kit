@@ -19,7 +19,7 @@ desktop_layout:
     - name: "system_monitor"
       type: "analog-clock"
       data_source: "local_system_api"
-      size: 100
+      size: 150
       timezone: "Europe/London"
       grid_position: {row: 1, col: 5}
       grid_span: { rows: 2, cols: 3 }

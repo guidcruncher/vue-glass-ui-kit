@@ -24,7 +24,7 @@ import { ref } from 'vue'
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 28px;
-  padding: 32px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
